@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:dinogarden/HomeScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,6 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  static const platform = const MethodChannel('flutter.native/helper');
+  String _responseFromNativeCode = 'Waiting for Response...';
+
+  Future<void> responseFromNativeCode() async {
+    String response = "";
+    try {
+      final String result = await platform.invokeMethod('helloFromNativeCode');
+      response = result;
+    } on PlatformException catch (e) {
+      response = "Failed to Invoke: '${e.message}'.";
+    }
+
+    setState(() {
+      _responseFromNativeCode = response;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -100,6 +119,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            TextButton.icon(
+              onPressed: () {
+                responseFromNativeCode();
+              },
+              icon: Icon(Icons.add, size: 18),
+              label: Text("TEXT BUTTON"),
+            ),
+            Text(_responseFromNativeCode)
           ],
         ),
       ),
