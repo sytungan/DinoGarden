@@ -178,6 +178,63 @@ class _LoginState extends State<Login> {
                                   )
                                 ],
                               ),
+                              Row(
+                                children:[
+                                  FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18.0),
+                                        side: BorderSide(color: Colors.black12)),
+                                    color: Color.fromARGB(255, 1, 170, 79),
+                                    textColor: Color.fromARGB(255, 255, 255, 255),
+                                    padding: EdgeInsets.all(8.0),
+                                    minWidth: 300.0,
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children:[
+                                  FlatButton(
+                                    textColor: Colors.grey,
+                                    padding: EdgeInsets.all(8.0),
+                                    minWidth: 300.0,
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Forgot password",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children:[
+                                  FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18.0),
+                                        side: BorderSide(color: Colors.grey)),
+
+                                    textColor: Colors.grey,
+                                    padding: EdgeInsets.all(8.0),
+                                    minWidth: 300.0,
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Sign up",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
