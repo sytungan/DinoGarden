@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'Pump_mode_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Pump_mode(),
     );
   }
 }
