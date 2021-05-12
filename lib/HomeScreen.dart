@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'cardItem.dart';
+import 'model/cardItem.dart';
+import 'model/bottomBar.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -13,7 +15,11 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+enum BottomIcons { Home, Favorite, Search, Account }
+
 class _HomeScreenState extends State<HomeScreen> {
+  BottomIcons bottomIcons = BottomIcons.Home;
+  int _currentIndex = 0;
   String runtime = "2h";
   bool online = true;
   num waterPercent = 0.5;
@@ -23,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   num waterLv = 0.85;
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return LayoutBuilder(
       builder: (context, constrains) {
         return Scaffold(
@@ -291,66 +299,59 @@ class _HomeScreenState extends State<HomeScreen> {
               //     ],
               //   ),
               // ),
-              Center(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints.expand(
-                              height: constrains.maxWidth * 0.3,
-                              width: constrains.maxWidth * 0.3),
-                          child: cardItem(
-                              context,
-                              temperature.toString() + " °C",
-                              "Temperature",
-                              "assets/temperature.png"),
-                        ),
-                        Container(
-                          constraints: BoxConstraints.expand(
-                              height: constrains.maxWidth * 0.3,
-                              width: constrains.maxWidth * 0.3),
-                          child: cardItem(context, humidity.toString() + " %",
-                              "Humidity", "assets/humidity.png"),
-                        ),
-                        Container(
-                          constraints: BoxConstraints.expand(
-                              height: constrains.maxWidth * 0.3,
-                              width: constrains.maxWidth * 0.3),
-                          child: cardItem(context, waterLv.toString() + " %",
-                              "Water level", "assets/water_level.png"),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints.expand(
-                              height: constrains.maxWidth * 0.3,
-                              width: constrains.maxWidth * 0.6),
-                          child: cardItemDouble(
-                              context,
-                              "Watering",
-                              "Need more",
-                              "Status",
-                              "assets/plant.png",
-                              "assets/clock.png"),
-                        ),
-                        Container(
-                          constraints: BoxConstraints.expand(
-                              height: constrains.maxWidth * 0.3,
-                              width: constrains.maxWidth * 0.3),
-                          child: cardItem(
-                              context, "On", "Pump status", "assets/clock.png"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: constrains.maxWidth * 0.3,
+                            width: constrains.maxWidth * 0.3),
+                        child: cardItem(context, temperature.toString() + " °C",
+                            "Temperature", "assets/temperature.png"),
+                      ),
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: constrains.maxWidth * 0.3,
+                            width: constrains.maxWidth * 0.3),
+                        child: cardItem(context, humidity.toString() + " %",
+                            "Humidity", "assets/humidity.png"),
+                      ),
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: constrains.maxWidth * 0.3,
+                            width: constrains.maxWidth * 0.3),
+                        child: cardItem(context, waterLv.toString() + " %",
+                            "Water level", "assets/water_level.png"),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: constrains.maxWidth * 0.3,
+                            width: constrains.maxWidth * 0.6),
+                        child: cardItemDouble(context, "Watering", "Need more",
+                            "Status", "assets/plant.png", "assets/clock.png"),
+                      ),
+                      Container(
+                        constraints: BoxConstraints.expand(
+                            height: constrains.maxWidth * 0.3,
+                            width: constrains.maxWidth * 0.3),
+                        child: cardItem(
+                            context, "On", "Pump status", "assets/clock.png"),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -366,13 +367,58 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             visible: true,
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: 0,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "data",
-              )
+          bottomNavigationBar: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(color: Colors.white),
+                padding:
+                    EdgeInsets.only(left: 24, right: 24, bottom: 10, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    BottomBar(
+                        onPressed: () {
+                          setState(() {
+                            bottomIcons = BottomIcons.Home;
+                          });
+                        },
+                        bottomIcons:
+                            bottomIcons == BottomIcons.Home ? true : false,
+                        icons: EvaIcons.home,
+                        text: "Home"),
+                    BottomBar(
+                        onPressed: () {
+                          setState(() {
+                            bottomIcons = BottomIcons.Favorite;
+                          });
+                        },
+                        bottomIcons:
+                            bottomIcons == BottomIcons.Favorite ? true : false,
+                        icons: EvaIcons.heartOutline,
+                        text: "Favorite"),
+                    BottomBar(
+                        onPressed: () {
+                          setState(() {
+                            bottomIcons = BottomIcons.Search;
+                          });
+                        },
+                        bottomIcons:
+                            bottomIcons == BottomIcons.Search ? true : false,
+                        icons: EvaIcons.search,
+                        text: "Search"),
+                    BottomBar(
+                        onPressed: () {
+                          setState(() {
+                            bottomIcons = BottomIcons.Account;
+                          });
+                        },
+                        bottomIcons:
+                            bottomIcons == BottomIcons.Account ? true : false,
+                        icons: EvaIcons.personOutline,
+                        text: "Account"),
+                  ],
+                ),
+              ),
             ],
           ),
         );
