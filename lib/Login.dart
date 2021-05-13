@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import 'Signup.dart';
 class Login extends StatefulWidget {
   Login({
     Key key,
@@ -43,22 +43,31 @@ class _LoginState extends State<Login> {
                                   ),
                                 ],
                               ),
-                              // Row(
-                              //   children: [
-                              //     Text(
-                              //         "       Dino Garden",
-                              //         //overflow: TextOverflow.visible,
-                              //         textAlign: TextAlign.left,
-                              //         style: TextStyle(
-                              //           height: 1.171875,
-                              //           fontSize: 30.0,
-                              //           fontFamily: 'Roboto',
-                              //           fontWeight: FontWeight.w700,
-                              //           color: Color.fromARGB(242, 173, 14, 27),
-                              //         )
-                              //     ),
-                              //   ],
-                              // ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding (
+            padding: const EdgeInsets.only(left: 40.0, top: 22.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Positioned.fill(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                           Image.asset(
+                            'images/Key_login.png',
+                            height: 100,
+                            width: 100,
+                          ),
+
+                        ],
+                      ),
 
                     ],
                   ),
@@ -66,45 +75,19 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          // Padding (
-          //   padding: const EdgeInsets.only(left: 40.0, top: 22.0),
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Positioned.fill(
-          //         child: Column(
-          //           children: [
-          //             Row(
-          //               children: [
-          //                  Image.asset(
-          //                   'images/Key_login.png',
-          //                   height: 100,
-          //                   width: 100,
-          //                 ),
-          //
-          //               ],
-          //             ),
-          //
-          //           ],
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
 
            Padding(
-            padding: const EdgeInsets.only(top: 100.0),
+            padding: const EdgeInsets.only(top: 60.0),
             child: Row(
               children: [
                   Container(
                     width: 360.0,
-                    height: 441.0,
+                    height: 500.0,
                       child: Container(
                         color: Color.fromARGB( 255, 214, 220, 226),
                         child: Center(
                           child: Padding(
-                          padding: const EdgeInsets.only(left: 28.0, top : 100.0),
+                          padding: const EdgeInsets.only(left: 28.0, top : 60.0),
                           child: Column(
                             children: [
                               Row(
@@ -124,6 +107,7 @@ class _LoginState extends State<Login> {
                               ]
 
                               ),
+                              SizedBox(height: 20),
                               Row(
                                 children:[
                                     Container(
@@ -151,6 +135,7 @@ class _LoginState extends State<Login> {
                                     )
                                   ],
                               ),
+                              SizedBox(height: 10),
                               Row(
                                 children:[
                                   Container(
@@ -178,6 +163,7 @@ class _LoginState extends State<Login> {
                                   )
                                 ],
                               ),
+                              SizedBox(height: 40),
                               Row(
                                 children:[
                                   FlatButton(
@@ -188,7 +174,9 @@ class _LoginState extends State<Login> {
                                     textColor: Color.fromARGB(255, 255, 255, 255),
                                     padding: EdgeInsets.all(8.0),
                                     minWidth: 300.0,
-                                    onPressed: () {},
+                                    onPressed: () {
+
+                                    },
                                     child: Text(
                                       "Login",
                                       style: TextStyle(
@@ -198,6 +186,7 @@ class _LoginState extends State<Login> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 10),
                               Row(
                                 children:[
                                   FlatButton(
@@ -215,6 +204,7 @@ class _LoginState extends State<Login> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 10),
                               Row(
                                 children:[
                                   FlatButton(
@@ -225,7 +215,9 @@ class _LoginState extends State<Login> {
                                     textColor: Colors.grey,
                                     padding: EdgeInsets.all(8.0),
                                     minWidth: 300.0,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (_) => Signup("Sign Up")));
+                                    },
                                     child: Text(
                                       "Sign up",
                                       style: TextStyle(
