@@ -12,11 +12,12 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding (
-                padding: const EdgeInsets.only(left: 20.0, top: 99.0),
+                padding: const EdgeInsets.only(left: 20.0, top: 80.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,8 +28,8 @@ class _SignupState extends State<Signup> {
                           Row(
                             children: [
                               Text(
-                                  "Create "
-                                      "New Account",
+                                  "Create\n "
+                                  "New Account",
                                   //overflow: TextOverflow.visible,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -47,53 +48,34 @@ class _SignupState extends State<Signup> {
                   ],
                 ),
               ),
-              Padding (
-                padding: const EdgeInsets.only(left: 40.0, top: 22.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Positioned.fill(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
 
-                               new Image.asset(
-                                'images/key_signup.png',
-                                height: 100,
-                                width: 100,
-                              ),
-
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    )
-                  ],
+              Container(
+                constraints: BoxConstraints(
+                  maxHeight: 528,
+                  maxWidth: 400,
                 ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: Row(
-                    children: [
-                      Container(
-                        width: 360.0,
-                        height: 500.0,
+                margin: EdgeInsets.fromLTRB(0,30,0,0),
                         child: Container(
                             color: Color.fromARGB( 255, 214, 220, 226),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 28.0, top : 60.0),
+                                padding: const EdgeInsets.only(left: 28.0, top : 10.0),
                                 child: Column(
                                   children: [
                                     Row(
+                                      children: [
+                                        new Image.asset(
+                                          'images/key_signup.png',
+                                          height: 60,
+                                          width: 60,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height:30),
+                                    Row(
                                         children:[ Text(
                                           'Sign Up'
-                                              ''
-                                              '',
+                                              ,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                               height: 1.171875,
@@ -120,7 +102,9 @@ class _SignupState extends State<Signup> {
                                                         keyboardType: TextInputType.emailAddress,
                                                         decoration: InputDecoration(
                                                           hintText: "Enter your email",
-
+                                                          focusedBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              borderSide: BorderSide(width: 0, color: Colors.green)),
                                                         ),
                                                       ),
                                                     )
@@ -148,7 +132,9 @@ class _SignupState extends State<Signup> {
                                                         keyboardType: TextInputType.emailAddress,
                                                         decoration: InputDecoration(
                                                           hintText: "Enter your password",
-
+                                                          focusedBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              borderSide: BorderSide(width: 0, color: Colors.green)),
                                                         ),
                                                       ),
                                                     )
@@ -176,7 +162,9 @@ class _SignupState extends State<Signup> {
                                                         keyboardType: TextInputType.emailAddress,
                                                         decoration: InputDecoration(
                                                           hintText: "Re Enter your password",
-
+                                                          focusedBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              borderSide: BorderSide(width: 0, color: Colors.green)),
                                                         ),
                                                       ),
                                                     )
@@ -190,7 +178,7 @@ class _SignupState extends State<Signup> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(height: 10),
+                                    SizedBox(height: 40),
                                     Row(
                                       children:[
                                         FlatButton(
@@ -243,9 +231,7 @@ class _SignupState extends State<Signup> {
                         ),
 
                       ),
-                    ]
-                ),
-              ),
+
 
 
 
