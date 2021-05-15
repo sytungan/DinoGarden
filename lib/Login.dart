@@ -20,7 +20,6 @@ class _LoginState extends State<Login> {
         resizeToAvoidBottomInset: false,
         body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
 
           Padding (

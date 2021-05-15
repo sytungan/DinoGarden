@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Login.dart';
 import 'Signup.dart';
+import 'Profile.dart';
 void main() {
   runApp(MyApp());
 }
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
         home: Navigator(
-          pages: [MaterialPage(key: ValueKey('Dino Garden'), child: Login())],
+          pages: [MaterialPage(key: ValueKey('Dino Garden'), child: Profile())],
           onPopPage: (route, result) => route.didPop(result),
 
 
