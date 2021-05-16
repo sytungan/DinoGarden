@@ -32,6 +32,10 @@ dependencies:
   path_drawing: ^0.5.0
   fl_chart: ^0.36.1
   table_calendar: ^3.0.0
+  hexcolor: ^2.0.3
+  google_fonts: ^2.0.0
+  percent_indicator: ^3.0.1
+  eva_icons_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +57,7 @@ flutter:
     - "assets/images/"
     - images/screen_image.jpg
   #   - images/a_dot_burr.jpeg
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
