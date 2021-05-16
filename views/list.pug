@@ -1,0 +1,34 @@
+extends ./layout.pug
+
+block content
+
+    
+       
+    .d-flex   
+        h1
+            span Moew Review
+       
+        form.ml-auto(action="/creat/search", method="get", class="form-group d-flex" )
+            input(type='text', name='q', class="form-control", value=inputs?inputs:"" disabled)
+            button(class="btn btn-primary ml-2") search
+    table.table
+        th Image
+        th Name 
+        th
+        th
+        th
+            each data in contentData 
+                tr 
+                    td  
+                        -var srcIm = data.mainPicture
+                        img(src=srcIm, width="64")                
+                    td= data.name
+                    td
+                    td
+                        a.ml-auto.btn.btn-light(target='_blank'  href='https://moewreview.press/anime-details.html?name='+data.content+'&id=' + data.id) view
+                    td
+                        a.ml-auto.btn.btn-light(href='/creat/delete/' + data.id) delete
+    
+    a.btn.btn-primary.mr-auto.ml-2.mt-auto.mb-auto.p-auto.mt-auto(href="/creat") Add new
+    a.m-4.btn.btn-primary(href ='/creat/download') Back up
+
