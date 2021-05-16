@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'Screens/Calender/index.dart';
-import 'Screens/DailyReport/index.dart';
-import 'Screens/Dashboard/index.dart';
+import 'screens/Calender/index.dart';
+import 'screens/DailyReport/index.dart';
+import 'screens/Dashboard/index.dart';
 
 void main() {
   runApp(myApp());
@@ -18,7 +18,6 @@ class myApp extends StatelessWidget {
       routes: {
         '/dashboard': (context) => new dashboardScrean(),
         '/Calender': (context) => new Calender(),
-
       },
     );
   }

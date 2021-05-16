@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-class Pump_mode extends StatefulWidget{
+class Pump_mode extends StatefulWidget {
   String name;
   int age;
-  Pump_mode({this.name, this.age});
+  Pump_mode(this.name, this.age);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _Pump_modeState();
   }
 }
-class _Pump_modeState extends State<Pump_mode>{
+
+class _Pump_modeState extends State<Pump_mode> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -18,15 +19,11 @@ class _Pump_modeState extends State<Pump_mode>{
         title: "This is a StatafulWidget",
         home: Scaffold(
             body: new ListView(
-              children: <Widget>[
-                new Image.asset(
-                "images/screen_image.jpg",
+          children: <Widget>[
+            new Image.asset(
+              "images/screen_image.jpg",
             )
-              ],
-            )
-        )
-    );
+          ],
+        )));
   }
-
-
 }

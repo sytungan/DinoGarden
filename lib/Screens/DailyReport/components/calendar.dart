@@ -30,7 +30,7 @@ class _Group34WidgetState extends State<Calendar> {
         height: 130.0,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index){
+          itemBuilder: (context, index) {
             if (index == dow.length) {
               day = day.subtract(const Duration(days: -1));
               dow.add(day);
@@ -38,8 +38,7 @@ class _Group34WidgetState extends State<Calendar> {
             return Container(
                 width: 95.0,
                 child: FlatButton(
-                  child: _builditem(
-                      dow[index], [] ,selectedDay),
+                  child: _builditem(dow[index], [], selectedDay),
                   onPressed: () {
                     setState(() {
                       selectedDay = dow[index];
@@ -47,7 +46,6 @@ class _Group34WidgetState extends State<Calendar> {
                   },
                 ));
           },
-
         ),
       ),
     );
@@ -81,9 +79,6 @@ String _change(int i) {
   return "";
 }
 
-
-
-
 Widget _builditem(DateTime date, List<String> img, selectedDay) {
   return Container(
       width: 78,
@@ -101,7 +96,9 @@ Widget _builditem(DateTime date, List<String> img, selectedDay) {
               width: 78,
               height: 102,
               decoration: BoxDecoration(
-                color: date.compareTo(selectedDay)==0?Color(0xff01AA4F):Color.fromRGBO(255, 255, 255, 1),
+                color: date.compareTo(selectedDay) == 0
+                    ? Color(0xff01AA4F)
+                    : Color.fromRGBO(255, 255, 255, 1),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -137,7 +134,9 @@ Widget _builditem(DateTime date, List<String> img, selectedDay) {
               date.day.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: date.compareTo(selectedDay)!=0? Color.fromRGBO(102, 102, 102, 1):Color(0xffFFFFFF),
+                  color: date.compareTo(selectedDay) != 0
+                      ? Color.fromRGBO(102, 102, 102, 1)
+                      : Color(0xffFFFFFF),
                   fontFamily: 'Roboto',
                   fontSize: 35,
                   letterSpacing:
@@ -152,7 +151,9 @@ Widget _builditem(DateTime date, List<String> img, selectedDay) {
               _change(date.weekday),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: date.compareTo(selectedDay)!=0? Color.fromRGBO(102, 102, 102, 1):Color(0xffFFFFFF),
+                  color: date.compareTo(selectedDay) != 0
+                      ? Color.fromRGBO(102, 102, 102, 1)
+                      : Color(0xffFFFFFF),
                   fontFamily: 'Roboto',
                   fontSize: 16,
                   letterSpacing:
@@ -163,7 +164,9 @@ Widget _builditem(DateTime date, List<String> img, selectedDay) {
         Positioned(
             top: 12,
             left: 59,
-            child: (date.year == DateTime.now().year && date.day == DateTime.now().day && date.month == DateTime.now().month)
+            child: (date.year == DateTime.now().year &&
+                    date.day == DateTime.now().day &&
+                    date.month == DateTime.now().month)
                 ? Container(
                     width: 7,
                     height: 7,
