@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 
 class Profile extends StatefulWidget {
@@ -11,6 +14,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile > {
+  String id = '1344295024';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,11 +73,11 @@ class _ProfileState extends State<Profile > {
                   child:
                       Stack(
                         overflow: Overflow.visible,
-                        clipBehavior: Clip.hardEdge,
+                        alignment: Alignment.bottomCenter,
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.fromLTRB(0,20,0,0),
-                            height: 206,
+                            height: 205,
                             padding: const EdgeInsets.only( top: 0.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -92,158 +97,122 @@ class _ProfileState extends State<Profile > {
                               ],
                             ),
                             child:
-                            ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: <Widget>[
-                                Image.asset(
-                                  'images/imgprofile_1.png',
-                                  width: 346,
-                                  height: 205,
+                              ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'images/imgprofile_1.png',
+                                    width: 346,
+                                    height: 205,
 
-                                ),
-                                Image.asset(
-                                  'images/imgprofile_2.png',
-                                  width: 346,
-                                  height: 205,
-                                ),
-                                Image.asset(
-                                  'images/imgprofile_3.png',
-                                  width: 346,
-                                  height: 205,
-                                ),
-
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 200,
-                            left: 27,
-                            child: Container(
-                                margin: EdgeInsets.fromLTRB(0,0,0,0),
-                                height: 75,
-                                width: 270,
-                                padding: const EdgeInsets.all( 10.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      topRight: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5)
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 3,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                        children:[
-                                          Text("Charlie's Garden",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                height: 1.171875,
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(255, 1, 170, 79),
-                                              )),
-                                        ]
-                                    ),
-                                    Row(
-                                        children: [
-                                          Text(
-                                              "ID: 1344295024",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                height: 1.171875,
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(255, 1, 170, 79),
-                                              )
-                                          ),
-                                        ]
-                                    ),
-                                  ],
-                                )
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-
-                            child:
-                              Container(
-                              margin: EdgeInsets.fromLTRB(0,0,0,0),
-                              height: 85,
-                              width: 304,
-                              padding: const EdgeInsets.all( 10.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    topRight: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                    bottomRight: Radius.circular(5)
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 3,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                  Image.asset(
+                                    'images/imgprofile_2.png',
+                                    width: 346,
+                                    height: 205,
                                   ),
+                                  Image.asset(
+                                    'images/imgprofile_3.png',
+                                    width: 346,
+                                    height: 205,
+                                  ),
+
                                 ],
                               ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                      children:[
-                                        Text("Charlie's Garden",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              height: 1.171875,
-                                              fontSize: 16.0,
-                                              fontFamily: 'Roboto',
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(255, 1, 170, 79),
-                                            )),
-                                      ]
-                                  ),
-                                  Row(
-                                      children: [
-                                        Text(
-                                            "ID: 1344295024",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              height: 1.171875,
-                                              fontSize: 16.0,
-                                              fontFamily: 'Roboto',
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(255, 1, 170, 79),
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ],
-                              )
                           ),
-                          )
+
+
+
                         ]
-                        )
+                      )
 
                   ),
                   Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 0.25,
+                                  blurRadius: 5,
+                                  offset:
+                                  Offset(0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: Row(
+                              children: [
+
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("  Charlie's Garden",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            height: 1.171875,
+                                            fontSize: 16.0,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 11, 12, 12),
+                                          )),
+                                      Text(
+                                          "  ID: " + id,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            height: 1.171875,
+                                            fontSize: 16.0,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.normal,
+                                            color: Color.fromARGB(
+                                                255, 33, 35, 34),
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                  flex: 2,
+                                ),
+                                Expanded(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.chevron_right,
+                                      size: 30,
+                                    ),
+                                    tooltip: 'Go detail',
+                                    color: HexColor("#0C9359"),
+                                    onPressed: () {
+                                      print("Pressed detail");
+                                    },
+                                  ),
+                                  flex: 1,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Center(
                   child: Container(
-                        margin: EdgeInsets.fromLTRB(0,80,0,0),
-                        height: 40,
+                        margin: EdgeInsets.fromLTRB(0,20,0,0),
+                        height: 60,
                         width: 304,
-                        padding: const EdgeInsets.all( 10.0),
+
                         decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(0.5),
                             borderRadius: BorderRadius.only(
@@ -251,76 +220,71 @@ class _ProfileState extends State<Profile > {
                               topRight: Radius.circular(5),
                               bottomLeft: Radius.circular(5),
                               bottomRight: Radius.circular(5)
-                        ),
-
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children:[
-                                ButtonBar(
-                                  alignment: MainAxisAlignment.start,
-                                  children: [
-                                    FlatButton(
-                                      onPressed: () {
-
-                                      },
-                                      child: const Text('PLANTS',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            height: 1.171875,
-                                            fontSize: 16.0,
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey,
-                                          )),
-                                      highlightColor: Colors.green,
-                                    ),
-                                    FlatButton(
-
-                                      onPressed: () {
-                                        // Perform some action
-                                      },
-                                      child: const Text('LOG',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            height: 1.171875,
-                                            fontSize: 16.0,
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey,
-                                          )),
-                                    ),
-                                    FlatButton(
-
-                                      onPressed: () {
-                                        // Perform some action
-                                      },
-                                      child: const Text('SETTINGS',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            height: 1.171875,
-                                            fontSize: 16.0,
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey,
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ]
                             ),
-                          ]
-                        )
+                        ),
+                        child:
+                          ButtonBar(
+                          mainAxisSize : MainAxisSize.min,
+                          alignment: MainAxisAlignment.start,
+                          children: [
 
+                            FlatButton(
+                              height : 60,
+                              color:  HexColor("6422EA6D") ,
+                              onPressed: () {
+                              },
+                              child: Text('PLANTS',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+
+                                      fontSize: 16.0,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.bold,
+                                      color: HexColor("#FF9E9E9E")
+                                  )),
+                            ),
+
+                            FlatButton(
+                              height: 60,
+                              onPressed: () {
+                              },
+                              child: Text('LOG',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      height: 1.171875,
+                                      fontSize: 16.0,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.bold,
+                                      color: HexColor("#FF9E9E9E")
+                                  )),
+                            ),
+                            FlatButton(
+                              height: 60,
+                              onPressed: () {
+                              },
+                              child: Text('SETTINGS',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    height: 1.171875,
+                                    fontSize: 16.0,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor("#FF9E9E9E"),
+                                  )),
+                            ),
+
+                          ],
+                        ),
 
                   )
                   ),
-
 
         ]
         )
     );
   }
+
 }
+
+
 

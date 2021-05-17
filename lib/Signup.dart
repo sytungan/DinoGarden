@@ -9,6 +9,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  bool _checkboxListTile = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,6 @@ class _SignupState extends State<Signup> {
                   ],
                 ),
               ),
-
               Container(
                 constraints: BoxConstraints(
                   maxHeight: 528,
@@ -71,7 +71,7 @@ class _SignupState extends State<Signup> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height:30),
+                                    SizedBox(height:20),
                                     Row(
                                         children:[ Text(
                                           'Sign Up'
@@ -178,7 +178,27 @@ class _SignupState extends State<Signup> {
                                         )
                                       ],
                                     ),
-                                    SizedBox(height: 40),
+                                    SizedBox(height:10),
+                                    Row(
+                                      children: <Widget>[
+                                        Checkbox(
+                                          value: _checkboxListTile,
+                                          onChanged: (bool value) {
+                                            setState(() => _checkboxListTile = value);
+                                          },
+                                        ),
+                                        Text('Agree app Policy and Term',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+
+                                          fontSize: 16.0,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w100,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.grey)),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
                                     Row(
                                       children:[
                                         FlatButton(
