@@ -134,17 +134,7 @@ class _LoginState extends State<Login> {
                                               children:[
                                                 SizedBox(
                                                   width:300,
-                                                  // child: TextField(
-                                                  //   keyboardType: TextInputType.text,
-                                                  //   decoration: InputDecoration(
-                                                  //     hintText: "Enter your password",
-                                                  //     suffixIcon: const Padding(
-                                                  //         padding: const EdgeInsets.only(right: 0.0),
-                                                  //         child: const Icon(Icons.lock)),
-                                                  //       prefixIcon: Icon(Icons.lock),
-                                                  //   ),
-                                                  //
-                                                  // ),
+
                                                   child: PasswordField(
                                                     color: Colors.green,
                                                     hasFloatingPlaceholder: true,

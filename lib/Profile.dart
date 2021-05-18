@@ -163,7 +163,7 @@ class _ProfileState extends State<Profile > {
                                   child: Row(
                                     children: [
 
-                                      Flexible(
+                                      Expanded(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment: CrossAxisAlignment
@@ -195,7 +195,7 @@ class _ProfileState extends State<Profile > {
                                         ),
                                         flex: 3,
                                       ),
-                                      Flexible(
+                                      Expanded(
                                         child: IconButton(
                                           icon: Icon(
                                             Icons.chevron_right,
@@ -318,15 +318,13 @@ class _ProfileState extends State<Profile > {
                                       children: [
                                         Column(
                                             children: [
-                                              SizedBox(height: 10),
                                               Row(
                                                   children: [
                                                     Center(
                                                       child:
                                                       Container(
                                                         width: 300,
-                                                        padding: const EdgeInsets.only(
-                                                            left: 5.0),
+                                                        padding: const EdgeInsets.only(left: 5.0),
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius
                                                               .circular(

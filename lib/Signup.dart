@@ -17,6 +17,7 @@ class _SignupState extends State<Signup> {
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Padding (
                 padding: const EdgeInsets.only(left: 20.0, top: 80.0),
                 child: Column(
@@ -49,18 +50,18 @@ class _SignupState extends State<Signup> {
                   ],
                 ),
               ),
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: 528,
-                  maxWidth: 400,
-                ),
-                margin: EdgeInsets.fromLTRB(0,30,0,0),
-                        child: Container(
-                            color: Color.fromARGB( 255, 214, 220, 226),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 28.0, top : 10.0),
-                                child: Column(
+              Center(
+              child:
+                Container(
+                    padding: const EdgeInsets.only(top: 10.0, left: 28.0, right: 10.0, bottom:10.0),
+                    height: 528,
+                    width: 400,
+                  margin: EdgeInsets.fromLTRB(0,30,0,0),
+                  color: Color.fromARGB( 255, 214, 220, 226),
+                  child:
+                          ListView(
+                            children: [
+                                Column(
                                   children: [
                                     Row(
                                       children: [
@@ -75,7 +76,7 @@ class _SignupState extends State<Signup> {
                                     Row(
                                         children:[ Text(
                                           'Sign Up'
-                                              ,
+                                          ,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                               height: 1.171875,
@@ -188,14 +189,14 @@ class _SignupState extends State<Signup> {
                                           },
                                         ),
                                         Text('Agree app Policy and Term',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
 
-                                          fontSize: 16.0,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w100,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.grey)),
+                                                fontSize: 16.0,
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.w100,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.grey)),
                                       ],
                                     ),
                                     SizedBox(height: 10),
@@ -246,14 +247,11 @@ class _SignupState extends State<Signup> {
                                     ),
                                   ],
                                 ),
-                              ),
-                            )
-                        ),
 
-                      ),
-
-
-
+                            ]
+                          )
+                )
+              )
 
             ]
         )
