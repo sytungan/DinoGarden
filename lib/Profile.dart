@@ -19,16 +19,15 @@ class _ProfileState extends State<Profile > {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-        builder: (context, constrains) {
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return Scaffold(
               resizeToAvoidBottomInset: false,
-              body: Center(
-                  child:
-                  CustomScrollView(
-                      slivers: [
-                      SliverFillRemaining(
-                      hasScrollBody: false,
-                      child:
+              body: SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight,
+                      ),
+                    child:
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -164,7 +163,7 @@ class _ProfileState extends State<Profile > {
                                   child: Row(
                                     children: [
 
-                                      Expanded(
+                                      Flexible(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment: CrossAxisAlignment
@@ -194,9 +193,9 @@ class _ProfileState extends State<Profile > {
                                             ),
                                           ],
                                         ),
-                                        flex: 2,
+                                        flex: 3,
                                       ),
-                                      Expanded(
+                                      Flexible(
                                         child: IconButton(
                                           icon: Icon(
                                             Icons.chevron_right,
@@ -315,179 +314,183 @@ class _ProfileState extends State<Profile > {
                                   ],
                                 ),
                                 child:
-                                Column(
-                                    children: [
-                                      SizedBox(height: 10),
-                                      Row(
-                                          children: [
-                                            Center(
-                                              child:
-                                              Container(
-                                                width: 300,
-                                                padding: const EdgeInsets.only(
-                                                    left: 5.0),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius
-                                                      .circular(
-                                                      5.0),
-                                                  color: Color.fromARGB(
-                                                      255, 208, 236, 217),
-                                                ),
-                                                child:
-                                                Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.grass,
-                                                        color: Colors.grey,
+                                    ListView(
+                                      children: [
+                                        Column(
+                                            children: [
+                                              SizedBox(height: 10),
+                                              Row(
+                                                  children: [
+                                                    Center(
+                                                      child:
+                                                      Container(
+                                                        width: 300,
+                                                        padding: const EdgeInsets.only(
+                                                            left: 5.0),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius
+                                                              .circular(
+                                                              5.0),
+                                                          color: Color.fromARGB(
+                                                              255, 208, 236, 217),
+                                                        ),
+                                                        child:
+                                                        Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.grass,
+                                                                color: Colors.grey,
+
+                                                              ),
+                                                              Text(
+                                                                  '  Plant growing',
+                                                                  style: TextStyle(
+                                                                    color: Colors.grey,
+
+                                                                  )
+                                                              ),
+
+                                                            ]
+                                                        ),
+
 
                                                       ),
-                                                      Text(
-                                                          '  Plant growing',
-                                                          style: TextStyle(
-                                                            color: Colors.grey,
+                                                    )
+                                                  ]
+                                              ),
+                                              SizedBox(height: 10.0),
+                                              Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      'images/garlic1.png',
+                                                    ),
+                                                    Text(
+                                                        '   Opinion',
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight: FontWeight.bold,
 
-                                                          )
-                                                      ),
-
-                                                    ]
-                                                ),
-
+                                                        )
+                                                    ),
+                                                    IconButton(
+                                                        icon: Icon(
+                                                            Icons.info,
+                                                            color: Color.fromARGB(
+                                                                255, 22, 182, 16)
+                                                        )
+                                                    )
+                                                  ]
+                                              ),
+                                              const Divider(
+                                                height: 20,
+                                                thickness: 1,
+                                                indent: 20,
+                                                endIndent: 20,
 
                                               ),
-                                            )
-                                          ]
-                                      ),
-                                      SizedBox(height: 10.0),
-                                      Row(
-                                          children: [
-                                            Image.asset(
-                                              'images/garlic1.png',
-                                            ),
-                                            Text(
-                                                '   Opinion',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontFamily: 'Roboto',
-                                                  fontWeight: FontWeight.bold,
+                                              Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      'images/corn1.png',
 
-                                                )
-                                            ),
-                                            IconButton(
-                                                icon: Icon(
-                                                    Icons.info,
-                                                    color: Color.fromARGB(
-                                                        255, 22, 182, 16)
-                                                )
-                                            )
-                                          ]
-                                      ),
-                                      const Divider(
-                                        height: 20,
-                                        thickness: 1,
-                                        indent: 20,
-                                        endIndent: 20,
+                                                    ),
+                                                    Text(
+                                                        '   Corn',
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight: FontWeight.bold,
+                                                        )
+                                                    ),
+                                                    IconButton(
+                                                        icon: Icon(
+                                                            Icons.info,
+                                                            color: Color.fromARGB(
+                                                                255, 22, 182, 16)
+                                                        )
+                                                    )
 
-                                      ),
-                                      Row(
-                                          children: [
-                                            Image.asset(
-                                              'images/corn1.png',
+                                                  ]
+                                              ),
+                                              const Divider(
+                                                height: 20,
+                                                thickness: 1,
+                                                indent: 20,
+                                                endIndent: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'images/spinach1.png',
 
-                                            ),
-                                            Text(
-                                                '   Corn',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontFamily: 'Roboto',
-                                                  fontWeight: FontWeight.bold,
-                                                )
-                                            ),
-                                            IconButton(
-                                                icon: Icon(
-                                                    Icons.info,
-                                                    color: Color.fromARGB(
-                                                        255, 22, 182, 16)
-                                                )
-                                            )
+                                                  ),
+                                                  Text(
+                                                      '   Spinach',
+                                                      style: TextStyle(
+                                                        fontSize: 16.0,
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight: FontWeight.bold,
 
-                                          ]
-                                      ),
-                                      const Divider(
-                                        height: 20,
-                                        thickness: 1,
-                                        indent: 20,
-                                        endIndent: 20,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            'images/spinach1.png',
+                                                      )
+                                                  ),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                          Icons.info,
+                                                          color: Color.fromARGB(
+                                                              255, 22, 182, 16)
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+                                              const Divider(
+                                                height: 20,
+                                                thickness: 1,
+                                                indent: 20,
+                                                endIndent: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'images/cabbage1.png',
 
-                                          ),
-                                          Text(
-                                              '   Spinach',
-                                              style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
+                                                  ),
+                                                  Text(
+                                                      '   Cabbage',
+                                                      style: TextStyle(
+                                                        fontSize: 16.0,
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight: FontWeight.bold,
 
-                                              )
-                                          ),
-                                          IconButton(
-                                              icon: Icon(
-                                                  Icons.info,
-                                                  color: Color.fromARGB(
-                                                      255, 22, 182, 16)
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                      const Divider(
-                                        height: 20,
-                                        thickness: 1,
-                                        indent: 20,
-                                        endIndent: 20,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            'images/cabbage1.png',
+                                                      )
+                                                  ),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                          Icons.info,
+                                                          color: Color.fromARGB(
+                                                              255, 22, 182, 16)
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+                                              const Divider(
+                                                height: 20,
+                                                thickness: 1,
+                                                indent: 20,
+                                                endIndent: 20,
+                                              ),
+                                            ]
+                                        )
+                                      ],
+                                    )
 
-                                          ),
-                                          Text(
-                                              '   Cabbage',
-                                              style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
-
-                                              )
-                                          ),
-                                          IconButton(
-                                              icon: Icon(
-                                                  Icons.info,
-                                                  color: Color.fromARGB(
-                                                      255, 22, 182, 16)
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                      const Divider(
-                                        height: 20,
-                                        thickness: 1,
-                                        indent: 20,
-                                        endIndent: 20,
-                                      ),
-                                    ]
-                                )
                             )
                         )
                       ]
                   )
               )
-                      ]
-          )
               )
+
 
           );
         }
