@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'HomeScreen.dart';
 
 import 'screens/Calender/index.dart';
 import 'screens/DailyReport/index.dart';
 import 'screens/Dashboard/index.dart';
+
+import 'Login.dart';
+import 'Signup.dart';
+import 'Profile.dart';
 
 void main() {
   runApp(myApp());
@@ -28,6 +33,7 @@ class myApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+
     );
   }
 }
@@ -74,10 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
         home: Navigator(
+
           pages: [
             MaterialPage(key: ValueKey('Dino Garden'), child: HomeScreen())
           ],
           onPopPage: (route, result) => route.didPop(result),
         ));
+
   }
 }
