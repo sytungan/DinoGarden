@@ -173,14 +173,14 @@ class _SignupState extends State<Signup> {
                         SizedBox(height: 10),
                         Row(
                           children: <Widget>[
-                            // Checkbox(
-                            //   value: _checkboxListTile,
-                            //   onChanged: (bool value) {
-                            //     setState(() {
-                            //       _checkboxListTile = value;
-                            //     });
-                            //   },
-                            // ),
+                            Checkbox(
+                              value: _checkboxListTile,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _checkboxListTile = value;
+                                });
+                              },
+                            ),
                             Text('Agree app Policy and Term',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
