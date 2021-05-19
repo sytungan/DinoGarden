@@ -26,11 +26,20 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 30
+    
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+            maven {
+                url "https://repo.eclipse.org/content/repositories/paho−snapshots/"
+            }
+        }
+    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.dinogarden"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -44,6 +53,14 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation 'com.android.support:localbroadcastmanager:28.0.0'
+    implementation 'com.github.mik3y:usb-serial-for-android:2.+'
+    implementation'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+    implementation'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+}
+
 
 flutter {
     source '../..'

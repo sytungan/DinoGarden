@@ -5,6 +5,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'model/cardItem.dart';
 import 'model/bottomBar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -18,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 enum BottomIcons { Home, Favorite, Search, Account }
 
 class _HomeScreenState extends State<HomeScreen> {
+  MQTTManager _manager = new MQTTManager();
   BottomIcons bottomIcons = BottomIcons.Home;
   int _currentIndex = 0;
   String runtime = "2h";
@@ -29,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   num waterLv = 0.85;
   @override
   Widget build(BuildContext context) {
+    _configureAndConnect();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return LayoutBuilder(
@@ -443,6 +447,15 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  void _configureAndConnect() {
+    // TODO: Use UUID
+    String osPrefix = 'Flutter_Android';
+    _manager.initializeMQTTClient(identifier: osPrefix);
+    _manager.connect();
+    _manager.subScribeTo('dinhkhanh412/feeds/light');
+    _manager.subScribeTo('dinhkhanh412/feeds/light2');
   }
 }
 

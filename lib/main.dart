@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:dinogarden/HomeScreen.dart';
 
 import 'HomeScreen.dart';
 
@@ -33,7 +35,6 @@ class myApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-
     );
   }
 }
@@ -70,6 +71,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  static const platform = const MethodChannel('flutter.native/helper');
+  String _responseFromNativeCode = 'Waiting for Response...';
+
+  Future<void> responseFromNativeCode() async {
+    String response = "";
+    try {
+      final String result = await platform.invokeMethod('helloFromNativeCode');
+      response = result;
+    } on PlatformException catch (e) {
+      response = "Failed to Invoke: '${e.message}'.";
+    }
+
+    setState(() {
+      _responseFromNativeCode = response;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -80,12 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
         home: Navigator(
-
-          pages: [
-            MaterialPage(key: ValueKey('Dino Garden'), child: HomeScreen())
-          ],
-          onPopPage: (route, result) => route.didPop(result),
-        ));
-
+      pages: [MaterialPage(key: ValueKey('Dino Garden'), child: HomeScreen())],
+      onPopPage: (route, result) => route.didPop(result),
+    ));
   }
 }
