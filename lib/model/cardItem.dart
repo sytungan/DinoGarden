@@ -43,7 +43,7 @@ Padding cardItem(context, value, title, img) {
                       SizedBox(height: 5),
                       Text(
                         title,
-                        style: GoogleFonts.muli(
+                        style: GoogleFonts.mulish(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
                           textStyle: TextStyle(color: HexColor("#06492C")),
@@ -52,7 +52,7 @@ Padding cardItem(context, value, title, img) {
                       SizedBox(height: 5),
                       Text(
                         value,
-                        style: GoogleFonts.muli(
+                        style: GoogleFonts.mulish(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           textStyle: TextStyle(color: HexColor("#06492C")),
@@ -105,7 +105,7 @@ Padding cardItemDouble(context, value1, value2, title, img1, img2) {
                     children: [
                       Text(
                         title,
-                        style: GoogleFonts.muli(
+                        style: GoogleFonts.mulish(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
                           textStyle: TextStyle(color: HexColor("#06492C")),
@@ -121,7 +121,7 @@ Padding cardItemDouble(context, value1, value2, title, img1, img2) {
                         SizedBox(width: 10),
                         Text(
                           value1,
-                          style: GoogleFonts.muli(
+                          style: GoogleFonts.mulish(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                             textStyle: TextStyle(color: HexColor("#06492C")),
@@ -137,7 +137,7 @@ Padding cardItemDouble(context, value1, value2, title, img1, img2) {
                         SizedBox(width: 10),
                         Text(
                           value2,
-                          style: GoogleFonts.muli(
+                          style: GoogleFonts.mulish(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                             textStyle: TextStyle(color: HexColor("#06492C")),

@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Text(
                                             "Your garden",
-                                            style: GoogleFonts.muli(
+                                            style: GoogleFonts.mulish(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
                                           ),
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             online
                                                 ? 'Connected'
                                                 : 'Not Connected',
-                                            style: GoogleFonts.muli(
+                                            style: GoogleFonts.mulish(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                               textStyle: TextStyle(
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   (waterPercent * 100).toString() + " %",
-                                  style: GoogleFonts.muli(
+                                  style: GoogleFonts.mulish(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 30,
                                       textStyle: TextStyle(
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   waterCap,
-                                  style: GoogleFonts.muli(
+                                  style: GoogleFonts.mulish(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 30,
                                       textStyle: TextStyle(
@@ -237,13 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Text(
                                         "Máy bơm ABCXYZ",
-                                        style: GoogleFonts.muli(
+                                        style: GoogleFonts.mulish(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
                                         "Running",
-                                        style: GoogleFonts.muli(
+                                        style: GoogleFonts.mulish(
                                             fontStyle: FontStyle.normal,
                                             fontSize: 16,
                                             textStyle: TextStyle(
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Text(
                                         "Run time: " + runtime,
-                                        style: GoogleFonts.muli(
+                                        style: GoogleFonts.mulish(
                                             fontStyle: FontStyle.normal,
                                             fontSize: 16,
                                             textStyle: TextStyle(
