@@ -4,11 +4,10 @@ const http = require('http')
 const path = require('path')
 
 const userData = require('../models/user')
-const { method } = require('../db')
 
 
 module.exports.creatAcount = async function(req , res){
-    // console.log(req.body )
+    console.log(req.body )
     // console.log(req.file)
     var image = fs.readFileSync('./public/image/avatar/' + 'edited-' + req.file.originalname).toString('base64')
     var finalImage = {
@@ -29,12 +28,14 @@ module.exports.creatAcount = async function(req , res){
             res.send(JSON.stringify(err))
             return
         }
-        res.redirect("http://moewreview.press/login.html") 
+        res.send("success")
+        // res.redirect("http://moewreview.press/login.html") 
     })
+
 }
 
 module.exports.login = function(req , res){
-    res.render('login');
+    res.render('login'); 
 };
 
 module.exports.postLogin = async function(req , res){

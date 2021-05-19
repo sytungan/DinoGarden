@@ -1,2 +1,2 @@
-console.log("60218018794ef303b45e87a9" in ["60218018794ef303b45e87a9"])
-
+var date = new Date()
+console.log(date.getDate() , date.getMonth() , date.getFullYear())

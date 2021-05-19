@@ -83,4 +83,4 @@ router.post('/signInUser' , validate.login , controller.loginUser )
 router.post('/check_mail' , controller.checkMail)
 
 
-module.exports = router 
+module.exports = router

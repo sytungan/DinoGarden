@@ -7,6 +7,10 @@ module.exports.postLogin = async function (req, res, next) {
     var pass = req.body.pass;
     var user;
     console.log(req.body)
+    if (req.body == {}){
+        res.send(req);
+        return
+    }
     await userManage.find({
         email: req.body.name
     }, function (err, data) {
@@ -18,13 +22,13 @@ module.exports.postLogin = async function (req, res, next) {
             user = data[0];
         } catch (err) {
             console.log(err);
-        }
+        } 
 
         var error = [];
-
+ 
 
         if (!user) {
-            res.render('login', {
+            res.send('login', {
                 error: [
                     'Name does not exist!'
                 ],
@@ -34,7 +38,7 @@ module.exports.postLogin = async function (req, res, next) {
         }
 
         if (user.pass !== md5(pass)) {
-            res.render('login', {
+            res.send('login', {
                 error: [
                     'Wrong password!'
                 ],
@@ -44,7 +48,7 @@ module.exports.postLogin = async function (req, res, next) {
         }
 
         if (user.permitsion == false) {
-            res.render('login', {
+            res.send( {
                 error: [
                     'Cút ra!!!'
                 ],
@@ -181,7 +185,7 @@ module.exports.login = async function(req , res , next){
             req.body['status'] = 'Sai email!'
 
             next()
-            return
+            return 
         }
 
         if (user.pass !== md5(pass)) {
