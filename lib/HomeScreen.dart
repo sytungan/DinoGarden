@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _configureAndConnect();
     _manager.addListener(() {
       MQTTAppState map = _manager.currentState;
+      print("co len em " + map.getReceivedText);
       setState(() {
         online = map.getReceivedText == 'ON' ? true : false;
       });
@@ -392,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Visibility(
             child: FloatingActionButton(
               onPressed: () async {
-                _manager.publish("ON");
+                _manager.publish("", "");
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),

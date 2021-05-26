@@ -10,11 +10,11 @@ class MQTTManager extends ChangeNotifier {
   MQTTAppState _currentState = MQTTAppState();
   MqttServerClient _client;
   String _host = 'io.adafruit.com';
-  String _user = 'sytungan';
-  String _key = 'aio_ZHlv47KxGf8WiYtwGNHGcLAZVZyu';
+  String _user = 'CSE_BBC';
+  String _key = 'aio_ujHa39CATridh60sV0wkkAhJmNhG';
   String _identifier;
 
-  String _topic = "sytungan/feeds/garden";
+  String _topic = "CSE_BBC/feeds/#";
 
   void initializeMQTTClient({
     @required String identifier,
@@ -57,7 +57,7 @@ class MQTTManager extends ChangeNotifier {
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);
       updateState();
       await _client.connect();
-      _client.subscribe('sytungan/feeds/garden', MqttQos.atLeastOnce);
+      _client.subscribe(_topic, MqttQos.atLeastOnce);
     } on Exception catch (e) {
       print('EXAMPLE::client exception - $e');
       disconnect();
@@ -69,10 +69,10 @@ class MQTTManager extends ChangeNotifier {
     _client.disconnect();
   }
 
-  void publish(String message) {
+  void publish(String message, String topic) {
     final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    _client.publishMessage(_topic, MqttQos.exactlyOnce, builder.payload);
+    _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload);
   }
 
   /// The subscribed callback
