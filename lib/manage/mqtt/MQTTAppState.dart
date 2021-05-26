@@ -7,7 +7,8 @@ enum MQTTAppConnectionState {
 }
 
 class MQTTAppState {
-  MQTTAppConnectionState _appConnectionState = MQTTAppConnectionState.disconnected;
+  MQTTAppConnectionState _appConnectionState =
+      MQTTAppConnectionState.disconnected;
   String _receivedText = '';
   String _historyText = '';
 

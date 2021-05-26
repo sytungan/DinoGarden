@@ -45,7 +45,6 @@ import java.util.concurrent.Executors;
 public class MainActivity extends FlutterActivity  implements SerialInputOutputManager.Listener{
     private static final String ACTION_USB_PERMISSION = "com.android.recipes.USB_PERMISSION";
     private static final String INTENT_ACTION_GRANT_USB = "com.example.dinogarden" + ".GRANT_USB";
-    private static final String CHANNEL = "flutter.native/helper";
     UsbSerialPort port;
 
     MQTTService mqttService;
@@ -68,24 +67,10 @@ public class MainActivity extends FlutterActivity  implements SerialInputOutputM
         return new String(hexChars);
     }
 
-    private String helloFromNativeCode() {
-        return "Hello from Native Android Code";
-      }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GeneratedPluginRegistrant.registerWith(this);
-    new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
-            new MethodChannel.MethodCallHandler() {
-              @Override
-              public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-                if (call.method.equals("helloFromNativeCode")) {
-                  String greetings = helloFromNativeCode();
-                  result.success(greetings);
-                }
-              }});
         // MQTT Service
 
         mqttService = new MQTTService(this);

@@ -6,6 +6,7 @@ import 'model/cardItem.dart';
 import 'model/bottomBar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
+import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,8 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
   num humidity = 0.74;
   num waterLv = 0.85;
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _configureAndConnect();
+    _manager.addListener(() {
+      MQTTAppState map = _manager.currentState;
+      setState(() {
+        online = map.getReceivedText == 'ON' ? true : false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return LayoutBuilder(
@@ -381,9 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Visibility(
             child: FloatingActionButton(
               onPressed: () async {
-                print("hhehe");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChildHomeScreen()));
+                _manager.publish("ON");
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),
@@ -454,8 +463,7 @@ class _HomeScreenState extends State<HomeScreen> {
     String osPrefix = 'Flutter_Android';
     _manager.initializeMQTTClient(identifier: osPrefix);
     _manager.connect();
-    _manager.subScribeTo('dinhkhanh412/feeds/light');
-    _manager.subScribeTo('dinhkhanh412/feeds/light2');
+    // _manager.subScribeTo('sytungan/feeds/garden');
   }
 }
 

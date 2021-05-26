@@ -10,11 +10,11 @@ class MQTTManager extends ChangeNotifier {
   MQTTAppState _currentState = MQTTAppState();
   MqttServerClient _client;
   String _host = 'io.adafruit.com';
-  String _user = 'dinhkhanh412';
-  String _key = 'aio_PrHt51fI5dDoYgZg87UqzAzFltXY';
+  String _user = 'sytungan';
+  String _key = 'aio_ZHlv47KxGf8WiYtwGNHGcLAZVZyu';
   String _identifier;
 
-  String _topic = "";
+  String _topic = "sytungan/feeds/garden";
 
   void initializeMQTTClient({
     @required String identifier,
@@ -57,8 +57,7 @@ class MQTTManager extends ChangeNotifier {
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);
       updateState();
       await _client.connect();
-      // _client.subscribe('dinhkhanh412/feeds/light', MqttQos.atLeastOnce);
-      // _client.subscribe('dinhkhanh412/feeds/light2', MqttQos.atLeastOnce);
+      _client.subscribe('sytungan/feeds/garden', MqttQos.atLeastOnce);
     } on Exception catch (e) {
       print('EXAMPLE::client exception - $e');
       disconnect();
@@ -108,7 +107,6 @@ class MQTTManager extends ChangeNotifier {
   void onConnected() {
     _currentState.setAppConnectionState(MQTTAppConnectionState.connected);
     updateState();
-    print('EXAMPLE::Mosquitto client connected....');
     _client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
       final MqttPublishMessage recMess = c[0].payload;
       final String pt =
@@ -119,15 +117,14 @@ class MQTTManager extends ChangeNotifier {
           'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       print('');
     });
-
     print(
         'EXAMPLE::OnConnected client callback - Client connection was sucessful');
   }
 
   void subScribeTo(String topic) {
     // Save topic for future use
-    _topic = topic;
-    _client.subscribe(_topic, MqttQos.atLeastOnce);
+    //_topic = topic;
+    _client.subscribe(topic, MqttQos.atLeastOnce);
   }
 
   /// Unsubscribe from a topic
