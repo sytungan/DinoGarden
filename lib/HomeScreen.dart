@@ -9,6 +9,13 @@ import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
 import 'package:dinogarden/model/Feed.dart';
+import 'screens/Calender/index.dart';
+import 'screens/DailyReport/index.dart';
+import 'screens/Dashboard/index.dart';
+
+import 'Login.dart';
+import 'Signup.dart';
+import 'Profile.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -19,7 +26,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-enum BottomIcons { Home, Favorite, Search, Account }
+enum BottomIcons { Home, Report, Profile }
 
 class _HomeScreenState extends State<HomeScreen> {
   MQTTManager _manager_1 = new MQTTManager();
@@ -449,8 +456,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             constraints: BoxConstraints.expand(
                                 height: constrains.maxWidth * 0.3,
                                 width: constrains.maxWidth * 0.3),
-                            child: cardItem(context, "On", "Pump status",
-                                "assets/clock.png"),
+                            child: cardItem(context, lightLv.toString(),
+                                "Light", "assets/clock.png"),
                           ),
                         ],
                       ),
@@ -470,60 +477,60 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             visible: true,
           ),
-          bottomNavigationBar: Stack(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                padding:
-                    EdgeInsets.only(left: 24, right: 24, bottom: 10, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    BottomBar(
-                        onPressed: () {
-                          setState(() {
-                            bottomIcons = BottomIcons.Home;
-                          });
-                        },
-                        bottomIcons:
-                            bottomIcons == BottomIcons.Home ? true : false,
-                        icons: EvaIcons.home,
-                        text: "Home"),
-                    BottomBar(
-                        onPressed: () {
-                          setState(() {
-                            bottomIcons = BottomIcons.Favorite;
-                          });
-                        },
-                        bottomIcons:
-                            bottomIcons == BottomIcons.Favorite ? true : false,
-                        icons: EvaIcons.heartOutline,
-                        text: "Favorite"),
-                    BottomBar(
-                        onPressed: () {
-                          setState(() {
-                            bottomIcons = BottomIcons.Search;
-                          });
-                        },
-                        bottomIcons:
-                            bottomIcons == BottomIcons.Search ? true : false,
-                        icons: EvaIcons.search,
-                        text: "Search"),
-                    BottomBar(
-                        onPressed: () {
-                          setState(() {
-                            bottomIcons = BottomIcons.Account;
-                          });
-                        },
-                        bottomIcons:
-                            bottomIcons == BottomIcons.Account ? true : false,
-                        icons: EvaIcons.personOutline,
-                        text: "Account"),
-                  ],
-                ),
+          bottomNavigationBar: Stack(children: [
+            Container(
+              padding:
+                  EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
+              decoration: BoxDecoration(color: Colors.white),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  BottomBar(
+                      onPressed: () {
+                        setState(() {
+                          bottomIcons = BottomIcons.Home;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        });
+                      },
+                      bottomIcons:
+                          bottomIcons == BottomIcons.Home ? true : false,
+                      icons: EvaIcons.home,
+                      text: "Home"),
+                  BottomBar(
+                      onPressed: () {
+                        setState(() {
+                          bottomIcons = BottomIcons.Report;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => dashboardScrean()));
+                        });
+                      },
+                      bottomIcons:
+                          bottomIcons == BottomIcons.Report ? true : false,
+                      icons: EvaIcons.bookOpen,
+                      text: "Favorite"),
+                  BottomBar(
+                      onPressed: () {
+                        setState(() {
+                          bottomIcons = BottomIcons.Profile;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()));
+                        });
+                      },
+                      bottomIcons:
+                          bottomIcons == BottomIcons.Profile ? true : false,
+                      icons: EvaIcons.personOutline,
+                      text: "Profile"),
+                ],
               ),
-            ],
-          ),
+            ),
+          ]),
         );
       },
     );
