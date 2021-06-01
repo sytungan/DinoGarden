@@ -72,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           break;
       }
-      _manager_2.notifyListeners();
     });
     _manager_2.addListener(() {
       MQTTAppState map2 = _manager_2.currentState;
@@ -105,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           break;
       }
-      _manager_1.notifyListeners();
     });
   }
 
@@ -533,9 +531,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _configureAndConnect() async {
     // TODO: Use UUID
-    String osPrefix = 'Dino_Garden';
-    await _manager_1.initializeMQTTClient(identifier: osPrefix, server: "BBC");
-    await _manager_2.initializeMQTTClient(identifier: osPrefix, server: "BBC1");
+    String server1 = 'server_1';
+    String server2 = 'server_2';
+    await _manager_1.initializeMQTTClient(identifier: server1, server: "BBC");
+    await _manager_2.initializeMQTTClient(identifier: server2, server: "BBC1");
     _manager_1.connect();
     _manager_2.connect();
     // _manager.subScribeTo('sytungan/feeds/garden');

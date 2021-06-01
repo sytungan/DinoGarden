@@ -122,7 +122,8 @@ class MQTTManager extends ChangeNotifier {
 
   /// The unsolicited disconnect callback
   void onDisconnected() {
-    print('EXAMPLE::OnDisconnected client callback - Client disconnection');
+    print('EXAMPLE::OnDisconnected client callback - Client disconnection ' +
+        _user);
     if (_client.connectionStatus.returnCode ==
         MqttConnectReturnCode.noneSpecified) {
       print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
@@ -151,7 +152,8 @@ class MQTTManager extends ChangeNotifier {
       print('');
     });
     print(
-        'EXAMPLE::OnConnected client callback - Client connection was sucessful');
+        'EXAMPLE::OnConnected client callback - Client connection was sucessful ' +
+            _user);
   }
 
   void subScribeTo(String topic) {
