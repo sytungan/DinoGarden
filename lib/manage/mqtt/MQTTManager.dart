@@ -1,25 +1,54 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
+import 'package:http/http.dart' as http;
+
+Future<String> fetchKey(String server) async {
+  final response = await http.get(Uri.parse('http://dadn.esp32thanhdanh.link'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return jsonDecode(response.body)['key' + server].toString();
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load key');
+  }
+}
 
 class MQTTManager extends ChangeNotifier {
   // Private instance of client
   MQTTAppState _currentState = MQTTAppState();
   MqttServerClient _client;
   String _host = 'io.adafruit.com';
-  String _user = 'CSE_BBC';
-  String _key = 'aio_ujHa39CATridh60sV0wkkAhJmNhG';
+  String _user;
+  String _key;
   String _identifier;
 
-  String _topic = "CSE_BBC/feeds/#";
+  String _topic;
 
-  void initializeMQTTClient({
-    @required String identifier,
-  }) {
+  // List<String> splitKey(String str) {
+  //   final splitIndex = str.indexOf(":");
+  //   List<String> result = [];
+  //   result.add(str.substring(0, splitIndex));
+  //   result.add(str.substring(splitIndex + 1, str.length));
+  //   print(result);
+  //   return result;
+  // }
+
+  Future<void> initializeMQTTClient(
+      {@required String identifier, @required String server}) async {
     // Save the values
+    // _key = splitKey(response)[0];
+    final Future<String> keyBBC = fetchKey(server);
+    _key = await keyBBC;
+    _user = "CSE_" + server;
+    _topic = "CSE_" + server + "/feeds/#";
     _identifier = identifier;
     _host = host;
     _client = MqttServerClient(_host, _key);
@@ -112,9 +141,13 @@ class MQTTManager extends ChangeNotifier {
       final String pt =
           MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       _currentState.setReceivedText(pt);
-      updateState();
-      print(
-          'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      bool cond1 = '/'.allMatches(c[0].topic).length == 2;
+      bool cond2 = c[0].topic.indexOf('bk-iot') != -1;
+      if (cond1 && cond2) {
+        updateState();
+        print(
+            'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      }
       print('');
     });
     print(

@@ -7,7 +7,8 @@ import 'model/bottomBar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
-import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:dinogarden/model/Feed.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -21,7 +22,8 @@ class HomeScreen extends StatefulWidget {
 enum BottomIcons { Home, Favorite, Search, Account }
 
 class _HomeScreenState extends State<HomeScreen> {
-  MQTTManager _manager = new MQTTManager();
+  MQTTManager _manager_1 = new MQTTManager();
+  MQTTManager _manager_2 = new MQTTManager();
   BottomIcons bottomIcons = BottomIcons.Home;
   int _currentIndex = 0;
   String runtime = "2h";
@@ -29,17 +31,81 @@ class _HomeScreenState extends State<HomeScreen> {
   double waterPercent = 0.5;
   String waterCap = "1000 ml";
   num temperature = 28;
-  num humidity = 0.74;
-  num waterLv = 0.85;
+  num humidity = 74;
+  num waterLv = 85;
+  num lightLv = 10;
+  bool pumpStart = false;
   @override
   void initState() {
     _configureAndConnect();
-    _manager.addListener(() {
-      MQTTAppState map = _manager.currentState;
-      print("co len em " + map.getReceivedText);
+
+    _manager_1.addListener(() {
+      MQTTAppState map1 = _manager_1.currentState;
+      Map<String, dynamic> adaResponse = jsonDecode(map1.getReceivedText);
+      Feed feed = Feed.fromJson(adaResponse);
       setState(() {
-        online = map.getReceivedText == 'ON' ? true : false;
+        online = true;
       });
+      String data = feed.data;
+      switch (int.parse(feed.id)) {
+        case 7:
+          {
+            setState(() {
+              final sub = data.indexOf("-");
+              temperature = int.parse(data.substring(0, sub));
+              humidity = int.parse(data.substring(sub + 1, data.length));
+            });
+          }
+          break;
+
+        case 9:
+          {
+            setState(() {
+              waterLv = int.parse(data);
+            });
+          }
+          break;
+
+        default:
+          {
+            //statements;
+          }
+          break;
+      }
+      _manager_2.notifyListeners();
+    });
+    _manager_2.addListener(() {
+      MQTTAppState map2 = _manager_2.currentState;
+      Map<String, dynamic> adaResponse = jsonDecode(map2.getReceivedText);
+      Feed feed = Feed.fromJson(adaResponse);
+      setState(() {
+        online = true;
+      });
+      String data = feed.data;
+      switch (int.parse(feed.id)) {
+        case 11:
+          {
+            setState(() {
+              pumpStart = (data == "1") ? true : false;
+            });
+          }
+          break;
+
+        case 13:
+          {
+            setState(() {
+              lightLv = int.parse(data);
+            });
+          }
+          break;
+
+        default:
+          {
+            //statements;
+          }
+          break;
+      }
+      _manager_1.notifyListeners();
     });
   }
 
@@ -258,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        "Running",
+                                        pumpStart ? "Running" : "Stopped",
                                         style: GoogleFonts.mulish(
                                             fontStyle: FontStyle.normal,
                                             fontSize: 16,
@@ -347,15 +413,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             constraints: BoxConstraints.expand(
                                 height: constrains.maxWidth * 0.3,
                                 width: constrains.maxWidth * 0.3),
-                            child: cardItem(context, humidity.toString() + " %",
-                                "Humidity", "assets/humidity.png"),
+                            child: cardItem(
+                                context,
+                                (humidity).toString() + " %",
+                                "Humidity",
+                                "assets/humidity.png"),
                           ),
                           Container(
                             constraints: BoxConstraints.expand(
                                 height: constrains.maxWidth * 0.3,
                                 width: constrains.maxWidth * 0.3),
-                            child: cardItem(context, waterLv.toString() + " %",
-                                "Water level", "assets/water_level.png"),
+                            child: cardItem(
+                                context,
+                                (waterLv).toString() + " %",
+                                "Water level",
+                                "assets/water_level.png"),
                           ),
                         ],
                       ),
@@ -393,7 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Visibility(
             child: FloatingActionButton(
               onPressed: () async {
-                _manager.publish("", "");
+                _manager_1.publish("", "");
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),
@@ -459,11 +531,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _configureAndConnect() {
+  void _configureAndConnect() async {
     // TODO: Use UUID
-    String osPrefix = 'Flutter_Android';
-    _manager.initializeMQTTClient(identifier: osPrefix);
-    _manager.connect();
+    String osPrefix = 'Dino_Garden';
+    await _manager_1.initializeMQTTClient(identifier: osPrefix, server: "BBC");
+    await _manager_2.initializeMQTTClient(identifier: osPrefix, server: "BBC1");
+    _manager_1.connect();
+    _manager_2.connect();
     // _manager.subScribeTo('sytungan/feeds/garden');
   }
 }
