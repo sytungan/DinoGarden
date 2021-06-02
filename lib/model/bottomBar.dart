@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class BottomBar extends StatefulWidget {
   Function onPressed;
@@ -23,7 +24,7 @@ class _BottomBarState extends State<BottomBar> {
         child: widget.bottomIcons == true
             ? Container(
                 decoration: BoxDecoration(
-                  color: Colors.indigo.shade100.withOpacity(0.6),
+                  color: HexColor("#01AA4F").withOpacity(0.2),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding:
@@ -32,7 +33,7 @@ class _BottomBarState extends State<BottomBar> {
                   children: <Widget>[
                     Icon(
                       widget.icons,
-                      color: Colors.indigo,
+                      color: HexColor("#01AA4F"),
                     ),
                     SizedBox(
                       width: 8,
@@ -40,7 +41,7 @@ class _BottomBarState extends State<BottomBar> {
                     Text(
                       widget.text,
                       style: TextStyle(
-                          color: Colors.indigo,
+                          color: HexColor("#01AA4F"),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),

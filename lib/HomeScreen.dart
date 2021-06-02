@@ -3,19 +3,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'model/cardItem.dart';
-import 'model/bottomBar.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'widget/bottomNavigator.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
 import 'package:dinogarden/model/Feed.dart';
-import 'screens/Calender/index.dart';
-import 'screens/DailyReport/index.dart';
-import 'screens/Dashboard/index.dart';
-
-import 'Login.dart';
-import 'Signup.dart';
-import 'Profile.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -444,67 +436,14 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Visibility(
             child: FloatingActionButton(
               onPressed: () {
-                _manager_2.publishInputDevice(11, "1");
+                _manager_2.publishInputDevice(11, "0");
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),
             ),
             visible: true,
           ),
-          bottomNavigationBar: Stack(children: [
-            Container(
-              padding:
-                  EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
-              decoration: BoxDecoration(color: Colors.white),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  BottomBar(
-                      onPressed: () {
-                        setState(() {
-                          bottomIcons = BottomIcons.Home;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
-                        });
-                      },
-                      bottomIcons:
-                          bottomIcons == BottomIcons.Home ? true : false,
-                      icons: EvaIcons.home,
-                      text: "Home"),
-                  BottomBar(
-                      onPressed: () {
-                        setState(() {
-                          bottomIcons = BottomIcons.Report;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => dashboardScrean()));
-                        });
-                      },
-                      bottomIcons:
-                          bottomIcons == BottomIcons.Report ? true : false,
-                      icons: EvaIcons.bookOpen,
-                      text: "Favorite"),
-                  BottomBar(
-                      onPressed: () {
-                        setState(() {
-                          bottomIcons = BottomIcons.Profile;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Profile()));
-                        });
-                      },
-                      bottomIcons:
-                          bottomIcons == BottomIcons.Profile ? true : false,
-                      icons: EvaIcons.personOutline,
-                      text: "Profile"),
-                ],
-              ),
-            ),
-          ]),
+          bottomNavigationBar: bottomNavigator(context, _currentIndex),
         );
       },
     );
