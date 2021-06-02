@@ -13,7 +13,7 @@ class Feed {
         unit = json['unit'];
 
   Map<String, dynamic> toJson() => {
-        'id': name,
+        'id': id,
         'name': name,
         'data': data,
         'unit': unit,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
+import 'package:dinogarden/model/Feed.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> fetchKey(String server) async {
@@ -175,5 +176,38 @@ class MQTTManager extends ChangeNotifier {
   void updateState() {
     //controller.add(_currentState);
     notifyListeners();
+  }
+
+  void publishInputDevice(id, data) {
+    if (_currentState.getAppConnectionState !=
+        MQTTAppConnectionState.connectedSubscribed) {
+      return;
+    }
+    if (((_user == "CSE_BBC") && (id > 10)) ||
+        ((_user == "CSE_BBC1") && (id < 11))) {
+      return;
+    }
+    switch (id) {
+      case 1:
+        String topic = "CSE_BBC/feeds/bk-iot-led";
+        Feed feed = Feed(id.toString(), "LED", data, "");
+        String body = json.encode(feed.toJson());
+        publish(body, topic);
+        break;
+      case 3:
+        String topic = "CSE_BBC/feeds/bk-iot-lcd";
+        Feed feed = Feed(id.toString(), "LCD", data, "");
+        String body = json.encode(feed.toJson());
+        publish(body, topic);
+        break;
+      case 11:
+        String topic = "CSE_BBC1/feeds/bk-iot-relay";
+        Feed feed = Feed(id.toString(), "RELAY", data, "");
+        String body = json.encode(feed.toJson());
+        publish(body, topic);
+        break;
+      default:
+        return;
+    }
   }
 }

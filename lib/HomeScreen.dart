@@ -369,32 +369,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  // Expanded(
-                  //   child: GridView.extent(
-                  //     primary: false,
-                  //     padding: const EdgeInsets.all(0),
-                  //     crossAxisSpacing: 3,
-                  //     mainAxisSpacing: 3,
-                  //     maxCrossAxisExtent: 200.0,
-                  //     children: <Widget>[
-                  //       GestureDetector(
-                  //         onTap: () {
-                  //           print("Container clicked");
-                  //         },
-                  //         child: cardItem(context, temperature.toString() + " °C",
-                  //             "Temperature", "temperature.png"),
-                  //       ),
-                  //       cardItem(context, humidity.toString() + " %", "Humidity",
-                  //           "humidity.png"),
-                  //       cardItem(context, waterLv.toString() + " %", "Water level",
-                  //           "water_level.png"),
-                  //       cardItemDouble(context, "Watering", "Need more", "Status",
-                  //           "plant.png", "clock.png"),
-                  //       cardItem(context, waterLv.toString() + " %", "Water level",
-                  //           "water_level.png"),
-                  //     ],
-                  //   ),
-                  // ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
@@ -469,8 +443,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton: Visibility(
             child: FloatingActionButton(
-              onPressed: () async {
-                _manager_1.publish("", "");
+              onPressed: () {
+                _manager_2.publishInputDevice(11, "1");
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),
