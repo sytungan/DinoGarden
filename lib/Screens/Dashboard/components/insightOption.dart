@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Insight extends StatelessWidget {
+class Insight extends StatefulWidget {
+  @override
+  _Group34WidgetState createState() => _Group34WidgetState();
+}
+
+class _Group34WidgetState extends State<Insight> {
   @override
   Widget build(BuildContext context) {
     // Figma Flutter Generator Group63Widget - GROUP

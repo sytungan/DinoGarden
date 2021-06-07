@@ -1,7 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class GraphGroup extends StatelessWidget {
+class GraphGroup extends StatefulWidget {
+  @override
+  _Group34WidgetState createState() => _Group34WidgetState();
+}
+
+class _Group34WidgetState extends State<GraphGroup> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,11 +122,10 @@ class Note extends StatelessWidget {
             child: Stack(
           children: [
             Positioned(
-
-              child: Icon(
-                    Icons.album_rounded,
-                    color: Color(0xff1AB260),
-                  )),
+                child: Icon(
+              Icons.album_rounded,
+              color: Color(0xff1AB260),
+            )),
             Positioned.fill(
               top: 5,
               left: 15,
@@ -141,82 +145,79 @@ class Note extends StatelessWidget {
         )),
         Expanded(
             child: Stack(
-              children: [
-                Positioned(
-
-                    child: Icon(
-                      Icons.album_rounded,
-                      color: Color(0xff3FBF7A),
-                    )),
-                Positioned.fill(
-                  top: 5,
-                  left: 15,
-                  child: Text(
-                    'User',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xff3FBF7A),
-                        fontFamily: 'Roboto',
-                        fontSize: 14,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1),
-                  ),
-                )
-              ],
+          children: [
+            Positioned(
+                child: Icon(
+              Icons.album_rounded,
+              color: Color(0xff3FBF7A),
             )),
+            Positioned.fill(
+              top: 5,
+              left: 15,
+              child: Text(
+                'User',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xff3FBF7A),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.normal,
+                    height: 1),
+              ),
+            )
+          ],
+        )),
         Expanded(
             child: Stack(
-              children: [
-                Positioned(
-
-                    child: Icon(
-                      Icons.album_rounded,
-                      color: Color(0xff7ED4A5),
-                    )),
-                Positioned.fill(
-                  top: 5,
-                  left: 15,
-                  child: Text(
-                    'Type 03',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xff7ED4A5),
-                        fontFamily: 'Roboto',
-                        fontSize: 14,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1),
-                  ),
-                )
-              ],
+          children: [
+            Positioned(
+                child: Icon(
+              Icons.album_rounded,
+              color: Color(0xff7ED4A5),
             )),
+            Positioned.fill(
+              top: 5,
+              left: 15,
+              child: Text(
+                'Type 03',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xff7ED4A5),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.normal,
+                    height: 1),
+              ),
+            )
+          ],
+        )),
         Expanded(
             child: Stack(
-              children: [
-                Positioned(
-
-                    child: Icon(
-                      Icons.album_rounded,
-                      color: Color(0xffB3E6CA),
-                    )),
-                Positioned.fill(
-                  top: 5,
-                  left: 15,
-                  child: Text(
-                    'Type 04',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xffB3E6CA),
-                        fontFamily: 'Roboto',
-                        fontSize: 14,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                        height: 1),
-                  ),
-                )
-              ],
+          children: [
+            Positioned(
+                child: Icon(
+              Icons.album_rounded,
+              color: Color(0xffB3E6CA),
             )),
+            Positioned.fill(
+              top: 5,
+              left: 15,
+              child: Text(
+                'Type 04',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xffB3E6CA),
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.normal,
+                    height: 1),
+              ),
+            )
+          ],
+        )),
       ],
     ));
   }

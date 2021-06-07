@@ -32,8 +32,7 @@ class _Group34WidgetState extends State<Calendar> {
                 _focusedDay = _focusedDay.subtract(const Duration(days: -1));
                 dow.add(_focusedDay);
               }
-              return _builditem(
-                  dow[index],_toDay, []);
+              return _builditem(dow[index], _toDay, ['assets/images/vector1.svg','assets/images/vector2.svg']);
             },
           ),
         ),
@@ -69,7 +68,19 @@ String _change(int i) {
   return "";
 }
 
-Widget _builditem(DateTime day,DateTime toDay, List<String> img) {
+Widget _listimg(String url) {
+  return Container(
+      width: 13,
+      height: 8,
+      child: Stack(children: <Widget>[
+        Positioned(
+            top: 0,
+            left: 0,
+            child: SvgPicture.asset(url, semanticsLabel: 'vector')),
+      ]));
+}
+
+Widget _builditem(DateTime day, DateTime toDay, List<String> img) {
   return Container(
       width: 83,
       height: 130,
@@ -82,20 +93,35 @@ Widget _builditem(DateTime day,DateTime toDay, List<String> img) {
         // }),
         Positioned(
             top: 79,
-            left: 33,
+            left: 5,
             child: Container(
-                width: 13,
-                height: 8,
-                child: Stack(children: <Widget>[
-                  Positioned(
-                      top: 0,
-                      left: 0,
-                      child: SvgPicture.asset(
-                          img.isEmpty == false
-                              ? img[0]
-                              : 'assets/images/null.svg',
-                          semanticsLabel: 'vector')),
-                ]))),
+              width: 70,
+              height: 10,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: img.length,
+                  itemBuilder: (content, index) {
+                    if(img.isEmpty == true){
+                      return _listimg('assets/images/null.svg');
+                    }
+                    return _listimg(img[index]);
+                  }),
+            )
+
+            // Container(
+            //     width: 13,
+            //     height: 8,
+            //     child: Stack(children: <Widget>[
+            //       Positioned(
+            //           top: 0,
+            //           left: 0,
+            //           child: SvgPicture.asset(
+            //               img.isEmpty == false
+            //                   ? img[0]
+            //                   : 'assets/images/null.svg',
+            //               semanticsLabel: 'vector')),
+            //     ]))
+            ),
         Positioned(
             top: 9,
             left: day.day.toString().length == 2 ? 17 : 26,
@@ -129,18 +155,18 @@ Widget _builditem(DateTime day,DateTime toDay, List<String> img) {
         Positioned(
             top: 12,
             left: 59,
-            child: day.compareTo(toDay)==0
+            child: day.compareTo(toDay) == 0
                 ? Container(
-                width: 7,
-                height: 7,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(1, 170, 79, 1),
-                  borderRadius: BorderRadius.all(Radius.elliptical(7, 7)),
-                ))
+                    width: 7,
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(1, 170, 79, 1),
+                      borderRadius: BorderRadius.all(Radius.elliptical(7, 7)),
+                    ))
                 : Container(
-              width: 7,
-              height: 7,
-            )),
+                    width: 7,
+                    height: 7,
+                  )),
         Positioned(
             top: 0,
             left: 0,
