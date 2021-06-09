@@ -29,23 +29,30 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TableCalendar(
-        focusedDay: DateTime.now(),
-        firstDay: DateTime(2020),
-        lastDay: DateTime(2030),
-        weekendDays: [],
-        //events: {DateTime.now(): _getEventsForDay(DateTime.now())},
-        calendarFormat: CalendarFormat.month,
-        startingDayOfWeek: StartingDayOfWeek.monday,
-        calendarStyle: CalendarStyle(
-          outsideDaysVisible: false,
-        ),
-        calendarBuilders: CalendarBuilders(
-            defaultBuilder: (context, date, events) =>
-                _calenderItems(context, date, events, false),
-            todayBuilder: (context, date, events) =>
-                _calenderItems(context, date, events, true)),
-      ),
+      body: Column(
+        children: [
+          TableCalendar(
+            focusedDay: DateTime.now(),
+            firstDay: DateTime(2020),
+            lastDay: DateTime(2030),
+            weekendDays: [],
+            //events: {DateTime.now(): _getEventsForDay(DateTime.now())},
+            calendarFormat: CalendarFormat.month,
+            startingDayOfWeek: StartingDayOfWeek.monday,
+            calendarStyle: CalendarStyle(
+              outsideDaysVisible: false,
+            ),
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, date, events) =>
+                  _calenderItems(context, date, events, false),
+              todayBuilder: (context, date, events) =>
+                  _calenderItems(context, date, events, true),
+              // markerBuilder: (context, date, events) =>
+            ),
+          ),
+        ],
+      )
+
     );
   }
 }
