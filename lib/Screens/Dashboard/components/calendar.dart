@@ -32,7 +32,7 @@ class _Group34WidgetState extends State<Calendar> {
                 _focusedDay = _focusedDay.subtract(const Duration(days: -1));
                 dow.add(_focusedDay);
               }
-              return _builditem(dow[index], _toDay, ['assets/images/vector1.svg','assets/images/vector2.svg']);
+              return _builditem(dow[index], _toDay, []);
             },
           ),
         ),
