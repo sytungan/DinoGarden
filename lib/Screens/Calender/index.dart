@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../Log.dart';
 import 'component/events_example.dart';
 import 'component/tabBar.dart';
 
 
 class Calender extends StatelessWidget {
+  List<dynamic> log;
+  Calender(this.log);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +18,7 @@ class Calender extends StatelessWidget {
         home: Scaffold(
           appBar: tabBar(context),
           body: Container(
-            child:Container(child: TableEventsExample(),)
+            child:Container(child: TableEventsExample(log),)
 
           )
           ),

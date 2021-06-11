@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../Log.dart';
+
 class Calendar extends StatefulWidget {
   DateTime day;
-
-  Calendar(this.day);
+  Map<String, List<dynamic>> even;
+  Calendar(this.day, this.even);
 
   @override
-  _Group34WidgetState createState() => _Group34WidgetState(day);
+  _Group34WidgetState createState() => _Group34WidgetState(day, even);
 }
 
 class _Group34WidgetState extends State<Calendar> {
   DateTime day;
+  Map<String, List<dynamic>> even;
   DateTime selectedDay = DateTime.now();
-  _Group34WidgetState(this.day);
+  _Group34WidgetState(this.day, this.even);
   var dow = [];
   @override
   void initState() {
@@ -44,7 +47,6 @@ class _Group34WidgetState extends State<Calendar> {
                         onPressed: () {
                           setState(() {
                             selectedDay = dow[index];
-                            ////////////////////////////////////even//////////////////////////////
                           });
                         },
                       ));
@@ -53,11 +55,15 @@ class _Group34WidgetState extends State<Calendar> {
             ),
             //////////////////////////listeven////////////////////////////////////////
             Container(
-              padding: const EdgeInsets.all(10.0),
-              margin: const EdgeInsets.only(top: 20.0),
-              height: 500,
-              color: Colors.blue,
-            )
+                padding: const EdgeInsets.all(10.0),
+                margin: const EdgeInsets.only(top: 20.0),
+                child: _EvenItem()
+                // ListView.builder(
+                //     itemCount: 1,
+                //     itemBuilder: (context, index) {
+                //       return _EvenItem();
+                //     }),
+                )
           ],
         ));
   }
@@ -88,6 +94,64 @@ String _change(int i) {
       break;
   }
   return "";
+}
+
+Widget _EvenItem() {
+  return Container(
+      height: 138,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.10000000149011612),
+              offset: Offset(0, 4),
+              blurRadius: 30)
+        ],
+        color: Color.fromRGBO(255, 255, 255, 1),
+      ),
+      child: Stack(children: <Widget>[
+        Positioned(
+            top: 15,
+            left: 15,
+            child: Image.asset(
+              'assets/images/w.jpg',width: 110,height: 110,
+            )),
+        Positioned(
+            top: 51,
+            right: 15,
+            child: Text(
+              'Turn off the pump',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  color: Color.fromRGBO(51, 51, 51, 1),
+                  fontFamily: 'Mulish',
+                  fontSize: 20,
+                  letterSpacing:
+                      0 /*percentages not used in flutter. defaulting to zero*/,
+                  fontWeight: FontWeight.normal,
+                  height: 1),
+            )),
+        Positioned(
+            top: 15,
+            right: 15,
+            child: Text(
+              '10:05',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Color.fromRGBO(153, 153, 153, 1),
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  letterSpacing:
+                      0 /*percentages not used in flutter. defaulting to zero*/,
+                  fontWeight: FontWeight.normal,
+                  height: 1),
+            )),
+      ]));
 }
 
 Widget _builditem(DateTime date, List<String> img, selectedDay) {
