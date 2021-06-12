@@ -3,7 +3,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'widget/bottomNavigator.dart';
-
+import 'package:dinogarden/api/login_api.dart';
+import 'package:dinogarden/model/login_model.dart';
 class Profile extends StatefulWidget {
   Profile({
     Key key,
@@ -155,6 +156,7 @@ class _ProfileState extends State<Profile> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text("  Charlie's Garden",
+
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 height: 1.171875,

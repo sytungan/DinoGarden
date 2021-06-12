@@ -44,7 +44,7 @@ class _Time_limit_State extends State<Time_limit> {
                     onPressed: () {
                       //right way: use context in below level tree with MaterialApp
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()));
+                          MaterialPageRoute(builder: (context) => HomeScreen( "id","name")));
                     },
 
                   ),

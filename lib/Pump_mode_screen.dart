@@ -41,7 +41,7 @@ class _Pump_modeState extends State<Pump_mode> {
                 onPressed: () {
                   //right way: use context in below level tree with MaterialApp
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => HomeScreen("id","name")));
                 },
 
               ),

@@ -1,82 +1,61 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:dinogarden/api/login_api.dart';
+import 'package:dinogarden/model/login_model.dart';
 import 'Signup.dart';
-// import 'package:passwordfield/passwordfield.dart';
+import 'HomeScreen.dart';
+import 'package:dinogarden/model/bottomBar.dart';
 
-class Login extends StatefulWidget {
-  Login({
-    Key key,
-  }) : super(key: key);
+
+class LoginPage extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
+  bool hidePassword = true;
+  bool isApiCallProcess = false;
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+  LoginRequestModel loginRequestModel;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
+  void initState() {
+    super.initState();
+    loginRequestModel = new LoginRequestModel();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 80.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Positioned.fill(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                              "Welcome\n"
-                              "Back",
-                              //overflow: TextOverflow.visible,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                height: 1.171875,
-                                fontSize: 30.0,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromARGB(255, 1, 170, 79),
-                              )),
-                        ],
-                      ),
+      key: scaffoldKey,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+
+                SizedBox(height: 15),
+                Container(
+
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin: EdgeInsets.symmetric(vertical: 85, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.withOpacity(0.2),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Theme.of(context).hintColor.withOpacity(0.2),
+                          offset: Offset(0, 10),
+                          blurRadius: 20)
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
-          Container(
-              color: Color.fromARGB(255, 214, 220, 226),
-              constraints: BoxConstraints(
-                maxHeight: 528,
-                maxWidth: 400,
-              ),
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(left: 28.0, top: 10.0),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Image.asset(
-                            'images/Key_login.png',
-                            height: 60,
-                            width: 60,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(children: [
+                  child: Form(
+                    key: globalFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 25),
                         Text(
-                          'Login'
-                          ''
-                          '',
+                          "Login",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               height: 1.171875,
@@ -85,135 +64,180 @@ class _LoginState extends State<Login> {
                               fontWeight: FontWeight.w700,
                               color: Color.fromARGB(255, 102, 102, 102)),
                         ),
-                      ]),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Container(
-                              child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 300,
-                                    child: TextField(
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                        hintText: "Enter your email",
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                                width: 0, color: Colors.green)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ))
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Container(
-                              child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 300,
-
-                                    // child: PasswordField(
-                                    //   color: Colors.green,
-                                    //   hasFloatingPlaceholder: true,
-                                    //   hintText: "Enter your password",
-
-                                    //   pattern: r'.*[a-zA-z0-9].*',
-                                    //   // border: OutlineInputBorder(
-                                    //   //     borderRadius: BorderRadius.circular(2),
-                                    //   //     borderSide: BorderSide(width: 0, color: Colors.green)),
-                                    //   focusedBorder: OutlineInputBorder(
-                                    //       borderRadius: BorderRadius.circular(10),
-                                    //       borderSide: BorderSide(width: 0, color: Colors.green)),
-
-                                    // ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ))
-                        ],
-                      ),
-                      SizedBox(height: 40),
-                      Row(
-                        children: [
-                          FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.black12)),
-                            color: Color.fromARGB(255, 1, 170, 79),
-                            textColor: Color.fromARGB(255, 255, 255, 255),
-                            padding: EdgeInsets.all(8.0),
-                            minWidth: 300.0,
-                            onPressed: () {},
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
+                        SizedBox(height: 20),
+                        new TextFormField(
+                          keyboardType: TextInputType.text,
+                          onSaved: (input) => loginRequestModel.email = input,
+                          validator: (input) => input.length < 6
+                              ? "Email should be more than 6 characters"
+                              : null,
+                          decoration: new InputDecoration(
+                            hintText: "Email Address",
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.green
+                                        .withOpacity(0.2))),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    width: 0, color: Colors.green)),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.grey.withOpacity(0.5),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          FlatButton(
-                            textColor: Colors.grey,
-                            padding: EdgeInsets.all(8.0),
-                            minWidth: 300.0,
-                            onPressed: () {},
-                            child: Text(
-                              "Forgot password",
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 16.0,
-                              ),
+                        ),
+                        SizedBox(height: 20),
+                        new TextFormField(
+
+                          keyboardType: TextInputType.text,
+                          onSaved: (input) =>
+                          loginRequestModel.pass = input,
+                          validator: (input) => input.length < 1
+                              ? "Password should be more than 1 characters"
+                              : null,
+                          obscureText: hidePassword,
+                          decoration: new InputDecoration(
+                            hintText: " Enter your Password",
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.green
+                                        .withOpacity(0.2))),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor)),
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                              color: Colors.grey.withOpacity(0.5),
+                              icon: Icon(hidePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.grey)),
-                            textColor: Colors.grey,
-                            padding: EdgeInsets.all(8.0),
-                            minWidth: 300.0,
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Signup("Sign Up")));
-                            },
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
+                        ),
+                        SizedBox(height: 30),
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.black12)),
+                          color: Color.fromARGB(255, 1, 170, 79),
+                          textColor: Color.fromARGB(255, 255, 255, 255),
+                          padding: EdgeInsets.all(8.0),
+                          minWidth: 300.0,
+                          onPressed: () {
+                            if (validateAndSave()) {
+                              print(loginRequestModel.toJson());
+
+                              setState(() {
+                                isApiCallProcess = true;
+                              });
+
+                              APIService apiService = new APIService();
+                              apiService.login(loginRequestModel).then((value) {
+                                if (value != null) {
+
+                                  setState(() {
+                                    isApiCallProcess = false;
+                                  });
+
+                                  if (value.status == "Đăng nhập thành công!") {
+
+                                    final snackBar = SnackBar(
+                                        content: Text("Login Successful"));
+                                    scaffoldKey.currentState
+                                        .showSnackBar(snackBar);
+                                    BottomBar( id:value.id,gardenName:value.name);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => HomeScreen( value.id,value.name)));
+
+                                  } else if (value.status == "Sai mật khẩu!"){
+                                    final snackBar =
+                                    SnackBar(content: Text("Sai mật khẩu"));
+                                    scaffoldKey.currentState
+                                        .showSnackBar(snackBar);
+                                  }
+                                  else {
+                                    final snackBar =
+                                    SnackBar(content: Text("Sai tài khoản"));
+                                    scaffoldKey.currentState
+                                        .showSnackBar(snackBar);
+                                  }
+                                }
+                              });
+                            }
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white,
+                              fontSize: 16.0,),
+                          ),
+
+                        ),
+                        SizedBox(height: 15),
+                        FlatButton(
+                          textColor: Colors.grey,
+                          padding: EdgeInsets.all(8.0),
+                          minWidth: 300.0,
+                          onPressed: () {},
+                          child: Text(
+                            "Forgot password",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 16.0,
                             ),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(height:15),
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.grey)),
+                          textColor: Colors.grey,
+                          padding: EdgeInsets.all(8.0),
+                          minWidth: 300.0,
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => Signup("Sign Up")));
+
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              )),
-        ]));
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

@@ -10,9 +10,14 @@ import 'dart:convert';
 import 'package:dinogarden/model/Feed.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({
-    Key key,
-  }) : super(key: key);
+  String id;
+  String gardenName;
+  HomeScreen(
+
+    @required this.id,
+    @required this.gardenName,
+  {Key key}
+  ) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -34,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   num waterLv = 85;
   num lightLv = 10;
   bool pumpStart = false;
+
   @override
   void initState() {
     _configureAndConnect();
@@ -156,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Your garden",
+                                            widget.gardenName,
                                             style: GoogleFonts.mulish(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),

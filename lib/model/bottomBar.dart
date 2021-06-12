@@ -7,8 +7,13 @@ class BottomBar extends StatefulWidget {
   bool bottomIcons;
   String text;
   IconData icons;
+  final String id;
+  final String gardenName;
   BottomBar(
-      {@required this.onPressed,
+      {
+        @required this.id,
+        @required this.gardenName,
+        @required this.onPressed,
       @required this.bottomIcons,
       @required this.icons,
       @required this.text});

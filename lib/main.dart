@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
         home: Navigator(
-      pages: [MaterialPage(key: ValueKey('Dino Garden'), child: HomeScreen())],
+      pages: [MaterialPage(key: ValueKey('Dino Garden'), child: LoginPage())],
       onPopPage: (route, result) => route.didPop(result),
     ));
   }
