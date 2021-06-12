@@ -21,6 +21,9 @@ List<Event> _getEventsForDay(DateTime day) {
   return [new Event("even" + day.day.toString())];
 }
 Map<String,List<dynamic>> _getEven(List<dynamic> log){
+  if(log.isEmpty){
+    return {};
+  }
   Map<String,List<dynamic>> re={};
   for(Map i in log){
     i.forEach((key, value) {
@@ -61,6 +64,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             lastDay: DateTime(2030),
             weekendDays: [],
             eventLoader: (day) {
+              if(even.isEmpty){
+                return [];
+              }
               if (even.containsKey(day.day.toString()+" "+day.month.toString()+" "+day.year.toString())) {
                 return even[day.day.toString()+" "+day.month.toString()+" "+day.year.toString()];
               }

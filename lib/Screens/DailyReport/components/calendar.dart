@@ -43,20 +43,23 @@ class _Group34WidgetState extends State<Calendar> {
                     dow.add(day);
                   }
                   String str = "";
-                  if (even.containsKey(dow[index].day.toString() +
-                      " " +
-                      dow[index].month.toString() +
-                      " " +
-                      dow[index].year.toString())) {
-                    str = even[dow[index].day.toString() +
-                                " " +
-                                dow[index].month.toString() +
-                                " " +
-                                dow[index].year.toString()]
-                            .length
-                            .toString() +
-                        " even";
+                  if(even.isNotEmpty){
+                    if (even.containsKey(dow[index].day.toString() +
+                        " " +
+                        dow[index].month.toString() +
+                        " " +
+                        dow[index].year.toString())) {
+                      str = even[dow[index].day.toString() +
+                          " " +
+                          dow[index].month.toString() +
+                          " " +
+                          dow[index].year.toString()]
+                          .length
+                          .toString() +
+                          " even";
+                    }
                   }
+
                   return Container(
                       width: 95.0,
                       child: FlatButton(

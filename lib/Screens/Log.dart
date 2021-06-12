@@ -5,7 +5,14 @@ class Log {
   Log({this.data, this.status});
 
   factory Log.fromJson(Map<String, dynamic> json) {
+    var temp;
+    if(json['data'] == null){
+      temp = [];
+    }
+    else{
+      temp =json['data']['history'].toList();
+    }
     return Log(
-        data: json['data']['history'].toList(), status: json['status']);
+        data: temp, status: json['status']);
   }
 }
