@@ -18,7 +18,9 @@ Future<Log> fetchAlbum() async {
   final response =
       await http.post(Uri.parse('https://testdinogarden.herokuapp.com/log/get'),
           //user id here
-          body: {'userId': '60c42eaf98ca9c0015be8cb5'});
+          body: {'userId': '60c42eaf98ca9c0015be8cb5'}
+          // body: {'userId': '60c4c686a7f9bf001569fb93'}
+          );
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
