@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -40,10 +42,25 @@ class _Group34WidgetState extends State<Calendar> {
                     day = day.subtract(const Duration(days: -1));
                     dow.add(day);
                   }
+                  String str = "";
+                  if (even.containsKey(dow[index].day.toString() +
+                      " " +
+                      dow[index].month.toString() +
+                      " " +
+                      dow[index].year.toString())) {
+                    str = even[dow[index].day.toString() +
+                                " " +
+                                dow[index].month.toString() +
+                                " " +
+                                dow[index].year.toString()]
+                            .length
+                            .toString() +
+                        " even";
+                  }
                   return Container(
                       width: 95.0,
                       child: FlatButton(
-                        child: _builditem(dow[index], [], selectedDay),
+                        child: _builditem(dow[index], [], selectedDay, str),
                         onPressed: () {
                           setState(() {
                             selectedDay = dow[index];
@@ -55,15 +72,32 @@ class _Group34WidgetState extends State<Calendar> {
             ),
             //////////////////////////listeven////////////////////////////////////////
             Container(
-                padding: const EdgeInsets.all(10.0),
-                margin: const EdgeInsets.only(top: 20.0),
-                child: _EvenItem()
-                // ListView.builder(
-                //     itemCount: 1,
-                //     itemBuilder: (context, index) {
-                //       return _EvenItem();
-                //     }),
-                )
+              height: 500,
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.only(top: 20.0),
+              child:
+                  // _EvenItem()
+                  ListView.builder(
+                      itemCount: even.containsKey(selectedDay.day.toString() +
+                              " " +
+                              selectedDay.month.toString() +
+                              " " +
+                              selectedDay.year.toString())
+                          ? even[selectedDay.day.toString() +
+                                  " " +
+                                  selectedDay.month.toString() +
+                                  " " +
+                                  selectedDay.year.toString()]
+                              .length
+                          : 0,
+                      itemBuilder: (context, index) {
+                        return _EvenItem(even[selectedDay.day.toString() +
+                            " " +
+                            selectedDay.month.toString() +
+                            " " +
+                            selectedDay.year.toString()][index]);
+                      }),
+            )
           ],
         ));
   }
@@ -96,9 +130,29 @@ String _change(int i) {
   return "";
 }
 
-Widget _EvenItem() {
+Widget _EvenItem(dynamic log) {
+  Map even = json.decode(log);
+  String text = even["text"];
+  String time = even["time"];
+  String img = "assets/images/default.png";
+  if(text ==null){
+    text = "something";
+  }
+  if(time ==null){
+    text = "...";
+  }
+  if (text.contains("watering")||text.contains("Watering")) {
+    img = "assets/images/watering.jpg";
+  } else if ((text.contains("light")||text.contains("Light")) && (text.contains("on")||text.contains("On"))) {
+    img = "assets/images/onlight.png";
+  } else if ((text.contains("light")||text.contains("Light")) && (text.contains("off")||text.contains("Off"))) {
+    img = "assets/images/offlight.png";
+  } else if (text.contains("pump")||text.contains("Pump")) {
+    img = "assets/images/pump.png";
+  }
   return Container(
       height: 138,
+      margin: const EdgeInsets.only(top: 10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -119,13 +173,15 @@ Widget _EvenItem() {
             top: 15,
             left: 15,
             child: Image.asset(
-              'assets/images/w.jpg',width: 110,height: 110,
+              img,
+              width: 110,
+              height: 110,
             )),
         Positioned(
             top: 51,
             right: 15,
             child: Text(
-              'Turn off the pump',
+              text,
               textAlign: TextAlign.right,
               style: TextStyle(
                   color: Color.fromRGBO(51, 51, 51, 1),
@@ -140,7 +196,7 @@ Widget _EvenItem() {
             top: 15,
             right: 15,
             child: Text(
-              '10:05',
+              time,
               textAlign: TextAlign.left,
               style: TextStyle(
                   color: Color.fromRGBO(153, 153, 153, 1),
@@ -154,7 +210,7 @@ Widget _EvenItem() {
       ]));
 }
 
-Widget _builditem(DateTime date, List<String> img, selectedDay) {
+Widget _builditem(DateTime date, List<String> img, selectedDay, even) {
   return Container(
       width: 78,
       height: 102,
@@ -231,6 +287,23 @@ Widget _builditem(DateTime date, List<String> img, selectedDay) {
                       : Color(0xffFFFFFF),
                   fontFamily: 'Roboto',
                   fontSize: 16,
+                  letterSpacing:
+                      0 /*percentages not used in flutter. defaulting to zero*/,
+                  fontWeight: FontWeight.normal,
+                  height: 1),
+            )),
+        Positioned(
+            top: 80,
+            left: 26,
+            child: Text(
+              even,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: date.compareTo(selectedDay) != 0
+                      ? Color.fromRGBO(102, 102, 102, 1)
+                      : Color(0xffFFFFFF),
+                  fontFamily: 'Poppins',
+                  fontSize: 8,
                   letterSpacing:
                       0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
