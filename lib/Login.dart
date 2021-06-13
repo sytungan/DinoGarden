@@ -6,7 +6,6 @@ import 'Signup.dart';
 import 'HomeScreen.dart';
 import 'package:dinogarden/model/bottomBar.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -32,10 +31,8 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Stack(
               children: <Widget>[
-
                 SizedBox(height: 15),
                 Container(
-
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                   margin: EdgeInsets.symmetric(vertical: 85, horizontal: 20),
@@ -75,13 +72,11 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: "Email Address",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Colors.green
-                                        .withOpacity(0.2))),
+                                    color: Colors.green.withOpacity(0.2))),
                             focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                    width: 0, color: Colors.green)),
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    BorderSide(width: 0, color: Colors.green)),
                             prefixIcon: Icon(
                               Icons.email,
                               color: Colors.grey.withOpacity(0.5),
@@ -90,10 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 20),
                         new TextFormField(
-
                           keyboardType: TextInputType.text,
-                          onSaved: (input) =>
-                          loginRequestModel.pass = input,
+                          onSaved: (input) => loginRequestModel.pass = input,
                           validator: (input) => input.length < 1
                               ? "Password should be more than 1 characters"
                               : null,
@@ -102,8 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: " Enter your Password",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Colors.green
-                                        .withOpacity(0.2))),
+                                    color: Colors.green.withOpacity(0.2))),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Theme.of(context).accentColor)),
@@ -144,32 +136,28 @@ class _LoginPageState extends State<LoginPage> {
                               APIService apiService = new APIService();
                               apiService.login(loginRequestModel).then((value) {
                                 if (value != null) {
-
                                   setState(() {
                                     isApiCallProcess = false;
                                   });
 
                                   if (value.status == "Đăng nhập thành công!") {
-
                                     final snackBar = SnackBar(
                                         content: Text("Login Successful"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
-                                    BottomBar( id:value.id,gardenName:value.name);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) => HomeScreen( value.id,value.name)));
-
-                                  } else if (value.status == "Sai mật khẩu!"){
+                                            builder: (_) => HomeScreen(
+                                                value.id, value.name)));
+                                  } else if (value.status == "Sai mật khẩu!") {
                                     final snackBar =
-                                    SnackBar(content: Text("Sai mật khẩu"));
+                                        SnackBar(content: Text("Sai mật khẩu"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
-                                  }
-                                  else {
-                                    final snackBar =
-                                    SnackBar(content: Text("Sai tài khoản"));
+                                  } else {
+                                    final snackBar = SnackBar(
+                                        content: Text("Sai tài khoản"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
                                   }
@@ -179,10 +167,11 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             "Login",
-                            style: TextStyle(color: Colors.white,
-                              fontSize: 16.0,),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
                           ),
-
                         ),
                         SizedBox(height: 15),
                         FlatButton(
@@ -198,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height:15),
+                        SizedBox(height: 15),
                         FlatButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
@@ -211,7 +200,6 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => Signup("Sign Up")));
-
                           },
                           child: Text(
                             "Sign Up",

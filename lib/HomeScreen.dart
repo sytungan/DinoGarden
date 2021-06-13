@@ -10,14 +10,10 @@ import 'dart:convert';
 import 'package:dinogarden/model/Feed.dart';
 
 class HomeScreen extends StatefulWidget {
-  String id;
+  String userID;
   String gardenName;
-  HomeScreen(
-
-    @required this.id,
-    @required this.gardenName,
-  {Key key}
-  ) : super(key: key);
+  HomeScreen(@required this.userID, @required this.gardenName, {Key key})
+      : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -449,7 +445,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             visible: true,
           ),
-          bottomNavigationBar: bottomNavigator(context, _currentIndex),
+          bottomNavigationBar: bottomNavigator(context, _currentIndex,
+              userID: widget.userID, userName: widget.gardenName),
         );
       },
     );
