@@ -14,11 +14,11 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-Future<Log> fetchAlbum() async {
+Future<Log> fetchAlbum(String userID) async {
   final response =
       await http.post(Uri.parse('https://testdinogarden.herokuapp.com/log/get'),
           //user id here
-          body: {'userId': '60c42eaf98ca9c0015be8cb5'}
+          body: {'userId': userID}
           // body: {'userId': '60c4c686a7f9bf001569fb93'}
           );
 
@@ -37,14 +37,15 @@ Future<Log> fetchAlbum() async {
 class DashboardScreen extends StatefulWidget {
   String userID;
   String gardenName;
-  DashboardScreen(@required this.userID, @required this.gardenName, {Key key})
-      : super(key: key);
+  DashboardScreen(this.userID, this.gardenName);
   @override
-  dashboardScrean createState() => dashboardScrean();
+  dashboardScrean createState() => dashboardScrean(userID);
 }
 
 class dashboardScrean extends State<DashboardScreen> {
   int _currentIndex = 1;
+  String userID;
+  dashboardScrean(this.userID);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,7 +56,7 @@ class dashboardScrean extends State<DashboardScreen> {
           appBar: tabBar(),
           body: Center(
             child: FutureBuilder<Log>(
-              future: fetchAlbum(),
+              future: fetchAlbum(userID),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<dynamic> log = snapshot.data.data;
