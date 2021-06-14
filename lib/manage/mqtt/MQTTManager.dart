@@ -7,6 +7,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'package:dinogarden/model/Feed.dart';
 import 'package:http/http.dart' as http;
+import 'package:dinogarden/api/device_api.dart';
 
 Future<String> fetchKey(String server) async {
   final response = await http.get(Uri.parse('http://dadn.esp32thanhdanh.link'));
@@ -178,11 +179,12 @@ class MQTTManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void publishInputDevice(id, data) {
-    if (_currentState.getAppConnectionState !=
-        MQTTAppConnectionState.connectedSubscribed) {
-      return;
-    }
+  Future<void> publishInputDevice(id, data, userId) async {
+    DeviceAPI deviceAPI = new DeviceAPI(userId);
+    // if (_currentState.getAppConnectionState !=
+    //     MQTTAppConnectionState.connectedSubscribed) {
+    //   return;
+    // }
     if (((_user == "CSE_BBC") && (id > 10)) ||
         ((_user == "CSE_BBC1") && (id < 11))) {
       return;
@@ -191,18 +193,22 @@ class MQTTManager extends ChangeNotifier {
       case 1:
         String topic = "CSE_BBC/feeds/bk-iot-led";
         Feed feed = Feed(id.toString(), "LED", data, "");
+        deviceAPI.setDevice(feed);
         String body = json.encode(feed.toJson());
         publish(body, topic);
         break;
       case 3:
         String topic = "CSE_BBC/feeds/bk-iot-lcd";
         Feed feed = Feed(id.toString(), "LCD", data, "");
+        await deviceAPI.setDevice(feed);
         String body = json.encode(feed.toJson());
         publish(body, topic);
         break;
       case 11:
         String topic = "CSE_BBC1/feeds/bk-iot-relay";
         Feed feed = Feed(id.toString(), "RELAY", data, "");
+        await deviceAPI.setDevice(feed);
+        print("pushed");
         String body = json.encode(feed.toJson());
         publish(body, topic);
         break;

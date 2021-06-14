@@ -3,11 +3,14 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'widget/bottomNavigator.dart';
+import 'package:dinogarden/api/login_api.dart';
+import 'package:dinogarden/model/login_model.dart';
 
 class Profile extends StatefulWidget {
-  Profile({
-    Key key,
-  }) : super(key: key);
+  String userID;
+  String gardenName;
+  Profile(@required this.userID, @required this.gardenName, {Key key})
+      : super(key: key);
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -409,7 +412,8 @@ class _ProfileState extends State<Profile> {
                                 ],
                               )))
                     ]))),
-        bottomNavigationBar: bottomNavigator(context, _currentIndex),
+        bottomNavigationBar: bottomNavigator(context, _currentIndex,
+            userID: widget.userID, userName: widget.gardenName),
       );
     });
   }

@@ -9,7 +9,8 @@ import '../Profile.dart';
 import '../HomeScreen.dart';
 import '../screens/Dashboard/index.dart';
 
-Widget bottomNavigator(context, index) {
+Widget bottomNavigator(context, index, {userID = Null, userName = Null}) {
+  BottomBar btm;
   return Stack(children: [
     Container(
       padding: EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
@@ -31,8 +32,14 @@ Widget bottomNavigator(context, index) {
           BottomBar(
               onPressed: () {
                 if (index != 0) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  // if (userID == Null) {
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => LoginPage()));
+                  // }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(userID, userName)));
                 }
               },
               bottomIcons: index == 0,
@@ -41,10 +48,15 @@ Widget bottomNavigator(context, index) {
           BottomBar(
               onPressed: () {
                 if (index != 1) {
+                  // if (userID == Null) {
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => LoginPage()));
+                  // }
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => dashboardScrean()));
+                          builder: (context) =>
+                              DashboardScreen(userID, userName)));
                 }
               },
               bottomIcons: index == 1,
@@ -53,8 +65,14 @@ Widget bottomNavigator(context, index) {
           BottomBar(
               onPressed: () {
                 if (index != 2) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
+                  // if (userID == Null) {
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => LoginPage()));
+                  // }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Profile(userID, userName)));
                 }
               },
               bottomIcons: index == 2,

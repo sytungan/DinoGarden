@@ -13,11 +13,6 @@ class water extends StatefulWidget {
 }
 
 
-
-
-
-
-
 class _water_State extends State<water> {
   bool isSwitched = false;
   String Value = '1000 ml';
@@ -50,7 +45,7 @@ class _water_State extends State<water> {
                   onPressed: () {
                     //right way: use context in below level tree with MaterialApp
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => HomeScreen("id","name")));
                   },
 
                   ),

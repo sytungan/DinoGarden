@@ -8,11 +8,13 @@ import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
 import 'package:dinogarden/model/Feed.dart';
+import 'package:dinogarden/api/device_api.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({
-    Key key,
-  }) : super(key: key);
+  String userID;
+  String gardenName;
+  HomeScreen(@required this.userID, @required this.gardenName, {Key key})
+      : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -29,14 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
   bool online = true;
   double waterPercent = 0.5;
   String waterCap = "1000 ml";
-  num temperature = 28;
-  num humidity = 74;
-  num waterLv = 85;
-  num lightLv = 10;
+  num temperature = 0;
+  num humidity = 0;
+  num waterLv = 0;
+  num lightLv = 0;
   bool pumpStart = false;
+
   @override
   void initState() {
-    _configureAndConnect();
+    // initValue
+    _initValue();
+    // connect
+    // _configureAndConnect();
 
     _manager_1.addListener(() {
       MQTTAppState map1 = _manager_1.currentState;
@@ -156,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Your garden",
+                                            widget.gardenName,
                                             style: GoogleFonts.mulish(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
@@ -435,15 +441,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton: Visibility(
             child: FloatingActionButton(
-              onPressed: () {
-                _manager_2.publishInputDevice(11, "0");
+              onPressed: () async {
+                await _manager_2.publishInputDevice(11, "0", widget.userID);
               },
               tooltip: 'Add new',
               child: const Icon(Icons.add),
             ),
             visible: true,
           ),
-          bottomNavigationBar: bottomNavigator(context, _currentIndex),
+          bottomNavigationBar: bottomNavigator(context, _currentIndex,
+              userID: widget.userID, userName: widget.gardenName),
         );
       },
     );
@@ -458,6 +465,35 @@ class _HomeScreenState extends State<HomeScreen> {
     _manager_1.connect();
     _manager_2.connect();
     // _manager.subScribeTo('sytungan/feeds/garden');
+  }
+
+  void _initValue() async {
+    DeviceAPI deviceAPI = new DeviceAPI(widget.userID);
+    // temp + humi
+    Feed temp = await deviceAPI.getDevice("7");
+    String data = temp.data;
+    final sub = data.indexOf("-");
+    setState(() {
+      temperature = int.parse(data.substring(0, sub));
+      humidity = int.parse(data.substring(sub + 1, data.length));
+    });
+    // soil
+    temp = await deviceAPI.getDevice("9");
+    setState(() {
+      waterLv = int.parse(temp.data);
+    });
+
+    // light
+    temp = await deviceAPI.getDevice("13");
+    setState(() {
+      lightLv = int.parse(temp.data);
+    });
+
+    // pump
+    temp = await deviceAPI.getDevice("11");
+    setState(() {
+      pumpStart = (temp.data == "1") ? true : false;
+    });
   }
 }
 
