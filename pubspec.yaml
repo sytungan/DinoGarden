@@ -38,12 +38,13 @@ dependencies:
   google_fonts: ^2.1.0
   percent_indicator: ^3.0.1
   eva_icons_flutter: ^3.0.0
-
+  form_field_validator: ^1.0.1
   fluttertoast: ^8.0.6
   mqtt_client: ^9.3.1
   provider: ^5.0.0
   http: ^0.13.3
   json_annotation: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,8 +4,8 @@ import 'package:dinogarden/api/login_api.dart';
 import 'package:dinogarden/model/login_model.dart';
 import 'Signup.dart';
 import 'HomeScreen.dart';
-import 'package:dinogarden/model/bottomBar.dart';
 
+import 'package:form_field_validator/form_field_validator.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               height: 1.171875,
-                              fontSize: 20.0,
+                              fontSize: 35.0,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
                               color: Color.fromARGB(255, 102, 102, 102)),
@@ -65,11 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                         new TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (input) => loginRequestModel.email = input,
-                          validator: (input) => input.length < 6
-                              ? "Email should be more than 6 characters"
-                              : null,
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "* Required"),
+                            EmailValidator(errorText: "Enter valid email id"),
+                          ]),
                           decoration: new InputDecoration(
-                            hintText: "Email Address",
+                            hintText: "Enter your account",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.green.withOpacity(0.2))),
@@ -87,12 +88,17 @@ class _LoginPageState extends State<LoginPage> {
                         new TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (input) => loginRequestModel.pass = input,
-                          validator: (input) => input.length < 1
-                              ? "Password should be more than 1 characters"
-                              : null,
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "* Required"),
+                            MinLengthValidator(6,
+                                errorText: "Password should be atleast 6 characters"),
+                            MaxLengthValidator(15,
+                                errorText:
+                                "Password should not be greater than 15 characters")
+                          ]),
                           obscureText: hidePassword,
                           decoration: new InputDecoration(
-                            hintText: " Enter your Password",
+                            hintText: " Enter your password",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.green.withOpacity(0.2))),
@@ -140,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                     isApiCallProcess = false;
                                   });
 
+
                                   if (value.status == "Đăng nhập thành công!") {
                                     final snackBar = SnackBar(
                                         content: Text("Login Successful"));
@@ -150,14 +157,16 @@ class _LoginPageState extends State<LoginPage> {
                                         MaterialPageRoute(
                                             builder: (_) => HomeScreen(
                                                 value.id, value.name)));
-                                  } else if (value.status == "Sai mật khẩu!") {
+                                  }
+                                  else if (value.status == "Sai email!") {
                                     final snackBar =
-                                        SnackBar(content: Text("Sai mật khẩu"));
+                                        SnackBar(content: Text("Sai tài khoản"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
-                                  } else {
+                                  }
+                                  else {
                                     final snackBar = SnackBar(
-                                        content: Text("Sai tài khoản"));
+                                        content: Text("Sai mật khẩu"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
                                   }

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'widget/bottomNavigator.dart';
 import 'package:dinogarden/api/login_api.dart';
+import 'Login.dart';
 import 'package:dinogarden/model/login_model.dart';
 
 class Profile extends StatefulWidget {
@@ -16,7 +17,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String id = '1344295024';
+
   int _currentIndex = 2;
 
   @override
@@ -24,6 +25,75 @@ class _ProfileState extends State<Profile> {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
       return Scaffold(
+        appBar: AppBar(
+            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+            elevation: 0,
+            title: Align (
+              child: Text(
+              'Profile',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Color.fromRGBO(44, 110, 73, 1),
+                  fontFamily: 'Mulish',
+                  fontSize: 30,
+                  letterSpacing:
+                  0 /*percentages not used in flutter. defaulting to zero*/,
+                  fontWeight: FontWeight.normal,
+                  height: 1),
+            ),
+              alignment: Alignment.centerLeft,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 60,
+                onPressed: () {
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) =>
+                  AlertDialog(
+                    title: const Text('Log Out DinoGarden',
+                    style: TextStyle(
+                      height: 1.171875,
+                      fontSize: 20.0,
+                      fontFamily: 'Mulish',
+                      fontWeight: FontWeight.bold,
+
+                    )
+                    ),
+                    content: const Text('Do you want to log out?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (_) => LoginPage())),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                  );
+
+                },
+                child: Text('Log Out',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      height: 1.171875,
+                      fontSize: 16.0,
+                      fontFamily: 'Mulish',
+                      fontWeight: FontWeight.bold,
+
+                    )),
+
+              ),
+              ]
+        ),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
             child: ConstrainedBox(
@@ -33,51 +103,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 30.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Positioned.fill(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                          icon: Image.asset('images/back.png'),
-                                          onPressed: () {
-                                            print("Pressed");
-                                          },
-                                          iconSize: 15),
-                                      SizedBox(width: 30.0),
-                                      Text("Profile",
-                                          //overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            height: 1.171875,
-                                            fontSize: 25.0,
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.w700,
-                                            color:
-                                                Color.fromARGB(255, 1, 170, 79),
-                                          )),
-                                      SizedBox(width: 105.0),
-                                      IconButton(
-                                          icon:
-                                              Image.asset('images/setting.png'),
-                                          onPressed: () {
-                                            print("Pressed");
-                                          },
-                                          iconSize: 15),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+
                       Center(
                           child: Stack(
                               overflow: Overflow.visible,
@@ -86,7 +112,7 @@ class _ProfileState extends State<Profile> {
                             Container(
                               margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                               height: 205,
-                              padding: const EdgeInsets.only(top: 0.0),
+
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -128,7 +154,7 @@ class _ProfileState extends State<Profile> {
                           ])),
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Stack(
                             children: [
                               Container(
@@ -147,57 +173,58 @@ class _ProfileState extends State<Profile> {
                                     ),
                                   ],
                                 ),
-                              ),
-                              Positioned.fill(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text("  Charlie's Garden",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                height: 1.171875,
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 11, 12, 12),
-                                              )),
-                                          Text("  ID: " + id,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                height: 1.171875,
-                                                fontSize: 16.0,
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.normal,
-                                                color: Color.fromARGB(
-                                                    255, 33, 35, 34),
-                                              )),
-                                        ],
-                                      ),
-                                      flex: 3,
-                                    ),
-                                    Expanded(
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.chevron_right,
-                                          size: 30,
+                                child: Positioned.fill(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("   My Garden: " ,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  height: 1.171875,
+                                                  fontSize: 16.0,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 11, 12, 11),
+                                                )),
+                                            Text("     " + widget.gardenName,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  height: 1.171875,
+                                                  fontSize: 20.0,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 17, 154, 17),
+                                                )),
+
+                                          ],
                                         ),
-                                        tooltip: 'Go detail',
-                                        color: HexColor("#0C9359"),
-                                        onPressed: () {
-                                          print("Pressed detail");
-                                        },
+                                        flex: 4,
                                       ),
-                                      flex: 1,
-                                    )
-                                  ],
-                                ),
-                              )
+                                      Expanded(
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.chevron_right,
+                                            size: 30,
+                                          ),
+                                          tooltip: 'Go detail',
+                                          color: HexColor("#0C9359"),
+                                          onPressed: () {
+                                            print("Pressed detail");
+                                          },
+                                        ),
+                                        flex: 1,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ),
+
                             ],
                           ),
                         ),

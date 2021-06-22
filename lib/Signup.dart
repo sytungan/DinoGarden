@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'Login.dart';
 import 'package:dinogarden/api/login_api.dart';
 import 'package:dinogarden/model/login_model.dart';
-
+import 'package:form_field_validator/form_field_validator.dart';
 class Signup extends StatefulWidget {
   final String string;
 
@@ -58,11 +58,11 @@ class _SignupState extends State<Signup> {
                       children: <Widget>[
                         SizedBox(height: 25),
                         Text(
-                          "Sign Up",
+                          "Create Account ",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               height: 1.171875,
-                              fontSize: 20.0,
+                              fontSize: 35.0,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
                               color: Color.fromARGB(255, 102, 102, 102)),
@@ -75,10 +75,8 @@ class _SignupState extends State<Signup> {
                           keyboardType: TextInputType.text,
                           onSaved: (input) =>
                           signupRequestModel.name = input,
-
-
                           decoration: new InputDecoration(
-                            hintText: " Enter your Name",
+                            hintText: " Enter your name",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.green
@@ -97,9 +95,12 @@ class _SignupState extends State<Signup> {
                         new TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (input) => signupRequestModel.email = input,
-
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "* Required"),
+                            EmailValidator(errorText: "Enter valid email id"),
+                          ]),
                           decoration: new InputDecoration(
-                            hintText: "Enter Email Address",
+                            hintText: "Enter your email ",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.green
@@ -121,10 +122,17 @@ class _SignupState extends State<Signup> {
                           keyboardType: TextInputType.text,
                           onSaved: (input) =>
                           signupRequestModel.pass = input,
-
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "* Required"),
+                            MinLengthValidator(6,
+                                errorText: "Password should be atleast 6 characters"),
+                            MaxLengthValidator(15,
+                                errorText:
+                                "Password should not be greater than 15 characters")
+                          ]),
                           obscureText: hidePassword,
                           decoration: new InputDecoration(
-                            hintText: " Enter your Password",
+                            hintText: " Enter your password",
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.green
@@ -163,7 +171,6 @@ class _SignupState extends State<Signup> {
                           onPressed: () {
                             if (validateAndSave()) {
                               print(signupRequestModel.toJson());
-
                               setState(() {
                                 isApiCallProcess = true;
                               });
@@ -176,7 +183,7 @@ class _SignupState extends State<Signup> {
                                     isApiCallProcess = false;
                                   });
 
-                                  if (value.token =='true') {
+                                  if (value.token =='success') {
                                     final snackBar = SnackBar(
                                         content: Text("Sign Up Successful"));
                                     scaffoldKey.currentState

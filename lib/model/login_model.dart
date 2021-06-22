@@ -12,9 +12,18 @@ class LoginResponseModel {
 });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json){
-    return LoginResponseModel(status:json["status"] != null ? json["status"] : "", name:json["userData"]["name"] != null ? json["userData"]["name"] : ""
-    ,id:json["userData"]["_id"] != null ? json["userData"]["_id"] :""
+    if (json["status"] == "Đăng nhập thành công!"){
+      return LoginResponseModel(status:json["status"] != null ? json["status"] : "",
+          name:json["userData"]["name"] != null ? json["userData"]["name"] : ""
+          ,id:json["userData"]["_id"] != null ? json["userData"]["_id"] :""
       );
+    }
+    else {
+      return LoginResponseModel(
+          status: json["status"] != null ? json["status"] : "",
+
+      );
+    }
   }
 
 }
@@ -26,9 +35,6 @@ class SignupResponseModel {
 
   });
 
-  // factory SignupResponseModel.fromJson(Map<String, dynamic> json){
-  //   return SignupResponseModel(token:json["token"] != null ? json["token"] : "");
-  // }
   factory SignupResponseModel.fromCheck(String json){
     return SignupResponseModel(token:json);
   }
