@@ -4,12 +4,20 @@ const http = require('http')
 const path = require('path')
 
 const userData = require('../models/user')
-
+const logModel = require('../models/log')
 
 module.exports.creatAcount = async function(req , res){
     console.log(req.body )
     // console.log(req.file)
-    var image = fs.readFileSync('./public/image/avatar/' + 'edited-' + req.file.originalname).toString('base64')
+    var image; 
+    try{
+       image = fs.readFileSync('./public/image/avatar/' + 'edited-' + req.file.originalname).toString('base64')
+    }
+    catch(err)
+    {
+        image = fs.readFileSync('./public/image/avatar/' + "edited-image00006.jpg").toString('base64')
+
+    }
     var finalImage = {
         type: 'image/png',
         image: Buffer.from(image , 'base64')
@@ -19,7 +27,8 @@ module.exports.creatAcount = async function(req , res){
         pass : md5(req.body.pass),
         email: req.body.email,
         avatar : finalImage,
-        permitsion: false
+        permitsion: false,
+        plant: [],
     })
 
    console.log(req.body.email)
@@ -90,4 +99,87 @@ module.exports.test = function(req, res){
 
     // var nameHTMLPage = req.params.content
     res.sendFile(path.join(  temp + 'public/image/avatar/'+ fileName))
+}
+
+module.exports.addPlant = async function(req, res)
+{
+    var userId, result, plant;
+    try
+    {
+        userId = req.body.userId
+        plant = req.body.plant
+    }
+    catch(err)
+    {
+        res.send(err);
+        return
+    }
+
+    var user_func = await userData.findById(
+            userId
+        , function (err, data) {
+        
+        if (err) {
+            console.log(err);
+            res.send(err)
+            return
+        }
+        try {
+            result = data;
+            console.log(data)
+        } catch (err) {
+            console.log(err);
+            res.send(err)
+            return
+        } 
+    })
+    var current_plant = result.plant == undefined ? [] : result.plant
+    if (plant.length == undefined)
+    {
+        current_plant.push(plant);
+
+    }
+    else 
+    {
+        current_plant = current_plant.concat(plant)
+    }
+    user_func.updateOne({
+        $set:
+        {
+            plant:current_plant
+        }
+    }, function(err){
+        if (err){
+            res.send(err)
+            return
+        }
+        res.send("success")
+    })
+    
+}
+
+module.exports.get_user = async function(req , res)
+{
+    try{
+        var userId = req.params.userId
+
+        await userData.findById(userId,
+            (err , data)=>{
+                if (err)
+                {
+                    res.send(err)
+                    return
+                }
+                if (data == null)
+                {
+                    res.send("No user found")
+                    return
+                }
+                res.send(data)    
+            })
+    }
+    catch(err)
+    {
+        res.send(err)
+    }
 }

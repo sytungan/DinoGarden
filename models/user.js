@@ -23,6 +23,10 @@ var userData = new mongoose.Schema({
     },
     permitsion:{
         type: Boolean
+    },
+    plant:
+    {
+        type:Object
     }
 });
 

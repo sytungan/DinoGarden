@@ -10,6 +10,6 @@ const logController = require("../controllers/log.controller")
 
 router.post('/creat' , logController.creatLog);
 
-router.get("/get"  , logController.getLog)
+router.post("/get"  , logController.getLog)
 
 module.exports = router

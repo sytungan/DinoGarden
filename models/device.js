@@ -5,7 +5,7 @@ var data = new mongoose.Schema({
         type: String, 
         require: true   
     },
-    name: {
+    id: {
         type: String, 
         require: true 
     },
@@ -13,17 +13,18 @@ var data = new mongoose.Schema({
         type: Object,
         require: true,
     },
-    // vote :{
-    //     type :Object,
-    //     require: true
-    // },
-    // email:{
-    //     type: String,
-    //     require: true
-    // },
-    // permitsion:{
-    //     type: Boolean
-    // }
+    name:{
+        type: String,
+        require:true
+    },
+    unit:{
+        type: String,
+        require:true
+    },
+    data:{
+        type: String,
+        require:true
+    }
 });
 
 var deviceData = mongoose.model('deviceData', data, 'deviceData');

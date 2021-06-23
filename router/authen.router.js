@@ -22,8 +22,7 @@ const storage = multer.diskStorage({
         console.log(5)
 
     }
-        
-
+    
 }) 
 
 const upload = multer({
@@ -37,6 +36,7 @@ const upload = multer({
 })
 
 const resizeImage = async function(req, res , next){
+    try{
     var direction = __dirname.replace('router' , '')
         console.log(4)
     console.log(req.file.path)
@@ -68,6 +68,10 @@ const resizeImage = async function(req, res , next){
     
     next();
 }
+    catch(errr){
+        next();
+    }
+}
  
 
 router.get('/login', controller.login);
@@ -77,10 +81,12 @@ router.post('/signup' , upload.single('file'), resizeImage, controller.creatAcou
 
 router.get('/signOut', controller.signOut);
 
+router.get('/get_user/:userId' , controller.get_user)
 
 router.post('/signInUser' , validate.login , controller.loginUser )
 
 router.post('/check_mail' , controller.checkMail)
 
+router.post('/add_plant', controller.addPlant )
 
 module.exports = router

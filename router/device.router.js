@@ -10,8 +10,11 @@ const deviceController = require("../controllers/device.controller")
 
 router.post('/add' , deviceController.addDevice);
 
-router.get("/get"  , deviceController.getDevice)
+router.get("/get/:userId/:id"  , deviceController.getDevice)
 
-router.post("/updateMode" , deviceController.updateMode)
+router.get("/get/:userId"  , deviceController.getDevice)
+
+
+router.post("/updateMode/:userId" , deviceController.updateMode)
 
 module.exports = router

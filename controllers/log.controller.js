@@ -61,7 +61,7 @@ module.exports.creatLog = async function(req , res){
         object[date] = data
 
         log = new logModel({
-            userId : "1",
+            userId : userId,
             history : [
                 object
             ]

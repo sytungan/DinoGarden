@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --inspect index.js",
-    "start": "node index.js",
+    "dev": "nodemon --inspect ./bin/www",
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -24,13 +24,17 @@
     "lowdb": "^1.0.0",
     "md5": "^2.2.1",
     "mongoose": "^5.11.18",
+    "mqtt": "^4.2.6",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3",
     "pug": "^2.0.4",
     "sharp": "^0.27.2",
     "short-id": "0.1.0-1",
     "shortid": "^2.2.15",
-    "zip-local": "^0.3.4"
+    "zip-local": "^0.3.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "debug": "~2.6.9"
   },
   "description": "",
   "devDependencies": {
