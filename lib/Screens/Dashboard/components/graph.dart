@@ -130,7 +130,7 @@ class Note extends StatelessWidget {
               top: 5,
               left: 15,
               child: Text(
-                'System',
+                'Watering',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xff1AB260),
@@ -155,7 +155,7 @@ class Note extends StatelessWidget {
               top: 5,
               left: 15,
               child: Text(
-                'User',
+                'Light on',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xff3FBF7A),
@@ -180,7 +180,7 @@ class Note extends StatelessWidget {
               top: 5,
               left: 15,
               child: Text(
-                'Type 03',
+                'Light off',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xff7ED4A5),
@@ -205,7 +205,7 @@ class Note extends StatelessWidget {
               top: 5,
               left: 15,
               child: Text(
-                'Type 04',
+                'Pump',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xffB3E6CA),
