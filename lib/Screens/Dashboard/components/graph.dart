@@ -62,7 +62,7 @@ class _Group123WidgetState extends State<Graph> {
               child: Column(
                 children: [
                   Text(
-                    'Type 01',
+                    'Watering',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: Color.fromRGBO(1, 170, 79, 1),
