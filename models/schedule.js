@@ -11,6 +11,6 @@ var data = new mongoose.Schema({
     }
 });
 
-var scheduleData = mongoose.model('userData', data, 'userData');
+var scheduleData = mongoose.model('schedule', data, 'schedule');
 
 module.exports = scheduleData;

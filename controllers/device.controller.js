@@ -2,7 +2,6 @@ const md5 = require('md5')
 const fs = require('fs')
 const http = require('http')
 const path = require('path')
-
 const deviceModel = require("../models/device")
 
 
@@ -68,6 +67,7 @@ module.exports.addDevice = async function(req , res){
         name = req.body.name
         userId = req.body.userId
         data = req.body.mode
+        status = req.body.status == "true"
         
         var deviceData = new deviceModel({
             userId : userId,
@@ -75,7 +75,8 @@ module.exports.addDevice = async function(req , res){
             mode : mode,
             unit : req.body.unit,
             data: req.body.data,
-            id: req.body.id
+            id: req.body.id,
+            status : status
         })
 
         await deviceData.save(function(err){
@@ -97,7 +98,8 @@ module.exports.updateMode = async function (req , res){
         var id = req.body.id;
         var data = req.body.data;
         var name = req.body.name
-        var unit = req.body.unit            
+        var unit = req.body.unit
+        var status = req.body.status == "true"            
         var deviceQuerry = await deviceModel.findOne({
             id : id,
             userId: userId
@@ -119,7 +121,8 @@ module.exports.updateMode = async function (req , res){
                 id : id,
                 data : data,
                 name : name,
-                unit : unit
+                unit : unit,
+                status: status
             }
         }, function(err)
             {

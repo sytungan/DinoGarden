@@ -13,6 +13,7 @@ const authRouter = require('./router/authen.router')
 const logRouter = require('./router/log.router')
 const validateAuth = require('./validate/auth.validate')
 const deviceRouter = require('./router/device.router')
+const scheduleRouter = require('./router/schedule.router')
 
 const sessionMiddleware = require('./middleware/session.middleware')
 const autoRespone = require("./script/mqtt.server")
@@ -25,10 +26,9 @@ mongoose.connect(process.env.MONGO_URL, {
 mongoose.set('useFindAndModify', false);
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-// app.set('view engine', 'pug');
-// app.set('views', './views');
+app.set('view engine', 'pug'); 
+app.set('views', './views');
 
 app.use(cookieParser('process.env.SESSION_SECRET'));
 app.use(sessionMiddleware)
@@ -43,10 +43,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// app.get('/', function (req, res) {
-//     res.render('home');
-// });
-
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, PATCH, DELETE');
@@ -56,12 +52,13 @@ app.use(function(req, res, next) {
 
 
 
-
 app.use('/auth' , authRouter)
 app.use('/log' , logRouter)
 app.use('/device',deviceRouter)
+app.use('/schedule', scheduleRouter)
 
-// autoRespone.autoRespone("sytungan", "aio_ZHlv47KxGf8WiYtwGNHGcLAZVZyu" , "sytungan/feeds/#");
+autoRespone.autoRespone(process.env.USER_NAME, process.env.PASSWORD , process.env.SUBCRIBE);
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

@@ -24,6 +24,11 @@ var data = new mongoose.Schema({
     data:{
         type: String,
         require:true
+    },
+    status:
+    {
+        type: Boolean,
+        require: true
     }
 });
 
