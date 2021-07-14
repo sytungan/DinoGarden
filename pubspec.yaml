@@ -71,7 +71,9 @@ flutter:
     - images/screen_image.jpg
   #   - images/a_dot_burr.jpeg
     - assets/
-    - images/
+    - images/spin.png
+    - images/watch.png
+    - images/speed.png
     - images/screen_image.jpg
     - images/w.jpg
     - images/water.jpg
