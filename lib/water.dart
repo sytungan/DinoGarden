@@ -1,6 +1,8 @@
 import 'package:dinogarden/Time_limit.dart';
 import 'package:flutter/material.dart';
 import 'package:dinogarden/HomeScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class water extends StatefulWidget {
 
@@ -36,26 +38,26 @@ class _water_State extends State<water> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 30.0, left: 2.0),
+              margin: EdgeInsets.only(top: 50.0, left: 5.0),
               width: 60.0,
               height: 60.0,
               //color: Colors.green,
               child: new IconButton(
+                iconSize: 40.0,
                 icon:   const Icon(Icons.arrow_back,   color: Colors.green),
-                  onPressed: () {
-                    //right way: use context in below level tree with MaterialApp
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen("id","name")));
-                  },
-
-                  ),
+                onPressed: () {
+                  //right way: use context in below level tree with MaterialApp
+                  Navigator.pop(context);
+                },
 
               ),
+
+            ),
             Positioned(
-              bottom:  -110.0,
+              top: 300.0,
               child: new Container(
-                width: MediaQuery.of(context).size.height*0.5555,
-                height: MediaQuery.of(context).size.width*1.15,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/2,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
@@ -70,22 +72,36 @@ class _water_State extends State<water> {
                       new Center(
                           child: new Container(
                             padding: const EdgeInsets.only(top: 20.0, bottom: 50.0),
-                            child: new Text("Water Limit", style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
+                            child: Text('Water limit',style: GoogleFonts.mulish(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),),
                           )
                       ),
                       new Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
                           children :<Widget>[
-                            new Text("Water limit",style: new TextStyle(fontSize: 20.0)),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('Water limit',style: GoogleFonts.mulish(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                textStyle: TextStyle(
+                                    color: HexColor("#06492C")),
+                              ),),
+                            ),
                             new Container(
-                              padding: EdgeInsets.only(left: 140.0),
+                              padding: EdgeInsets.only(left: 120.0),
                               child: DropdownButton<String>(
                                 value: Value,
                                 icon: const Icon(Icons.arrow_forward_ios_rounded , color: Colors.green),
                                 iconSize: 20,
                                 elevation: 10,
-                                style: const TextStyle(fontSize: 20.0,color: Colors.green),
+                                style: GoogleFonts.mulish(
+                                  fontSize: 20,
+                                  color: Colors.green,
+                                ),
                                 onChanged: (String newValue) {
                                 setState(() {
                                 Value = newValue;
@@ -112,7 +128,7 @@ class _water_State extends State<water> {
 
             ),
             Positioned(
-              bottom:  -120.0,
+              top: MediaQuery.of(context).size.height/1.5,
               left: 0.0,
               right: 0.0,
               child: Center(

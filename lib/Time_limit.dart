@@ -35,26 +35,26 @@ class _Time_limit_State extends State<Time_limit> {
               ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 30.0, left: 2.0),
+                  margin: EdgeInsets.only(top: 50.0, left: 5.0),
                   width: 60.0,
                   height: 60.0,
                   //color: Colors.green,
                   child: new IconButton(
+                    iconSize: 40.0,
                     icon:   const Icon(Icons.arrow_back,   color: Colors.green),
                     onPressed: () {
                       //right way: use context in below level tree with MaterialApp
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeScreen( "id","name")));
+                      Navigator.pop(context);
                     },
 
                   ),
 
                 ),
                Positioned(
-                 bottom:  -110.0,
+                 top: 300.0,
                  child: new Container(
-                      width: MediaQuery.of(context).size.height*0.5555,
-                      height: MediaQuery.of(context).size.width*1.15,
+                   width: MediaQuery.of(context).size.width,
+                   height: MediaQuery.of(context).size.height/2,
                       decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -73,7 +73,7 @@ class _Time_limit_State extends State<Time_limit> {
                             )
                             ),
                             new Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
                               child: Row(
                                 children :<Widget>[
                                   new Text("Time limit",style: new TextStyle(fontSize: 20.0)),
