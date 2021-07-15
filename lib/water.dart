@@ -1,23 +1,36 @@
-import 'package:dinogarden/Time_limit.dart';
+
 import 'package:flutter/material.dart';
-import 'package:dinogarden/HomeScreen.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class water extends StatefulWidget {
 
-  water();
+
+
+
+class Water extends StatefulWidget {
+
+  Water();
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _water_State();
+    return _Water_State();
+  }
+}
+class Size{
+  static width(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.width/p;
+  }
+  static height(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.height/p;
   }
 }
 
-
-class _water_State extends State<water> {
+class _Water_State extends State<Water> {
   bool isSwitched = false;
-  String Value = '1000 ml';
+  String value = '1000 ml';
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +44,16 @@ class _water_State extends State<water> {
 
 
             Container(
-              width: 881,
-              height: 522,
+              width: Size.width(1.0, context),
+              height: MediaQuery.of(context).size.height*0.66,
               child: new Image.asset(
                 "images/screen_image.jpg",
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: 50.0, left: 5.0),
-              width: 60.0,
-              height: 60.0,
+              width: MediaQuery.of(context).size.width/6.85,
+              height: MediaQuery.of(context).size.height/13.675,
               //color: Colors.green,
               child: new IconButton(
                 iconSize: 40.0,
@@ -54,7 +67,7 @@ class _water_State extends State<water> {
 
             ),
             Positioned(
-              top: 300.0,
+              top: Size.height(2.7, context),
               child: new Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height/2,
@@ -94,7 +107,7 @@ class _water_State extends State<water> {
                             new Container(
                               padding: EdgeInsets.only(left: 120.0),
                               child: DropdownButton<String>(
-                                value: Value,
+                                value: value,
                                 icon: const Icon(Icons.arrow_forward_ios_rounded , color: Colors.green),
                                 iconSize: 20,
                                 elevation: 10,
@@ -104,7 +117,7 @@ class _water_State extends State<water> {
                                 ),
                                 onChanged: (String newValue) {
                                 setState(() {
-                                Value = newValue;
+                                value = newValue;
                                 });
                                 },
                                 items: <String>['1000 ml', '1100 ml', '1300 ml', '1500 ml', '1800 ml','2000 ml']

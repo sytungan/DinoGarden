@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:dinogarden/HomeScreen.dart';
+
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
+
+
+
 
 class Time_limit extends StatefulWidget {
 
@@ -8,6 +13,16 @@ class Time_limit extends StatefulWidget {
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _Time_limit_State();
+  }
+}
+class Size{
+  static width(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.width/p;
+  }
+  static height(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.height/p;
   }
 }
 
@@ -24,20 +39,17 @@ class _Time_limit_State extends State<Time_limit> {
             body: Stack(
               clipBehavior: Clip.none,
               children: <Widget>[
-
-
-              Container(
-                width: 881,
-                height: 522,
-                child: new Image.asset(
-                  "images/screen_image.jpg",
+                Container(
+                  width: Size.width(1.0, context),
+                  height: MediaQuery.of(context).size.height*0.66,
+                  child: new Image.asset(
+                    "images/screen_image.jpg",
+                  ),
                 ),
-              ),
-
                 Container(
                   margin: EdgeInsets.only(top: 50.0, left: 5.0),
-                  width: 60.0,
-                  height: 60.0,
+                  width: MediaQuery.of(context).size.width/6.85,
+                  height: MediaQuery.of(context).size.height/13.675,
                   //color: Colors.green,
                   child: new IconButton(
                     iconSize: 40.0,
@@ -51,7 +63,7 @@ class _Time_limit_State extends State<Time_limit> {
 
                 ),
                Positioned(
-                 top: 300.0,
+                 top: Size.height(2.7, context),
                  child: new Container(
                    width: MediaQuery.of(context).size.width,
                    height: MediaQuery.of(context).size.height/2,
@@ -69,16 +81,26 @@ class _Time_limit_State extends State<Time_limit> {
                             new Center(
                               child: new Container(
                                 padding: const EdgeInsets.all(20.0),
-                                child: new Text("Time Limit", style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
+                                child: Text('Time limit',style: GoogleFonts.mulish(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                ),),
                             )
                             ),
-                            new Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                            new Container(padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                               child: Row(
                                 children :<Widget>[
-                                  new Text("Time limit",style: new TextStyle(fontSize: 20.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text('Time limit',style: GoogleFonts.mulish(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      textStyle: TextStyle(
+                                          color: HexColor("#06492C")),
+                                    ),),
+                                  ),
                                   new Container(
-                                    padding: EdgeInsets.only(left: 170.0),
+                                    padding: EdgeInsets.only(left: 130.0),
                                     child:  Switch(
                                       value: isSwitched,
                                       onChanged: (value){
@@ -104,7 +126,7 @@ class _Time_limit_State extends State<Time_limit> {
                 ),
 
               Positioned(
-                bottom:  -30.0,
+                top: Size.height(1.7, context),
                 left: 0.0,
                 right: 0.0,
                 child: Center(
@@ -118,7 +140,7 @@ class _Time_limit_State extends State<Time_limit> {
                 ),
               ),
               Positioned(
-                bottom: 60.0,
+                top: 600,
                 left: 0.0,
                 right: 0.0,
                 child: Center(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dinogarden/HomeScreen.dart';
+
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class Pump_mode extends StatefulWidget {
 
@@ -8,6 +10,16 @@ class Pump_mode extends StatefulWidget {
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _Pump_modeState();
+  }
+}
+class Size{
+  static width(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.width/p;
+  }
+  static height(double p,BuildContext context)
+  {
+    return MediaQuery.of(context).size.height/p;
   }
 }
 
@@ -25,23 +37,23 @@ class _Pump_modeState extends State<Pump_mode> {
           clipBehavior: Clip.none,
           children: <Widget>[
             Container(
-              width: 881,
-              height: 522,
+              width: Size.width(1.0, context),
+              height: MediaQuery.of(context).size.height*0.66,
               child: new Image.asset(
                 "images/screen_image.jpg",
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 30.0, left: 2.0),
-              width: 60.0,
-              height: 60.0,
+              margin: EdgeInsets.only(top: 50.0, left: 5.0),
+              width: MediaQuery.of(context).size.width/6.85,
+              height: MediaQuery.of(context).size.height/13.675,
               //color: Colors.green,
               child: new IconButton(
+                iconSize: 40.0,
                 icon:   const Icon(Icons.arrow_back,   color: Colors.green),
                 onPressed: () {
                   //right way: use context in below level tree with MaterialApp
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen("id","name")));
+                  Navigator.pop(context);
                 },
 
               ),
@@ -49,10 +61,10 @@ class _Pump_modeState extends State<Pump_mode> {
             ),
 
             Positioned(
-              bottom:  -120.0,
+              top:Size.height(2.6, context),
               child: new Container(
-                width: MediaQuery.of(context).size.height*0.5555,
-                height: MediaQuery.of(context).size.width*0.90,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/1.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
@@ -67,14 +79,23 @@ class _Pump_modeState extends State<Pump_mode> {
                       new Center(
                           child: new Container(
                             padding: const EdgeInsets.all(20.0),
-                            child: new Text("Pump mode", style: new TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold)),
+                            child: Text('Pump mode',style: GoogleFonts.mulish(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),),
                           )
                       ),
                       new Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                         child: Row(
                           children :<Widget>[
-                            new Text("Custom mode",style: new TextStyle(fontSize: 20.0)),
+                            Text('Custom mode',style: GoogleFonts.mulish(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              textStyle: TextStyle(
+                                  color: HexColor("#06492C")),
+                            ),
+                            ),
                             new Container(
                               padding: EdgeInsets.only(left: 100.0),
                               child:  Switch(
@@ -93,18 +114,23 @@ class _Pump_modeState extends State<Pump_mode> {
                         ),
                       ) ,
                       new Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                         child: Row(
                           children :<Widget>[
-                            new Text("Mode",style: new TextStyle(fontSize: 20.0)),
-                            new Container(
-                              padding: EdgeInsets.only(left: 170.0),
-                              child: DropdownButton<String>(
+                              Text('Mode',style: GoogleFonts.mulish(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              textStyle: TextStyle(
+                                  color: HexColor("#06492C")),
+                            ),),
+                            SizedBox(width: Size.width(3, context)),
+                            DropdownButton<String>(
                                 value: dropdownValue,
                                 icon: const Icon(Icons.arrow_forward_ios_rounded , color: Colors.green),
-                                iconSize: 20,
-                                elevation: 10,
-                                style: const TextStyle(fontSize: 20.0,color: Colors.green),
+                                style: GoogleFonts.mulish(
+                                  fontSize: 20,
+                                  color: Colors.green,
+                                ),
                                 onChanged: (String newValue) {
                                   setState(() {
                                     dropdownValue = newValue;
@@ -118,7 +144,6 @@ class _Pump_modeState extends State<Pump_mode> {
                                   );
                                 }).toList(),
                               ),
-                            ),
                           ],
                         ),
                       )

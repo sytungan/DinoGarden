@@ -1,4 +1,4 @@
-import 'package:dinogarden/Profile.dart';
+
 import 'package:dinogarden/Pump_mode_screen.dart';
 import 'package:dinogarden/Time_limit.dart';
 import 'package:dinogarden/water.dart';
@@ -37,6 +37,7 @@ class _MaybomState extends State<Maybom > {
                   children: [
                     IconButton(
                         icon:   const Icon(Icons.arrow_back,   color: Colors.green),
+                         iconSize: 40.0,
                          onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => HomeScreen("id","name")));
@@ -230,7 +231,7 @@ class _MaybomState extends State<Maybom > {
                                 onPressed: () {
                                   //right way: use context in below level tree with MaterialApp
                                   Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => water()));
+                                      MaterialPageRoute(builder: (context) => Water()));
                                 },
                               ),
                             )

@@ -77,6 +77,23 @@ flutter:
     - images/screen_image.jpg
     - images/w.jpg
     - images/water.jpg
+    - assets/farm_connected.png
+    - assets/farm_connected.png
+    - assets/watering_plants.png
+    - assets/pump.png
+    - assets/temperature.png
+    - assets/humidity.png
+    - assets/water_level.png
+    - assets/plant.png
+    - assets/clock.png
+    - images/imgprofile_1.png
+    - images/imgprofile_2.png
+    - images/garlic1.png
+    - images/corn1.png
+    - images/spinach1.png
+    - images/cabbage1.png
+    - images/imgprofile_3.png
+    - assets/online.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
