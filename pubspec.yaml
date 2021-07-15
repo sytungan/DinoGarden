@@ -70,7 +70,7 @@ flutter:
     - "assets/images/"
     - images/screen_image.jpg
   #   - images/a_dot_burr.jpeg
-    - assets/
+    - images/Power_Off.png
     - images/spin.png
     - images/watch.png
     - images/speed.png
