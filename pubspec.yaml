@@ -21,6 +21,7 @@ environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
+  syncfusion_flutter_gauges: ^19.2.47
   # passwordfield: ^0.0.5
 
   flutter:
