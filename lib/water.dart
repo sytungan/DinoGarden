@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 
 
@@ -31,7 +32,7 @@ class Size{
 class _Water_State extends State<Water> {
   bool isSwitched = false;
   String value = '1000 ml';
-
+  double shapePointerValue = 25;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -45,7 +46,7 @@ class _Water_State extends State<Water> {
 
             Container(
               width: Size.width(1.0, context),
-              height: MediaQuery.of(context).size.height*0.66,
+              height: MediaQuery.of(context).size.height - 200.0,
               child: new Image.asset(
                 "images/screen_image.jpg",
               ),
@@ -67,10 +68,10 @@ class _Water_State extends State<Water> {
 
             ),
             Positioned(
-              top: Size.height(2.7, context),
+              top: Size.height(3.0, context),
               child: new Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/2,
+                height: MediaQuery.of(context).size.height/1.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(
@@ -116,18 +117,18 @@ class _Water_State extends State<Water> {
                                   color: Colors.green,
                                 ),
                                 onChanged: (String newValue) {
-                                setState(() {
-                                value = newValue;
-                                });
+                                  setState(() {
+                                    value = newValue;
+                                  });
                                 },
-                                items: <String>['1000 ml', '1100 ml', '1300 ml', '1500 ml', '1800 ml','2000 ml']
+                                items: <String>['1000 ml', '1100 ml', '1200 ml', '1300 ml', '1400 ml','1500 ml']
                                     .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                                );
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
                                 }).toList(),
-                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -141,16 +142,35 @@ class _Water_State extends State<Water> {
 
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height/1.5,
+              top: 500,
               left: 0.0,
               right: 0.0,
-              child: Center(
-                child: Container(
-                  height: 250.0,
-                  width: 390.0,
-                  child: new Image.asset(
-                    "images/water.jpg",
-                  ),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                width: MediaQuery.of(context).size.width - 20.0,
+                height: MediaQuery.of(context).size.height/4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0), color: HexColor("#6798C0"),
+                ),
+
+                child: SfLinearGauge(minimum: 1000, maximum: 1500,
+                  markerPointers: [
+                    LinearShapePointer(
+
+                        value: shapePointerValue,
+                        //Changes the value of shape pointer based on interaction
+                        onValueChanged: (value) {
+                          setState(() {
+                            shapePointerValue = value;
+                          });
+                        },
+                        color: Colors.blue[800]),
+                  ],
+
+                  //Add a new bar pointer.
+
+                  //Add a new shape pointer.
+
                 ),
               ),
             ),
