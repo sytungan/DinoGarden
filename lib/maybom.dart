@@ -1,5 +1,7 @@
 import 'package:dinogarden/Pump_mode_screen.dart';
 import 'package:dinogarden/Time_limit.dart';
+import 'package:dinogarden/api/device_api.dart';
+import 'package:dinogarden/model/Device_Auto.dart';
 import 'package:dinogarden/water.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +25,16 @@ class _MaybomState extends State<Maybom> {
   bool isSwitched = false;
   String dropdownValue = 'Phun vòi';
   ScheduleAPI scheduleAPI;
+  DeviceAPI deviceAPI;
+  DeviceAuto dvcTemp;
+  DeviceAuto dvcSoil;
+  DeviceAuto dvcLight;
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      deviceAPI = DeviceAPI(widget.userID);
       scheduleAPI = ScheduleAPI(widget.userID);
     });
     _getStatus();
@@ -35,8 +42,12 @@ class _MaybomState extends State<Maybom> {
 
   Future<void> _getStatus() async {
     final Future<String> status = scheduleAPI.getSchedule();
-    String status_ = await status;
-    print(status_);
+    dynamic data = json.decode(await status)['data'];
+    setState(() {
+      dvcTemp = DeviceAuto.fromJson(data[0]);
+      dvcSoil = DeviceAuto.fromJson(data[1]);
+      dvcLight = DeviceAuto.fromJson(data[2]);
+    });
   }
 
   @override
