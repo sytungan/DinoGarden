@@ -1,3 +1,4 @@
+import 'package:dinogarden/maybom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dinogarden/HomeScreen.dart';
@@ -85,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //   pages: [MaterialPage(key: ValueKey('Dino Garden'), child: LoginPage())],
     //   onPopPage: (route, result) => route.didPop(result),
     // ));
-    return LoginPage();
-
+    return Maybom("60c584eb353077001511f095");
   }
 }

@@ -357,8 +357,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: HexColor("#0C9359"),
                                     onPressed: () {
                                       print("Pressed detail");
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => Maybom()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Maybom(widget.userID)));
                                     },
                                   ),
                                   flex: 1,

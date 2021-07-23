@@ -6,6 +6,7 @@ import 'Signup.dart';
 import 'HomeScreen.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -91,10 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                           validator: MultiValidator([
                             RequiredValidator(errorText: "* Required"),
                             MinLengthValidator(6,
-                                errorText: "Password should be atleast 6 characters"),
+                                errorText:
+                                    "Password should be atleast 6 characters"),
                             MaxLengthValidator(15,
                                 errorText:
-                                "Password should not be greater than 15 characters")
+                                    "Password should not be greater than 15 characters")
                           ]),
                           obscureText: hidePassword,
                           decoration: new InputDecoration(
@@ -146,7 +148,6 @@ class _LoginPageState extends State<LoginPage> {
                                     isApiCallProcess = false;
                                   });
 
-
                                   if (value.status == "Đăng nhập thành công!") {
                                     final snackBar = SnackBar(
                                         content: Text("Login Successful"));
@@ -157,16 +158,14 @@ class _LoginPageState extends State<LoginPage> {
                                         MaterialPageRoute(
                                             builder: (_) => HomeScreen(
                                                 value.id, value.name)));
-                                  }
-                                  else if (value.status == "Sai email!") {
-                                    final snackBar =
-                                        SnackBar(content: Text("Sai tài khoản"));
+                                  } else if (value.status == "Sai email!") {
+                                    final snackBar = SnackBar(
+                                        content: Text("Sai tài khoản"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
-                                  }
-                                  else {
-                                    final snackBar = SnackBar(
-                                        content: Text("Sai mật khẩu"));
+                                  } else {
+                                    final snackBar =
+                                        SnackBar(content: Text("Sai mật khẩu"));
                                     scaffoldKey.currentState
                                         .showSnackBar(snackBar);
                                   }
