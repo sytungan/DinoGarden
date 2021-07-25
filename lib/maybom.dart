@@ -43,15 +43,27 @@ class _MaybomState extends State<Maybom> {
   Future<void> _getStatus() async {
     final Future<String> status = scheduleAPI.getSchedule();
     dynamic data = json.decode(await status)['data'];
+    print(data);
     setState(() {
       dvcTemp = DeviceAuto.fromJson(data[0]);
       dvcSoil = DeviceAuto.fromJson(data[1]);
       dvcLight = DeviceAuto.fromJson(data[2]);
     });
+    _setStatus();
   }
 
   void _setStatus() {
     Map<String, dynamic> schedule;
+    dvcTemp.status = "false";
+    List<Map<String, dynamic>> lstDeviceAuto = [
+      dvcTemp.toJson(),
+      dvcSoil.toJson(),
+      dvcLight.toJson()
+    ];
+    schedule = {
+      'data': List<dynamic>.from(lstDeviceAuto.map((x) => x)),
+    };
+    print(schedule);
     scheduleAPI.setSchedule(schedule);
   }
 
