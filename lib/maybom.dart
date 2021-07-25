@@ -50,6 +50,11 @@ class _MaybomState extends State<Maybom> {
     });
   }
 
+  void _setStatus() {
+    Map<String, dynamic> schedule;
+    scheduleAPI.setSchedule(schedule);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

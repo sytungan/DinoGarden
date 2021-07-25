@@ -20,11 +20,9 @@ class ScheduleAPI {
     }
   }
 
-  Future<bool> setDevice(Feed device) async {
-    final response = await http.post(
-        Uri.parse(
-            'https://testdinogarden.herokuapp.com/device/updateMode/' + userId),
-        body: device.toJson());
+  Future<bool> setSchedule(Map<String, dynamic> schedule) async {
+    String url = 'https://testdinogarden.herokuapp.com/schedule/' + this.userId;
+    final response = await http.post(Uri.parse(url), body: schedule);
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
