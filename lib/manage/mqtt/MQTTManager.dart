@@ -10,17 +10,22 @@ import 'package:http/http.dart' as http;
 import 'package:dinogarden/api/device_api.dart';
 
 Future<String> fetchKey(String server) async {
-  final response = await http.get(Uri.parse('http://dadn.esp32thanhdanh.link'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return jsonDecode(response.body)['key' + server].toString();
+  if (server == 'BBC') {
+    return "aio_qyBr29pmfJC09tUFB5n9Ap9AtIwD";
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load key');
+    return "aio_ieyO306EGPxQmn7S23iE7p3jIG8O";
   }
+  // final response = await http.get(Uri.parse('http://dadn.esp32thanhdanh.link'));
+
+  // if (response.statusCode == 200) {
+  //   // If the server did return a 200 OK response,
+  //   // then parse the JSON.
+  //   return jsonDecode(response.body)['key' + server].toString();
+  // } else {
+  //   // If the server did not return a 200 OK response,
+  //   // then throw an exception.
+  //   throw Exception('Failed to load key');
+  // }
 }
 
 class MQTTManager extends ChangeNotifier {
