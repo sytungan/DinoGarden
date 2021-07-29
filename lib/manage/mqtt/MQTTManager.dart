@@ -11,9 +11,9 @@ import 'package:dinogarden/api/device_api.dart';
 
 Future<String> fetchKey(String server) async {
   if (server == 'BBC') {
-    return "keyBBC";
+    return "aio_YqQF29yXm1YVckRjWSB8zrwF229R";
   } else {
-    return "keyBBC1";
+    return "aio_lalo812RLqinl37MHkU4fadRXbEZ";
   }
   // final response = await http.get(Uri.parse('http://dadn.esp32thanhdanh.link'));
 

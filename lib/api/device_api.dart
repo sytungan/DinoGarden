@@ -8,7 +8,7 @@ class DeviceAPI {
   DeviceAPI(this.userId);
   Future<Feed> getDevice(String id) async {
     String url = 'https://testdinogarden.herokuapp.com/device/get/' +
-        this.userId +
+        "60c584eb353077001511f098" +
         "/" +
         id;
     final response = await http.get(Uri.parse(url));

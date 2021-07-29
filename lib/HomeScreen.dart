@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // initValue
-    _initValue();
+    // _initValue();
     // connect
-    // _configureAndConnect();
+    _configureAndConnect();
 
     _manager_1.addListener(() {
       MQTTAppState map1 = _manager_1.currentState;

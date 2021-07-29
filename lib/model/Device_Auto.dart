@@ -4,7 +4,7 @@ class DeviceAuto {
   String off;
   String hOn;
   String hOff;
-  String status;
+  bool status;
 
   DeviceAuto(this.name, this.on, this.off, this.hOn, this.hOff, this.status);
 
@@ -14,7 +14,7 @@ class DeviceAuto {
         off = json['off'].toString(),
         hOn = json['ho'].toString(),
         hOff = json['hof'].toString(),
-        status = json['status'].toString();
+        status = json['status'];
 
   Map<String, dynamic> toJson() => {
         'name': name,

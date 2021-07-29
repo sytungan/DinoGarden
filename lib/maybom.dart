@@ -9,10 +9,15 @@ import 'package:dinogarden/HomeScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:dinogarden/api/schedule_api.dart';
+import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
+import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
 
 class Maybom extends StatefulWidget {
   String userID;
+  MQTTManager _manager;
+  bool pumpStart;
+  // Maybom(@required this.userID, @required this._manager, this.pumpStart);
   Maybom(@required this.userID);
   @override
   State<StatefulWidget> createState() {
@@ -29,6 +34,7 @@ class _MaybomState extends State<Maybom> {
   DeviceAuto dvcTemp;
   DeviceAuto dvcSoil;
   DeviceAuto dvcLight;
+  bool isPumpTurnOn;
 
   @override
   void initState() {
@@ -36,14 +42,14 @@ class _MaybomState extends State<Maybom> {
     setState(() {
       deviceAPI = DeviceAPI(widget.userID);
       scheduleAPI = ScheduleAPI(widget.userID);
+      // isPumpTurnOn = widget.pumpStart;
     });
     _getStatus();
   }
 
   Future<void> _getStatus() async {
-    final Future<String> status = scheduleAPI.getSchedule();
-    dynamic data = json.decode(await status)['data'];
-    print(data);
+    final Future<dynamic> status = scheduleAPI.getSchedule();
+    dynamic data = (await status)['data'];
     setState(() {
       dvcTemp = DeviceAuto.fromJson(data[0]);
       dvcSoil = DeviceAuto.fromJson(data[1]);
@@ -53,18 +59,29 @@ class _MaybomState extends State<Maybom> {
   }
 
   void _setStatus() {
-    Map<String, dynamic> schedule;
-    dvcTemp.status = "false";
+    Map schedule;
+    dvcTemp.on = "25-50";
     List<Map<String, dynamic>> lstDeviceAuto = [
       dvcTemp.toJson(),
       dvcSoil.toJson(),
       dvcLight.toJson()
     ];
     schedule = {
-      'data': List<dynamic>.from(lstDeviceAuto.map((x) => x)),
+      'schedule': {
+        'data': List<dynamic>.from(lstDeviceAuto.map((x) => x)),
+      }
     };
-    print(schedule);
     scheduleAPI.setSchedule(schedule);
+  }
+
+  void sendPumpRequest() async {
+    await widget._manager.publishInputDevice(11, "0", widget.userID);
+  }
+
+  void togglePumpStatus() {
+    setState(() {
+      isPumpTurnOn = !isPumpTurnOn;
+    });
   }
 
   @override
@@ -84,10 +101,7 @@ class _MaybomState extends State<Maybom> {
                   icon: const Icon(Icons.arrow_back, color: Colors.green),
                   iconSize: 40.0,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen("id", "name")));
+                    Navigator.pop(context);
                   },
                 ),
                 Text(

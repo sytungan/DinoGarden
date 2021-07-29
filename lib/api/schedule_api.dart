@@ -6,8 +6,9 @@ import 'dart:convert';
 class ScheduleAPI {
   String userId;
   ScheduleAPI(this.userId);
-  Future<String> getSchedule() async {
-    String url = 'https://testdinogarden.herokuapp.com/schedule/' + this.userId;
+  Future<dynamic> getSchedule() async {
+    String url = 'https://testdinogarden.herokuapp.com/schedule/' +
+        "60c584eb353077001511f095";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -20,9 +21,15 @@ class ScheduleAPI {
     }
   }
 
-  Future<bool> setSchedule(Map<String, dynamic> schedule) async {
-    String url = 'https://testdinogarden.herokuapp.com/schedule/' + this.userId;
-    final response = await http.post(Uri.parse(url), body: schedule.toString());
+  Future<bool> setSchedule(Map scheduleData) async {
+    String url = 'https://testdinogarden.herokuapp.com/schedule/' +
+        "60c584eb353077001511f095";
+    print(json.encode(scheduleData));
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"content-type": "application/json"},
+      body: json.encode(scheduleData),
+    );
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
