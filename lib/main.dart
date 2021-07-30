@@ -1,7 +1,9 @@
 import 'package:dinogarden/maybom.dart';
+import 'package:dinogarden/model/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dinogarden/HomeScreen.dart';
+import 'package:provider/provider.dart';
 
 import 'HomeScreen.dart';
 
@@ -14,7 +16,12 @@ import 'Signup.dart';
 import 'Profile.dart';
 
 void main() {
-  runApp(myApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartModel(),
+      child: myApp(),
+    ),
+  );
 }
 
 class myApp extends StatelessWidget {
@@ -86,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //   pages: [MaterialPage(key: ValueKey('Dino Garden'), child: LoginPage())],
     //   onPopPage: (route, result) => route.didPop(result),
     // ));
-    return Maybom("60c584eb353077001511f095");
+    // return Maybom("60c584eb353077001511f095");
+    return HomeScreen("", "");
   }
 }

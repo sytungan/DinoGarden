@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'model/cardItem.dart';
+import 'model/cart_model.dart';
 import 'widget/bottomNavigator.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
@@ -41,9 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // initValue
-    // _initValue();
+    _initValue();
     // connect
-    _configureAndConnect();
+    // _configureAndConnect();
 
     _manager_1.addListener(() {
       MQTTAppState map1 = _manager_1.currentState;
@@ -167,6 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: GoogleFonts.mulish(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
+                                          ),
+                                          Consumer<CartModel>(
+                                            builder: (context, cart, child) {
+                                              return Text(
+                                                  "Total price: ${cart.totalPrice}");
+                                            },
                                           ),
                                           SizedBox(width: 10),
                                           Image.asset(
@@ -475,8 +483,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _initValue() async {
     DeviceAPI deviceAPI = new DeviceAPI(widget.userID);
+    dynamic allDevice = await deviceAPI.getAllDevice(widget.userID);
     // temp + humi
-    Feed temp = await deviceAPI.getDevice("7");
+    // Feed temp = await deviceAPI.getDevice("7");
+    Feed temp = new Feed.fromJson(allDevice[0]);
     String data = temp.data;
     final sub = data.indexOf("-");
     setState(() {
@@ -484,19 +494,23 @@ class _HomeScreenState extends State<HomeScreen> {
       humidity = int.parse(data.substring(sub + 1, data.length));
     });
     // soil
-    temp = await deviceAPI.getDevice("9");
+    // temp = await deviceAPI.getDevice("9");
+    temp = new Feed.fromJson(allDevice[1]);
     setState(() {
       waterLv = int.parse(temp.data);
     });
 
     // light
-    temp = await deviceAPI.getDevice("13");
+    // temp = await deviceAPI.getDevice("13");
+    temp = new Feed.fromJson(allDevice[2]);
+    // print(temp.data);
     setState(() {
       lightLv = int.parse(temp.data);
     });
 
     // pump
-    temp = await deviceAPI.getDevice("11");
+    // temp = await deviceAPI.getDevice("11");
+    temp = new Feed.fromJson(allDevice[3]);
     setState(() {
       pumpStart = (temp.data == "1") ? true : false;
     });

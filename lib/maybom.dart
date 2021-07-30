@@ -13,6 +13,8 @@ import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
 
+import 'model/cart_model.dart';
+
 class Maybom extends StatefulWidget {
   String userID;
   MQTTManager _manager;
@@ -122,10 +124,12 @@ class _MaybomState extends State<Maybom> {
               icon: Image.asset('images/Power_Off.png'),
               onPressed: () {
                 //right way: use context in below level tree with MaterialApp
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen("id", "name")));
+                final cart = CartModel();
+                cart.add(Item('Dash'));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => HomeScreen("id", "name")));
               },
             ),
           ),
