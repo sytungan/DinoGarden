@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../Log.dart';
 
 class Calendar extends StatefulWidget {
@@ -135,9 +135,21 @@ String _change(int i) {
 
 Widget _EvenItem(dynamic log) {
   Map even = json.decode(log);
-  String text = even["text"];
+  String text0 = even["text"];
   String time = even["time"];
   String img = "assets/images/default.png";
+  String img1 = "assets/images/null.png";
+  String actor = text0.split(" ")[0];
+  String text = "";
+  for( int i = 1; i < text0.split(" ").length;i++){
+    text += text0.split(" ")[i] +" ";
+  }
+  if(actor == "system"){
+    img1 = "cog";
+  }
+  else if( actor == "user"){
+    img1 = "account";
+  }
   if(text ==null){
     text = "something";
   }
@@ -173,12 +185,12 @@ Widget _EvenItem(dynamic log) {
       ),
       child: Stack(children: <Widget>[
         Positioned(
-            top: 15,
-            left: 15,
+            top: 25,
+            left: 35,
             child: Image.asset(
               img,
-              width: 110,
-              height: 110,
+              width: 90,
+              height: 90,
             )),
         Positioned(
             top: 51,
@@ -195,6 +207,20 @@ Widget _EvenItem(dynamic log) {
                   fontWeight: FontWeight.normal,
                   height: 1),
             )),
+        Positioned(
+            top: 81,
+            right: 15,
+            child: IconButton(
+              // Use the string name to access icons.
+                icon: new Icon(MdiIcons.fromString(img1)),
+                onPressed: () {}
+            )
+            // Image.asset(
+            //   img1,
+            //   width: 40,
+            //   height: 40,
+            // )
+            ),
         Positioned(
             top: 15,
             right: 15,
