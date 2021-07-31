@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class GlobalDeviceStatus extends ChangeNotifier {
   /// Internal, private state of the cart.
-  List<bool> _status = [];
+  List<bool> _status = [true];
 
   /// An unmodifiable view of the items in the cart.
   // UnmodifiableListView<DeviceAuto> get items => UnmodifiableListView(_items);

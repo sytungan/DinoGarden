@@ -2,6 +2,7 @@ import 'package:dinogarden/Pump_mode_screen.dart';
 import 'package:dinogarden/Time_limit.dart';
 import 'package:dinogarden/api/device_api.dart';
 import 'package:dinogarden/model/Device_Auto.dart';
+import 'package:dinogarden/model/global_device.dart';
 import 'package:dinogarden/model/global_schedule.dart';
 import 'package:dinogarden/water.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,8 +15,6 @@ import 'package:dinogarden/api/schedule_api.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
 import 'dart:convert';
-
-import 'model/cart_model.dart';
 
 class Maybom extends StatefulWidget {
   String userID;
@@ -38,7 +37,7 @@ class _MaybomState extends State<Maybom> {
   DeviceAuto dvcTemp;
   DeviceAuto dvcSoil;
   DeviceAuto dvcLight;
-  bool isPumpTurnOn;
+  bool isPumpTurnOn = false;
 
   @override
   void initState() {
@@ -59,6 +58,11 @@ class _MaybomState extends State<Maybom> {
     scheduleModel.add(DeviceAuto.fromJson(data[0]));
     scheduleModel.add(DeviceAuto.fromJson(data[1]));
     scheduleModel.add(DeviceAuto.fromJson(data[2]));
+
+    var deviceStatus = context.read<GlobalDeviceStatus>();
+    setState(() {
+      isPumpTurnOn = deviceStatus.getStatus(0);
+    });
 
     setState(() {
       dvcTemp = DeviceAuto.fromJson(data[0]);
@@ -142,7 +146,7 @@ class _MaybomState extends State<Maybom> {
           Center(
             child: Container(
               child: Text(
-                'Power Off',
+                isPumpTurnOn ? 'Power Off' : 'Power On',
                 style: GoogleFonts.mulish(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,

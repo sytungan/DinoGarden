@@ -6,6 +6,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'model/cardItem.dart';
 import 'model/cart_model.dart';
+import 'model/global_device.dart';
 import 'widget/bottomNavigator.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
 import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
@@ -508,6 +509,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       pumpStart = (temp.data == "1") ? true : false;
     });
+    var deviceStatus = context.read<GlobalDeviceStatus>();
+    deviceStatus.setDeviceStatus(pumpStart, 0);
   }
 }
 
