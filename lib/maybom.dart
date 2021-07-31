@@ -1,20 +1,20 @@
-import 'package:dinogarden/Pump_mode_screen.dart';
-import 'package:dinogarden/Time_limit.dart';
+import 'package:dinogarden/Screens/Auto_Mode/Soil%20Moisture.dart';
+import 'package:dinogarden/Screens/Auto_Mode/Humidity.dart';
 import 'package:dinogarden/api/device_api.dart';
 import 'package:dinogarden/model/Device_Auto.dart';
 import 'package:dinogarden/model/global_schedule.dart';
-import 'package:dinogarden/water.dart';
+import 'package:dinogarden/Screens/Auto_Mode/Temperature_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:dinogarden/HomeScreen.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:dinogarden/api/schedule_api.dart';
 import 'package:dinogarden/manage/mqtt/MQTTManager.dart';
-import 'package:dinogarden/manage/mqtt/MQTTAppState.dart';
-import 'dart:convert';
 
+import 'Screens/Auto_Mode/Light.dart';
 import 'model/cart_model.dart';
 
 class Maybom extends StatefulWidget {
@@ -32,7 +32,7 @@ class Maybom extends StatefulWidget {
 
 class _MaybomState extends State<Maybom> {
   bool isSwitched = false;
-  String dropdownValue = 'Phun vòi';
+  //String dropdownValue = 'Phun vòi';
   ScheduleAPI scheduleAPI;
   DeviceAPI deviceAPI;
   DeviceAuto dvcTemp;
@@ -193,13 +193,13 @@ class _MaybomState extends State<Maybom> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Mode',
+                                'Auto Mode',
                                 style: GoogleFonts.mulish(
                                     fontSize: 16.0, color: Colors.black),
                               ),
                               SizedBox(height: 10.0),
                               Text(
-                                'Phun vòi',
+                                'Temperature',
                                 style: GoogleFonts.mulish(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -213,13 +213,19 @@ class _MaybomState extends State<Maybom> {
                           left: 95.0,
                           child: IconButton(
                             iconSize: 5.0,
-                            icon: Image.asset('images/spin.png'),
+                            icon: SvgPicture.asset(
+                              "assets/icons/thermometer_nhat.svg",
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             onPressed: () {
                               //right way: use context in below level tree with MaterialApp
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Pump_mode()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Temperature(),
+                                ),
+                              );
                             },
                           ),
                         )
@@ -243,13 +249,13 @@ class _MaybomState extends State<Maybom> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Time limit',
+                                'Auto Mode',
                                 style: GoogleFonts.mulish(
                                     fontSize: 16.0, color: Colors.black),
                               ),
                               SizedBox(height: 10.0),
                               Text(
-                                'None',
+                                'Humidity',
                                 style: GoogleFonts.mulish(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -263,13 +269,17 @@ class _MaybomState extends State<Maybom> {
                           left: 95.0,
                           child: IconButton(
                             iconSize: 5.0,
-                            icon: Image.asset('images/watch.png'),
+                            icon: Image.asset(
+                              "assets/humidity.png",
+                              height: 20.0,
+                              width: 20.0,
+                            ),
                             onPressed: () {
                               //right way: use context in below level tree with MaterialApp
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Time_limit()));
+                                      builder: (context) => Humidity()));
                             },
                           ),
                         )
@@ -300,13 +310,13 @@ class _MaybomState extends State<Maybom> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Water limit',
+                                'Auto Mode',
                                 style: GoogleFonts.mulish(
                                     fontSize: 16.0, color: Colors.black),
                               ),
                               SizedBox(height: 10.0),
                               Text(
-                                '696 ml',
+                                'Soil Moisture',
                                 style: GoogleFonts.mulish(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -319,14 +329,18 @@ class _MaybomState extends State<Maybom> {
                           top: 3.0,
                           left: 95.0,
                           child: IconButton(
-                            iconSize: 5.0,
-                            icon: Image.asset('images/speed.png'),
+                            iconSize: 4.0,
+                            icon: SvgPicture.asset(
+                              'assets/icons/humidity_water.svg',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             onPressed: () {
                               //right way: use context in below level tree with MaterialApp
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Water()));
+                                      builder: (context) => Soil()));
                             },
                           ),
                         )
@@ -350,13 +364,13 @@ class _MaybomState extends State<Maybom> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Humid limit',
+                                'Auto Mode',
                                 style: GoogleFonts.mulish(
                                     fontSize: 16.0, color: Colors.black),
                               ),
                               SizedBox(height: 10.0),
                               Text(
-                                'None',
+                                'Light',
                                 style: GoogleFonts.mulish(
                                     fontSize: 20.0,
                                     color: Colors.black,
@@ -369,15 +383,18 @@ class _MaybomState extends State<Maybom> {
                           top: 3.0,
                           left: 95.0,
                           child: IconButton(
-                            iconSize: 5.0,
-                            icon: Image.asset('images/speed.png'),
+                            iconSize: 10.0,
+                            icon: Image.asset(
+                              'images/spin.png',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             onPressed: () {
                               //right way: use context in below level tree with MaterialApp
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          HomeScreen("id", "name")));
+                                      builder: (context) => Light()));
                             },
                           ),
                         )
@@ -398,7 +415,7 @@ class _MaybomState extends State<Maybom> {
                           40.0) //                 <--- border radius here
                       ),
                 ),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     print("CONFIRMED");
                     _setStatus();

@@ -1,5 +1,6 @@
 import 'package:dinogarden/maybom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -40,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   num waterLv = 0;
   num lightLv = 0;
   bool pumpStart = false;
+  Widget contentDialog;
+  Widget contentDialogHumidity;
+  Widget contentDialogWater;
+  Widget contentDialogLight;
 
   @override
   void initState() {
@@ -385,35 +390,43 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: constrains.maxWidth * 0.3,
-                                width: constrains.maxWidth * 0.3),
-                            child: cardItem(
-                                context,
-                                temperature.toString() + " °C",
-                                "Temperature",
-                                "assets/temperature.png"),
+                          InkWell(
+                              child: Container(
+                                constraints: BoxConstraints.expand(
+                                    height: constrains.maxWidth * 0.3,
+                                    width: constrains.maxWidth * 0.3),
+                                child: cardItem(
+                                    context,
+                                    temperature.toString() + " °C",
+                                    "Temperature",
+                                    "assets/temperature.png"),
+                              ),
+                              onTap: () => _showDialogTemperature()),
+                          InkWell(
+                            onTap: () => _showDialogHumidity(),
+                            child: Container(
+                              constraints: BoxConstraints.expand(
+                                  height: constrains.maxWidth * 0.3,
+                                  width: constrains.maxWidth * 0.3),
+                              child: cardItem(
+                                  context,
+                                  (humidity).toString() + " %",
+                                  "Humidity",
+                                  "assets/humidity.png"),
+                            ),
                           ),
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: constrains.maxWidth * 0.3,
-                                width: constrains.maxWidth * 0.3),
-                            child: cardItem(
-                                context,
-                                (humidity).toString() + " %",
-                                "Humidity",
-                                "assets/humidity.png"),
-                          ),
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: constrains.maxWidth * 0.3,
-                                width: constrains.maxWidth * 0.3),
-                            child: cardItem(
-                                context,
-                                (waterLv).toString() + " %",
-                                "Water level",
-                                "assets/water_level.png"),
+                          InkWell(
+                            onTap: () => _showDialogWater(),
+                            child: Container(
+                              constraints: BoxConstraints.expand(
+                                  height: constrains.maxWidth * 0.3,
+                                  width: constrains.maxWidth * 0.3),
+                              child: cardItem(
+                                  context,
+                                  (waterLv).toString() + " %",
+                                  "Water level",
+                                  "assets/water_level.png"),
+                            ),
                           ),
                         ],
                       ),
@@ -433,12 +446,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "assets/plant.png",
                                 "assets/clock.png"),
                           ),
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: constrains.maxWidth * 0.3,
-                                width: constrains.maxWidth * 0.3),
-                            child: cardItem(context, lightLv.toString(),
-                                "Light", "assets/clock.png"),
+                          InkWell(
+                            onTap: () => _showDialogLight(),
+                            child: Container(
+                              constraints: BoxConstraints.expand(
+                                  height: constrains.maxWidth * 0.3,
+                                  width: constrains.maxWidth * 0.3),
+                              child: cardItem(context, lightLv.toString(),
+                                  "Light", "assets/clock.png"),
+                            ),
                           ),
                         ],
                       ),
@@ -462,6 +478,138 @@ class _HomeScreenState extends State<HomeScreen> {
               userID: widget.userID, userName: widget.gardenName),
         );
       },
+    );
+  }
+
+  void _showDialogTemperature() {
+    if (temperature >= 30) {
+      contentDialog = SvgPicture.asset(
+        "assets/icons/hot.svg",
+        width: 300.0,
+        height: 300.0,
+      );
+    } else {
+      contentDialog = Image.asset(
+        "assets/icons/smi.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    }
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('$temperature' + " °C"),
+        content: contentDialog,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDialogHumidity() {
+    if (humidity >= 20) {
+      contentDialogHumidity = SvgPicture.asset(
+        'assets/icons/cold.svg',
+        width: 300.0,
+        height: 300.0,
+      );
+    } else {
+      contentDialogHumidity = Image.asset(
+        "assets/icons/smi.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    }
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('$humidity' + " %"),
+        content: contentDialogHumidity,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDialogWater() {
+    if (waterLv >= 2) {
+      contentDialogWater = Image.asset(
+        "assets/icons/crying.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    } else {
+      contentDialogWater = Image.asset(
+        "assets/icons/smi.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    }
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('$waterLv' + " %"),
+        content: contentDialogWater,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDialogLight() {
+    if (lightLv >= 527) {
+      contentDialogLight = Image.asset(
+        "assets/icons/proud.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    } else {
+      contentDialogLight = Image.asset(
+        "assets/icons/smi.png",
+        width: 300.0,
+        height: 300.0,
+      );
+    }
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('$lightLv'),
+        content: contentDialogLight,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
