@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'HomeScreen.dart';
 
+import 'model/global_device.dart';
+import 'model/global_schedule.dart';
 import 'screens/Calender/index.dart';
 import 'screens/DailyReport/index.dart';
 import 'screens/Dashboard/index.dart';
@@ -17,8 +19,12 @@ import 'Profile.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => GlobalSchedule()),
+        ChangeNotifierProvider(create: (context) => GlobalDeviceStatus()),
+        // Provider(create: (context) => SomeOtherClass()),
+      ],
       child: myApp(),
     ),
   );

@@ -2,9 +2,11 @@ import 'package:dinogarden/Pump_mode_screen.dart';
 import 'package:dinogarden/Time_limit.dart';
 import 'package:dinogarden/api/device_api.dart';
 import 'package:dinogarden/model/Device_Auto.dart';
+import 'package:dinogarden/model/global_schedule.dart';
 import 'package:dinogarden/water.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:dinogarden/HomeScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -46,27 +48,34 @@ class _MaybomState extends State<Maybom> {
       scheduleAPI = ScheduleAPI(widget.userID);
       // isPumpTurnOn = widget.pumpStart;
     });
-    _getStatus();
+    // _getStatus();
   }
 
   Future<void> _getStatus() async {
     final Future<dynamic> status = scheduleAPI.getSchedule();
     dynamic data = (await status)['data'];
+
+    var scheduleModel = context.read<GlobalSchedule>();
+    scheduleModel.add(DeviceAuto.fromJson(data[0]));
+    scheduleModel.add(DeviceAuto.fromJson(data[1]));
+    scheduleModel.add(DeviceAuto.fromJson(data[2]));
+
     setState(() {
       dvcTemp = DeviceAuto.fromJson(data[0]);
       dvcSoil = DeviceAuto.fromJson(data[1]);
       dvcLight = DeviceAuto.fromJson(data[2]);
     });
-    _setStatus();
   }
 
   void _setStatus() {
     Map schedule;
     dvcTemp.on = "25-50";
+    var scheduleModel = context.read<GlobalSchedule>();
+
     List<Map<String, dynamic>> lstDeviceAuto = [
-      dvcTemp.toJson(),
-      dvcSoil.toJson(),
-      dvcLight.toJson()
+      scheduleModel.listSchedule[0].toJson(),
+      scheduleModel.listSchedule[1].toJson(),
+      scheduleModel.listSchedule[2].toJson(),
     ];
     schedule = {
       'schedule': {
@@ -76,8 +85,9 @@ class _MaybomState extends State<Maybom> {
     scheduleAPI.setSchedule(schedule);
   }
 
-  void sendPumpRequest() async {
-    await widget._manager.publishInputDevice(11, "0", widget.userID);
+  void sendPumpRequestTurnOn(bool isTrue) async {
+    await widget._manager
+        .publishInputDevice(11, isTrue ? "0" : "1", widget.userID);
   }
 
   void togglePumpStatus() {
@@ -124,7 +134,7 @@ class _MaybomState extends State<Maybom> {
               icon: Image.asset('images/Power_Off.png'),
               onPressed: () {
                 //right way: use context in below level tree with MaterialApp
-                final cart = CartModel();
+                var cart = context.read<CartModel>();
                 cart.add(Item('Dash'));
                 // Navigator.push(
                 //     context,
@@ -393,6 +403,7 @@ class _MaybomState extends State<Maybom> {
                 child: FlatButton(
                   onPressed: () {
                     print("CONFIRMED");
+                    _setStatus();
                   },
                   child: Text("CONFIRM",
                       style: GoogleFonts.mulish(

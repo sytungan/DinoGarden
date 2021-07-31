@@ -23,7 +23,7 @@ class ScheduleAPI {
 
   Future<bool> setSchedule(Map scheduleData) async {
     String url = 'https://testdinogarden.herokuapp.com/schedule/' +
-        "60c584eb353077001511f095";
+        "60c584eb353077001511f098";
     print(json.encode(scheduleData));
     final response = await http.post(
       Uri.parse(url),

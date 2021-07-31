@@ -54,4 +54,20 @@ class DeviceAPI {
       throw Exception('Failed to load device');
     }
   }
+
+  Future<bool> sendLog(Feed device) async {
+    final response = await http.post(
+        Uri.parse('https://testdinogarden.herokuapp.com/log/creat'),
+        body: device.toJson());
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return true;
+    } else {
+      return false;
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load device');
+    }
+  }
 }
