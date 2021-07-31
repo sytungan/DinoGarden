@@ -106,6 +106,7 @@ flutter:
     - assets/icons/smi.png
     - assets/icons/crying.png
     - assets/icons/proud.png
+    - assets/icons/light.svg
 
 
   #   - images/a_dot_ham.jpeg
