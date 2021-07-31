@@ -170,12 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
                                           ),
-                                          Consumer<CartModel>(
-                                            builder: (context, cart, child) {
-                                              return Text(
-                                                  "Total price: ${cart.totalPrice}");
-                                            },
-                                          ),
                                           SizedBox(width: 10),
                                           Image.asset(
                                             'assets/farm_connected.png',

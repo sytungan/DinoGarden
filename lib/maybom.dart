@@ -132,8 +132,6 @@ class _MaybomState extends State<Maybom> {
               icon: Image.asset('images/Power_Off.png'),
               onPressed: () {
                 //right way: use context in below level tree with MaterialApp
-                var cart = context.read<CartModel>();
-                cart.add(Item('Dash'));
                 // Navigator.push(
                 //     context,
                 //     MaterialPageRoute(
