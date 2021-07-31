@@ -69,9 +69,7 @@ class _MaybomState extends State<Maybom> {
 
   void _setStatus() {
     Map schedule;
-    dvcTemp.on = "25-50";
     var scheduleModel = context.read<GlobalSchedule>();
-
     List<Map<String, dynamic>> lstDeviceAuto = [
       scheduleModel.listSchedule[0].toJson(),
       scheduleModel.listSchedule[1].toJson(),
