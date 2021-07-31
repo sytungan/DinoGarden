@@ -1,9 +1,11 @@
 import 'package:dinogarden/Pump_mode_screen.dart';
+import 'package:dinogarden/Screens/Log.dart';
 import 'package:dinogarden/Time_limit.dart';
 import 'package:dinogarden/api/device_api.dart';
 import 'package:dinogarden/model/Device_Auto.dart';
 import 'package:dinogarden/model/global_device.dart';
 import 'package:dinogarden/model/global_schedule.dart';
+import 'package:dinogarden/model/log_model.dart';
 import 'package:dinogarden/water.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +87,13 @@ class _MaybomState extends State<Maybom> {
       }
     };
     scheduleAPI.setSchedule(schedule);
+  }
+
+  void _writeLog() {
+    DateTime now = new DateTime.now();
+    deviceAPI.sendLog(LogLine(
+        "user turn" + (isPumpTurnOn ? "on" : "off") + "the pump",
+        now.hour.toString() + ":" + now.minute.toString()));
   }
 
   void sendPumpRequestTurnOn(bool isTrue) async {
