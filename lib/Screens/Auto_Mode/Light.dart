@@ -1,9 +1,13 @@
+import 'package:dinogarden/model/Device_Auto.dart';
+import 'package:dinogarden/model/global_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Light extends StatefulWidget {
@@ -32,6 +36,67 @@ class LightState extends State<Light> {
   double endPointerValue = 40;
   TimeOfDay _time = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay _timeOff = TimeOfDay(hour: 10, minute: 00);
+  DeviceAuto lightDvc;
+  @override
+  void initState() {
+    super.initState();
+    var deviceStatus = context.read<GlobalSchedule>();
+    lightDvc = deviceStatus.getDevice(2);
+    // Init switch
+    setState(() {
+      isSwitched = lightDvc.status;
+    });
+    // Init time
+    setState(() {
+      _time = _parseDateTime(lightDvc.hOn);
+      _timeOff = _parseDateTime(lightDvc.hOff);
+    });
+    // Get current
+    setState(() {
+      startPointerValue = double.parse(lightDvc.on);
+      endPointerValue = double.parse(lightDvc.off);
+    });
+  }
+
+  TimeOfDay _parseDateTime(String str) {
+    final first = str.indexOf(":");
+    final second = str.lastIndexOf(":");
+    int hour = int.parse(str.substring(0, first));
+    int minute = int.parse(str.substring(first + 1, second));
+    int sec = int.parse(str.substring(second + 1, str.length));
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  String _dateToString(TimeOfDay dat) {
+    return dat.hour.toString() + ":" + dat.minute.toString() + ":" + "00";
+  }
+
+  bool _isScheduleChange(DeviceAuto presentDvc) {
+    return !((lightDvc.status == presentDvc.status) &&
+        (lightDvc.hOn == presentDvc.hOn) &&
+        (lightDvc.hOff == presentDvc.hOff) &&
+        (lightDvc.on == presentDvc.on) &&
+        (lightDvc.off == presentDvc.off));
+  }
+
+  void _setSchedule() {
+    int onValue = startPointerValue.toInt();
+    int offValue = endPointerValue.toInt();
+    DeviceAuto presentDvc = DeviceAuto(
+      lightDvc.name,
+      onValue.toString(),
+      offValue.toString(),
+      _dateToString(_time),
+      _dateToString(_timeOff),
+      isSwitched,
+    );
+
+    if (_isScheduleChange(presentDvc)) {
+      var deviceStatus = context.read<GlobalSchedule>();
+      deviceStatus.setSchedule(presentDvc, 0);
+    }
+  }
+
   void _selectTimeOff() async {
     final TimeOfDay newTime = await showTimePicker(
       context: context,
@@ -122,6 +187,7 @@ class LightState extends State<Light> {
                               color: Colors.yellow.shade50,
                             ),
                             child: SfLinearGauge(
+                              maximum: 1023,
                               markerPointers: [
                                 LinearWidgetPointer(
                                   position: LinearElementPosition.outside,
@@ -318,6 +384,17 @@ class LightState extends State<Light> {
           child: TextButton(
             onPressed: () {
               print("CONFIRMED");
+              _setSchedule();
+              Fluttertoast.showToast(
+                msg: "Ok !!! Set schedule",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              Navigator.pop(context);
             },
             child: Text("CONFIRM",
                 style: GoogleFonts.mulish(fontSize: 16.0, color: Colors.white)),

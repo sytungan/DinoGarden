@@ -2,6 +2,7 @@ import 'package:dinogarden/model/Device_Auto.dart';
 import 'package:dinogarden/model/global_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -60,10 +61,16 @@ class HumidityState extends State<Humidity> {
     setState(() {
       startPointerValue = double.parse(tempHumStart.substring(0, subOn));
       endPointerValue = double.parse(tempHumEnd.substring(0, subOff));
+      startPointerValue =
+          double.parse(tempHumStart.substring(subOn + 1, tempHumStart.length));
+      endPointerValue =
+          double.parse(tempHumEnd.substring(subOn + 1, tempHumStart.length));
     });
     // Save remainder
     remainderOn = tempHumStart.substring(subOn, tempHumStart.length);
     remainderOff = tempHumEnd.substring(subOff, tempHumEnd.length);
+    remainderOn = tempHumStart.substring(0, subOn + 1);
+    remainderOff = tempHumEnd.substring(0, subOff + 1);
   }
 
   TimeOfDay _parseDateTime(String str) {
@@ -77,6 +84,34 @@ class HumidityState extends State<Humidity> {
 
   String _dateToString(TimeOfDay dat) {
     return dat.hour.toString() + ":" + dat.minute.toString() + ":" + "00";
+  }
+
+  bool _isScheduleChange(DeviceAuto presentDvc) {
+    return !((tempHumDvc.status == presentDvc.status) &&
+        (tempHumDvc.hOn == presentDvc.hOn) &&
+        (tempHumDvc.hOff == presentDvc.hOff) &&
+        (tempHumDvc.on == presentDvc.on) &&
+        (tempHumDvc.off == presentDvc.off));
+  }
+
+  void _setSchedule() {
+    int onValue = startPointerValue.toInt();
+    int offValue = endPointerValue.toInt();
+    DeviceAuto presentDvc = DeviceAuto(
+      tempHumDvc.name,
+      // onValue.toString() + remainderOn,
+      // offValue.toString() + remainderOff,
+      remainderOn + onValue.toString(),
+      remainderOff + offValue.toString(),
+      _dateToString(_time),
+      _dateToString(_timeOff),
+      isSwitched,
+    );
+
+    if (_isScheduleChange(presentDvc)) {
+      var deviceStatus = context.read<GlobalSchedule>();
+      deviceStatus.setSchedule(presentDvc, 0);
+    }
   }
 
   void _selectTimeOff() async {
@@ -100,32 +135,6 @@ class HumidityState extends State<Humidity> {
       setState(() {
         _time = newTime;
       });
-    }
-  }
-
-  bool _isScheduleChange(DeviceAuto presentDvc) {
-    return !((tempHumDvc.status == presentDvc.status) &&
-        (tempHumDvc.hOn == presentDvc.hOn) &&
-        (tempHumDvc.hOff == presentDvc.hOff) &&
-        (tempHumDvc.on == presentDvc.on) &&
-        (tempHumDvc.off == presentDvc.off));
-  }
-
-  void _setSchedule() {
-    int onValue = startPointerValue.toInt();
-    int offValue = endPointerValue.toInt();
-    DeviceAuto presentDvc = DeviceAuto(
-      tempHumDvc.name,
-      onValue.toString() + remainderOn,
-      offValue.toString() + remainderOff,
-      _dateToString(_time),
-      _dateToString(_timeOff),
-      isSwitched,
-    );
-
-    if (_isScheduleChange(presentDvc)) {
-      var deviceStatus = context.read<GlobalSchedule>();
-      deviceStatus.setSchedule(presentDvc, 0);
     }
   }
 
@@ -392,6 +401,16 @@ class HumidityState extends State<Humidity> {
             onPressed: () {
               print("CONFIRMED");
               _setSchedule();
+              Fluttertoast.showToast(
+                msg: "Ok !!! Set schedule",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              Navigator.pop(context);
             },
             child: Text("CONFIRM",
                 style: GoogleFonts.mulish(fontSize: 16.0, color: Colors.white)),

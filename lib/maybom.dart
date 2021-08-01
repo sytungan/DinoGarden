@@ -92,14 +92,14 @@ class _MaybomState extends State<Maybom> {
     var deviceStatus = context.read<GlobalDeviceStatus>();
     if (isPumpTurnOn != deviceStatus.getStatus(0)) {
       _writeLog();
-      sendPumpRequestTurnOn(isPumpTurnOn);
+      // sendPumpRequestTurnOn(isPumpTurnOn);
     }
   }
 
   void _writeLog() {
     DateTime now = new DateTime.now();
     deviceAPI.sendLog(LogLine(
-        "user turn" + (isPumpTurnOn ? "on" : "off") + "the pump",
+        "user turn " + (isPumpTurnOn ? "on" : "off") + " the pump",
         now.hour.toString() + ":" + now.minute.toString()));
   }
 

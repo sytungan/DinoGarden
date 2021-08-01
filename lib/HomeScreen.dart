@@ -652,6 +652,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void _initValue() async {
     DeviceAPI deviceAPI = new DeviceAPI(widget.userID);
     dynamic allDevice = await deviceAPI.getAllDevice(widget.userID);
+    if (allDevice.toString() == "None") {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     // temp + humi
     // Feed temp = await deviceAPI.getDevice("7");
     Feed temp = new Feed.fromJson(allDevice[0]);

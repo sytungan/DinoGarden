@@ -68,6 +68,7 @@ class DeviceAPI {
           now.year.toString(),
       'data': logLine.toJson(),
     };
+    print(log.toString());
     final response = await http.post(
         Uri.parse('https://testdinogarden.herokuapp.com/log/creat'),
         headers: {"content-type": "application/json"},

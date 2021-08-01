@@ -1,8 +1,12 @@
+import 'package:dinogarden/model/Device_Auto.dart';
+import 'package:dinogarden/model/global_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -32,6 +36,77 @@ class temperatureState extends State<Temperature> {
   double endPointerValue = 40;
   TimeOfDay _time = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay _timeOff = TimeOfDay(hour: 10, minute: 00);
+  DeviceAuto tempHumDvc;
+  String remainderOff;
+  String remainderOn;
+
+  @override
+  void initState() {
+    super.initState();
+    var deviceStatus = context.read<GlobalSchedule>();
+    tempHumDvc = deviceStatus.getDevice(0);
+    // Init switch
+    setState(() {
+      isSwitched = tempHumDvc.status;
+    });
+    // Init time
+    setState(() {
+      _time = _parseDateTime(tempHumDvc.hOn);
+      _timeOff = _parseDateTime(tempHumDvc.hOff);
+    });
+    // Cut and parse temp - hum
+    String tempHumStart = tempHumDvc.on;
+    String tempHumEnd = tempHumDvc.off;
+    final subOn = tempHumStart.indexOf("-");
+    final subOff = tempHumEnd.indexOf("-");
+    setState(() {
+      startPointerValue = double.parse(tempHumStart.substring(0, subOn));
+      endPointerValue = double.parse(tempHumEnd.substring(0, subOff));
+    });
+    // Save remainder
+    remainderOn = tempHumStart.substring(subOn, tempHumStart.length);
+    remainderOff = tempHumEnd.substring(subOff, tempHumEnd.length);
+  }
+
+  TimeOfDay _parseDateTime(String str) {
+    final first = str.indexOf(":");
+    final second = str.lastIndexOf(":");
+    int hour = int.parse(str.substring(0, first));
+    int minute = int.parse(str.substring(first + 1, second));
+    int sec = int.parse(str.substring(second + 1, str.length));
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  String _dateToString(TimeOfDay dat) {
+    return dat.hour.toString() + ":" + dat.minute.toString() + ":" + "00";
+  }
+
+  bool _isScheduleChange(DeviceAuto presentDvc) {
+    return !((tempHumDvc.status == presentDvc.status) &&
+        (tempHumDvc.hOn == presentDvc.hOn) &&
+        (tempHumDvc.hOff == presentDvc.hOff) &&
+        (tempHumDvc.on == presentDvc.on) &&
+        (tempHumDvc.off == presentDvc.off));
+  }
+
+  void _setSchedule() {
+    int onValue = startPointerValue.toInt();
+    int offValue = endPointerValue.toInt();
+    DeviceAuto presentDvc = DeviceAuto(
+      tempHumDvc.name,
+      onValue.toString() + remainderOn,
+      offValue.toString() + remainderOff,
+      _dateToString(_time),
+      _dateToString(_timeOff),
+      isSwitched,
+    );
+
+    if (_isScheduleChange(presentDvc)) {
+      var deviceStatus = context.read<GlobalSchedule>();
+      deviceStatus.setSchedule(presentDvc, 0);
+    }
+  }
+
   void _selectTimeOff() async {
     final TimeOfDay newTime = await showTimePicker(
       context: context,
@@ -196,6 +271,17 @@ class temperatureState extends State<Temperature> {
           child: TextButton(
             onPressed: () {
               print("CONFIRMED");
+              _setSchedule();
+              Fluttertoast.showToast(
+                msg: "Ok !!! Set schedule",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              Navigator.pop(context);
             },
             child: Text("CONFIRM",
                 style: GoogleFonts.mulish(fontSize: 16.0, color: Colors.white)),

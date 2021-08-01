@@ -1,9 +1,13 @@
+import 'package:dinogarden/model/Device_Auto.dart';
+import 'package:dinogarden/model/global_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Soil extends StatefulWidget {
@@ -32,6 +36,67 @@ class _Soil_State extends State<Soil> {
   double endPointerValue = 40;
   TimeOfDay _time = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay _timeOff = TimeOfDay(hour: 10, minute: 00);
+  DeviceAuto soilDvc;
+  @override
+  void initState() {
+    super.initState();
+    var deviceStatus = context.read<GlobalSchedule>();
+    soilDvc = deviceStatus.getDevice(1);
+    // Init switch
+    setState(() {
+      isSwitched = soilDvc.status;
+    });
+    // Init time
+    setState(() {
+      _time = _parseDateTime(soilDvc.hOn);
+      _timeOff = _parseDateTime(soilDvc.hOff);
+    });
+    // Get current
+    setState(() {
+      startPointerValue = double.parse(soilDvc.on);
+      endPointerValue = double.parse(soilDvc.off);
+    });
+  }
+
+  TimeOfDay _parseDateTime(String str) {
+    final first = str.indexOf(":");
+    final second = str.lastIndexOf(":");
+    int hour = int.parse(str.substring(0, first));
+    int minute = int.parse(str.substring(first + 1, second));
+    int sec = int.parse(str.substring(second + 1, str.length));
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  String _dateToString(TimeOfDay dat) {
+    return dat.hour.toString() + ":" + dat.minute.toString() + ":" + "00";
+  }
+
+  bool _isScheduleChange(DeviceAuto presentDvc) {
+    return !((soilDvc.status == presentDvc.status) &&
+        (soilDvc.hOn == presentDvc.hOn) &&
+        (soilDvc.hOff == presentDvc.hOff) &&
+        (soilDvc.on == presentDvc.on) &&
+        (soilDvc.off == presentDvc.off));
+  }
+
+  void _setSchedule() {
+    int onValue = startPointerValue.toInt();
+    int offValue = endPointerValue.toInt();
+    DeviceAuto presentDvc = DeviceAuto(
+      soilDvc.name,
+      onValue.toString(),
+      offValue.toString(),
+      _dateToString(_time),
+      _dateToString(_timeOff),
+      isSwitched,
+    );
+
+    if (_isScheduleChange(presentDvc)) {
+      var deviceStatus = context.read<GlobalSchedule>();
+      deviceStatus.setSchedule(presentDvc, 0);
+    }
+  }
+
   void _selectTimeOff() async {
     final TimeOfDay newTime = await showTimePicker(
       context: context,
@@ -122,6 +187,7 @@ class _Soil_State extends State<Soil> {
                               color: Colors.lightBlue.shade100,
                             ),
                             child: SfLinearGauge(
+                              maximum: 1023,
                               markerPointers: [
                                 LinearWidgetPointer(
                                   position: LinearElementPosition.outside,
@@ -196,6 +262,16 @@ class _Soil_State extends State<Soil> {
           child: TextButton(
             onPressed: () {
               print("CONFIRMED");
+              _setSchedule();
+              Fluttertoast.showToast(
+                msg: "Ok !!! Set schedule",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
             },
             child: Text("CONFIRM",
                 style: GoogleFonts.mulish(fontSize: 16.0, color: Colors.white)),
