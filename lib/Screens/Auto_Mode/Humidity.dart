@@ -27,7 +27,10 @@ class Size {
 class HumidityState extends State<Humidity> {
   String contend = "";
   bool isSwitched = false;
-  double shapePointerValue = 25;
+  double barPointerValue = 40;
+  int barPointerValuetoInt = 40;
+  int shapePointerValuetoInt = 20;
+  double shapePointerValue = 20;
   TimeOfDay _time = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay _timeOff = TimeOfDay(hour: 10, minute: 00);
   void _selectTimeOff() async {
@@ -90,7 +93,7 @@ class HumidityState extends State<Humidity> {
                             Row(
                               children: [
                                 field("Enable"),
-                                Enablebutton(),
+                                enableButton(),
                               ],
                             ),
                             Row(
@@ -119,38 +122,52 @@ class HumidityState extends State<Humidity> {
                                 color: Colors.grey.shade300,
                               ),
                               child: SfLinearGauge(
-                                ranges: <LinearGaugeRange>[
-                                  //First range
-                                  LinearGaugeRange(
-                                      startValue: 39,
-                                      endValue: 41,
-                                      color: Colors.green),
-                                  //Second range
-                                  LinearGaugeRange(
-                                      startValue: 19,
-                                      endValue: 21,
-                                      color: Colors.red)
-                                ],
-                                minimum: 10, maximum: 100,
                                 markerPointers: [
-                                  LinearShapePointer(
-                                      value: shapePointerValue,
-                                      //Changes the value of shape pointer based on interaction
-                                      onValueChanged: (value) {
-                                        setState(() {
-                                          shapePointerValue = value;
-                                        });
-                                      },
-                                      color: Colors.blue[800]),
+                                  LinearWidgetPointer(
+                                    position: LinearElementPosition.outside,
+                                    value: barPointerValue,
+                                    onValueChanged: (value) {
+                                      setState(() {
+                                        barPointerValue = value;
+                                        barPointerValuetoInt =
+                                            barPointerValue.toInt();
+                                      });
+                                    },
+                                    child: Container(
+                                        height: 22,
+                                        width: 22,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            shape: BoxShape.circle),
+                                        child: Center(
+                                            child: Text(
+                                          "$barPointerValuetoInt",
+                                          style: TextStyle(fontSize: 14.0),
+                                        ))),
+                                  ),
+                                  LinearWidgetPointer(
+                                    position: LinearElementPosition.outside,
+                                    value: shapePointerValue,
+                                    onValueChanged: (value) {
+                                      setState(() {
+                                        shapePointerValue = value;
+                                        shapePointerValuetoInt =
+                                            shapePointerValue.toInt();
+                                      });
+                                    },
+                                    child: Container(
+                                        height: 22,
+                                        width: 22,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            shape: BoxShape.circle),
+                                        child: Center(
+                                            child: Text(
+                                          "$shapePointerValuetoInt",
+                                          style: TextStyle(fontSize: 14.0),
+                                        ))),
+                                  ),
                                 ],
-
-                                //Add a new bar pointer.
-
-                                //Add a new shape pointer.
-
-                                //Add a new bar pointer.
-
-                                //Add a new shape pointer.
                               ),
                             ),
                             confirmbutton(),
@@ -168,7 +185,7 @@ class HumidityState extends State<Humidity> {
     );
   }
 
-  Widget Enablebutton() {
+  Widget enableButton() {
     return new Container(
       margin: EdgeInsets.only(left: Size.width(1.8, context)),
       child: Switch(
