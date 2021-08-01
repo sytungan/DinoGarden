@@ -12,7 +12,7 @@ router.post('/add' , deviceController.addDevice);
 
 router.get("/get/:userId/:id"  , deviceController.getDevice)
 
-router.get("/get/:userId"  , deviceController.getDevice)
+router.get("/get/:userId"  , deviceController.getAllDevice)
 
 
 router.post("/updateMode/:userId" , deviceController.updateMode)

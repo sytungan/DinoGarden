@@ -1,5 +1,6 @@
+const { shuffle } = require("../db")
 const scheduleModel = require("../models/schedule")
-const event_update = require("../script/event")
+const event_update = require("../script/event").updateSchedule
 
 module.exports.updateSchedule = async function(req, res)
 {

@@ -21,7 +21,7 @@ const autoRespone = require("./script/mqtt.server")
 mongoose.connect(process.env.MONGO_URL, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
-    serverSelectionTimeoutMS: 5000 
+    serverSelectionTimeoutMS: 5000
 }).catch(err => console.log(err)); 
 mongoose.set('useFindAndModify', false);
 
@@ -57,7 +57,9 @@ app.use('/log' , logRouter)
 app.use('/device',deviceRouter)
 app.use('/schedule', scheduleRouter)
 
-autoRespone.autoRespone(process.env.USER_NAME, process.env.PASSWORD , process.env.SUBCRIBE);
+autoRespone.autoRespone(process.env.USER_NAME1, process.env.PASSWORD1 , process.env.SUBCRIBE1, true); //lock publish BBC
+// autoRespone.autoRespone(process.env.USER_NAME2, process.env.PASSWORD2 , process.env.SUBCRIBE2, false);
+
 
 app.use(function(req, res, next) {
   next(createError(404));

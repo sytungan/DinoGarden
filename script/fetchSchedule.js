@@ -1,6 +1,6 @@
 const scheduleModel = require('../models/schedule')
 const logModel = require("../models/log")
-const devideModel = require("../models/device")
+const deviceModel = require("../models/device")
 module.exports.fetchSchedule = async function()
 {
     var result
@@ -56,7 +56,7 @@ module.exports.updateLog = async function(userId, date, status)
         let object = {}
         object[date] = data
         log.history.push(object);
-        console.log(log)
+        // console.log(log)
         await logQuerry.updateOne({
             $set: {
                 history : log.history
@@ -68,41 +68,38 @@ module.exports.updateLog = async function(userId, date, status)
     }
 }
 
-module.exports.updateDevice = async function(userId, id , status)
+module.exports.updateDevice = async function(
+    userId = undefined , id , status = undefined, data = undefined 
+    )
 {
     try {
         
-        var deviceQuerry = await deviceModel.findOne({
-            id : id,
-            userId: userId
+        var payload = {} , filter = {}
+        if (data != undefined)
+            payload["data"] = data
+        if (status != undefined)
+            payload["status"] = status
+        filter["id"] = id
+        if (userId != undefined)
+            payload[userId] = userId
+        var deviceQuerry = await deviceModel.updateMany(
+            filter,
+        {
+            $set: payload
         }
-        , function(err , data){
+        , function(err , result){
             if (err){
+                console.log(err)
                 return undefined
             }
-            if (data == null) {
+            if (result == null) {
                 return undefined
             }
         })
         
-        await deviceQuerry.updateOne(
-        {
-            $set: {
-                status: status
-            }
-        }, function(err)
-            {
-                if(err)
-                {
-                    res.send(err)
-                    return undefined
-                } 
-   
-                return ""
-            }
-        )
 
     } catch (error) {
+        console.log(error)
         return undefined        
     } 
 }
@@ -110,17 +107,21 @@ module.exports.updateDevice = async function(userId, id , status)
 module.exports.getDevice = async function(userId, id)
 {
 
-    var deviceList
-    await deviceModel.findOne({
+    var deviceList = await deviceModel.findOne({
         userId: userId,
         id : id
     },function(err , data){
         if (err)
         { 
-            return undefined
+            console.log(err)
+            return []
         }
+        // console.log(data)
         deviceList = data
+        
     })
+    return deviceList
     
-    return deviceList 
 }
+
+

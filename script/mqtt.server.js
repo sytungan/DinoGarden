@@ -1,17 +1,28 @@
 var schedule = require("./fetchSchedule")
-var update_schedule = require('./event')
+var update_schedule = require('./event').updateSchedule
+var publishEvent = require('./event').publishEvent
 var node_cron = require('node-cron')
 
 
 module.exports.autoRespone = async function(
-    userName , password , clientSubcribe
+    userName , password , clientSubcribe, is_publish = false
 ){
     var mqtt = require('mqtt');
     var data_schedule
     await schedule.fetchSchedule().then(data =>{
-        data_schedule = data 
+        data_schedule = data
+        console.log("update schedule") 
     })
     console.log(data_schedule)
+
+    publishEvent.on("publish", (text)=>{
+        if (is_publish == false) return
+        else
+        {
+            client.publish("CSE_BBC1/feeds/bk-iot-relay" , JSON.stringify(text))
+            console.log("publish",text)
+        }
+    })
 
     update_schedule.on("update", async ()=>{
         await schedule.fetchSchedule().then(data =>{
@@ -32,23 +43,46 @@ module.exports.autoRespone = async function(
     client.on("error" , function(error){
         console.log(error)
     })
-    
-    // client.publish("sytungan/feeds/garden" , "OFF")
+    // var text = {"id": "11", "name": "RELAY", "data": `${true?0:1}`, "unit": ""}
+    // publishEvent.emit("publish", text)
+    // client.publish("CSE_BBC1/feeds/bk-iot-relay" , JSON.stringify({"id": "11", "name": "RELAY", "data": "0", "unit": ""}))
 
     var temp
+    var light
+    var soil
     var client_topic
     client.on('message', function(topic, message, packet) {
     
         try {
             var mes_json = JSON.parse(message)
-            if (mes_json.last_value == undefined)
-                temp = mes_json
+            if (mes_json.last_value == undefined){
+                if (mes_json.name == "LIGHT")
+                {
+                    light = mes_json
+                }
+                else if (mes_json.name == "SOIL")
+                {
+                    soil = mes_json
+                }
+                else if (temp == "TEMP-HUMID")
+                {
+                    temp = mes_json
+                }
+
+                console.log(temp , light , soil)
+                schedule.updateDevice(undefined , mes_json.id , undefined , mes_json.data)
+            }
 
         }catch(err){
-            console.log(err)
+            // console.log(err)
         }
-        if (topic.indexOf("/json") == -1 && topic.indexOf("/csv") == -1 && topic.indexOf('bk-iot') != -1)
-        client_topic = topic
+
+        if (topic.indexOf("/json") == -1 && topic.indexOf("/csv") == -1 && topic.indexOf('bk-iot') != -1){
+            client_topic = topic
+            console.log(client_topic)
+
+        }
+
     });
 
     node_cron.schedule("0-59 * * * *", async ()=>{
@@ -57,28 +91,54 @@ module.exports.autoRespone = async function(
         var currentDate = getDate() 
         for (x of data_schedule)
             {
-                x.schedule = JSON.parse(x.schedule)
+                if (typeof(x.schedule) == "string")    
+                    x.schedule = JSON.parse(x.schedule)
+                // console.log(x.schedule)
+                var device
+                await schedule.getDevice(x.userId, "11").then(e => {
+                    device = e
+                })
+                
                 for (i of x.schedule.data)
                 {
                     if (i.status != true) continue
+                   
                     if (i.ho != undefined && i.hof != undefined)
                     {
+                
                         if (
                             Date.parse("01/01/2021 " +i.ho) >= Date.parse("01/01/2021 " +currentTime) || 
                             Date.parse("01/01/2021 " +i.hof) <= Date.parse("01/01/2021 " +currentTime)
                         )
                         {
+                            try{
+                                
+                            
+                            if (device.data == "1") {
+
+                                publishEvent.emit("publish", {"id": "11", "name": "RELAY", "data": `${0}`, "unit": ""})
+                        
+                                // await schedule.updateDevice(x.userId, i.id , trigger, )
+                                await schedule.updateLog(x.userId , currentDate, {"text":"turn " + text + " the relay" , "time":currentTime})
+                            }
+                            continue
+                        }catch(e){
                             continue
                         }
+                        }
                     }
-
-                    if (temp.name == i.name)
-                    {
+                    try{
+                    
+                    
                         var trigger
-                        if (i.name != "TEMP-HUMID")
-                            trigger = i.on <= parseInt(temp.data) &&
-                            i.off >= parseInt(temp.data)
-                        else
+                        if (i.name == "LIGHT"){
+                            trigger = validate(light , i)
+                        } else if (i.name = "SOIL")
+                        {
+                            trigger = validate(soil , i)
+                        }
+                            
+                        else if (i.name == "TEMP-HUMID") 
                             {
                                 var a = temp.data.split("-")
                                 var a1 = i.on.split("-")
@@ -91,13 +151,23 @@ module.exports.autoRespone = async function(
                             }
                         
                        
-                        var device = await schedule.getDevice(x.userId, i.id)
-                        if (device.status == trigger ) continue
-                        var text = trigger ? "ON" :"OFF"
-                        client.publish(client_topic , text )
-                        await schedule.updateDevice(x.userId, i.id , trigger)
+                        
+                        if ( parseInt(device.data) == (trigger?1:0)) continue
+                        var text = {"id": "11", "name": "RELAY", "data": `${trigger?1:0}`, "unit": ""} 
+                            
+                        // console.log(client_topic , JSON.stringify(text))
+                        // client.publish("CSE_BBC1/feeds/bk-iot-relay" , JSON.stringify(text))
+                        
+                        publishEvent.emit("publish", text)
+                        
+                        // await schedule.updateDevice(x.userId, i.id , trigger)
                         await schedule.updateLog(x.userId , currentDate, {"text":"turn " + text + " the " +  i.name, "time":currentTime})
-                    }
+                    
+                }
+                catch(er){
+                    console.log(er)
+                    continue
+                }
                 }    
             }
         }
@@ -126,3 +196,8 @@ function getDate()
     return currentDate
 }
 
+function validate(temp , i )
+{
+    return i.on <= parseInt(temp.data) &&
+                            i.off >= parseInt(temp.data)
+}

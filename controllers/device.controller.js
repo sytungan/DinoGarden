@@ -45,7 +45,7 @@ module.exports.getAllDevice = async function(req , res) {
     }
 
     var deviceList
-    await deviceModel.findOne({
+    await deviceModel.find({
         userId: userId
     },function(err , data){
         if (err)
