@@ -11,7 +11,7 @@ class Light extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _Light_State();
+    return LightState();
   }
 }
 
@@ -25,7 +25,7 @@ class Size {
   }
 }
 
-class _Light_State extends State<Light> {
+class LightState extends State<Light> {
   String contend = "";
   bool isSwitched = false;
   double startPointerValue = 20;
@@ -67,110 +67,110 @@ class _Light_State extends State<Light> {
         body: Stack(
           clipBehavior: Clip.none,
           children: <Widget>[
-            screen_image(),
-            back_button(),
-            Positioned(
-              top: Size.height(3.0, context),
-              child: new Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.5,
-                decoration: BoxDecoration(
+            screenimage(),
+            backbutton(),
+            Container(
+              margin: EdgeInsets.only(
+                top: Size.height(2.93, context),
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 1.5,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
                   color: Colors.white,
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
                 ),
-                child: Container(
-                  child: new Column(
-                    children: <Widget>[
-                      title(),
-                      new Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                field("Enable"),
-                                Enable_button(),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Container(
+                child: new Column(
+                  children: <Widget>[
+                    title(),
+                    new Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              field("Enable"),
+                              enablebutton(),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              field("Time On"),
+                              clock(),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              field("Time Off"),
+                              clockOff(),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 2.0),
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            height: Size.height(5, context),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.yellow.shade50,
+                            ),
+                            child: SfLinearGauge(
+                              markerPointers: [
+                                LinearWidgetPointer(
+                                  position: LinearElementPosition.outside,
+                                  value: startPointerValue,
+                                  onValueChanged: (value) {
+                                    setState(() {
+                                      startPointerValue = value;
+                                    });
+                                  },
+                                  child: Container(
+                                      height: 22,
+                                      width: 22,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle),
+                                      child: Center(
+                                          child: Text(
+                                        "${startPointerValue.toInt()}",
+                                        style: TextStyle(fontSize: 14.0),
+                                      ))),
+                                ),
+                                LinearWidgetPointer(
+                                  position: LinearElementPosition.outside,
+                                  value: endPointerValue,
+                                  onValueChanged: (value) {
+                                    setState(() {
+                                      endPointerValue = value;
+                                    });
+                                  },
+                                  child: Container(
+                                      height: 22,
+                                      width: 22,
+                                      decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle),
+                                      child: Center(
+                                          child: Text(
+                                        "${endPointerValue.toInt()}",
+                                        style: TextStyle(fontSize: 14.0),
+                                      ))),
+                                ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                field("Time On"),
-                                clock(),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                field("Time Off"),
-                                clockOff(),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 2.0),
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              height: Size.height(5, context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.yellow.shade50,
-                              ),
-                              child: SfLinearGauge(
-                                markerPointers: [
-                                  LinearWidgetPointer(
-                                    position: LinearElementPosition.outside,
-                                    value: startPointerValue,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        startPointerValue = value;
-                                      });
-                                    },
-                                    child: Container(
-                                        height: 22,
-                                        width: 22,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green,
-                                            shape: BoxShape.circle),
-                                        child: Center(
-                                            child: Text(
-                                          "${startPointerValue.toInt()}",
-                                          style: TextStyle(fontSize: 14.0),
-                                        ))),
-                                  ),
-                                  LinearWidgetPointer(
-                                    position: LinearElementPosition.outside,
-                                    value: endPointerValue,
-                                    onValueChanged: (value) {
-                                      setState(() {
-                                        endPointerValue = value;
-                                      });
-                                    },
-                                    child: Container(
-                                        height: 22,
-                                        width: 22,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            shape: BoxShape.circle),
-                                        child: Center(
-                                            child: Text(
-                                          "${endPointerValue.toInt()}",
-                                          style: TextStyle(fontSize: 14.0),
-                                        ))),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            confirm_button(),
-                          ],
-                        ),
+                          ),
+                          confirmbutton(),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -180,7 +180,7 @@ class _Light_State extends State<Light> {
     );
   }
 
-  Widget Enable_button() {
+  Widget enablebutton() {
     return new Container(
       margin: EdgeInsets.only(left: Size.width(1.8, context)),
       child: Switch(
@@ -275,7 +275,7 @@ class _Light_State extends State<Light> {
     );
   }
 
-  Widget back_button() {
+  Widget backbutton() {
     return Container(
       margin: EdgeInsets.only(top: 50.0, left: 5.0),
       width: MediaQuery.of(context).size.width / 6.85,
@@ -292,7 +292,7 @@ class _Light_State extends State<Light> {
     );
   }
 
-  Widget screen_image() {
+  Widget screenimage() {
     return Container(
       width: Size.width(1.0, context),
       height: MediaQuery.of(context).size.height - 200.0,
@@ -302,7 +302,7 @@ class _Light_State extends State<Light> {
     );
   }
 
-  Widget confirm_button() {
+  Widget confirmbutton() {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Center(
