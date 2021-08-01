@@ -94,12 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-    // return MaterialApp(
-    //     home: Navigator(
-    //   pages: [MaterialPage(key: ValueKey('Dino Garden'), child: LoginPage())],
-    //   onPopPage: (route, result) => route.didPop(result),
-    // ));
+    return MaterialApp(
+        home: Navigator(
+      pages: [MaterialPage(key: ValueKey('Dino Garden'), child: LoginPage())],
+      onPopPage: (route, result) => route.didPop(result),
+    ));
     // return Maybom("60c584eb353077001511f095");
-    return HomeScreen("", "");
+    // return HomeScreen("", "");
   }
 }
