@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget contentDialogHumidity;
   Widget contentDialogWater;
   Widget contentDialogLight;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -127,179 +128,46 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return LayoutBuilder(
-      builder: (context, constrains) {
-        return Scaffold(
-          backgroundColor: HexColor("#C7F9CC"),
-          body: ListView(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Top side
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 28.0, top: 30.0, bottom: 28.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 85,
-                          width: MediaQuery.of(context).size.width * 0.60,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 0.25,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 1), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned.fill(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 28.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            widget.gardenName,
-                                            style: GoogleFonts.mulish(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Image.asset(
-                                            'assets/farm_connected.png',
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            online
-                                                ? 'Connected'
-                                                : 'Not Connected',
-                                            style: GoogleFonts.mulish(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              textStyle: TextStyle(
-                                                  color: HexColor("#D3D3D3")),
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Image.asset(
-                                            online
-                                                ? 'assets/online.png'
-                                                : 'assets/offline.png',
-                                            height: 10,
-                                            width: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                flex: 3,
-                              ),
-                              Expanded(
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.chevron_right,
-                                    size: 30,
-                                  ),
-                                  tooltip: 'Go detail',
-                                  color: HexColor("#0C9359"),
-                                  onPressed: () {
-                                    print("Pressed detail");
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  // Water status
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Image.asset(
-                              'assets/watering_plants.png',
-                              height: 100,
-                              width: 100,
-                            ),
-                            flex: 1,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  (waterPercent * 100).toString() + " %",
-                                  style: GoogleFonts.mulish(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      textStyle: TextStyle(
-                                          color: HexColor("#2C6E49"))),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                  child: new LinearPercentIndicator(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.40,
-                                    animation: true,
-                                    lineHeight: 20.0,
-                                    animationDuration: 2000,
-                                    percent: waterPercent,
-                                    linearStrokeCap: LinearStrokeCap.roundAll,
-                                    progressColor: HexColor("#78C6F7"),
-                                  ),
-                                ),
-                                Text(
-                                  waterCap,
-                                  style: GoogleFonts.mulish(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      textStyle: TextStyle(
-                                          color: HexColor("#2C6E49"))),
-                                ),
-                              ],
-                            ),
-                            flex: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Device running
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0),
+    if (isLoading) {
+      return MaterialApp(
+          title: "This is a StatafulWidget",
+          home: Scaffold(
+              body: Align(
+            alignment: Alignment.center,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Please wait....",
+                style: GoogleFonts.mulish(
+                  color: Colors.green,
+                  fontSize: 18.0,
+                ),
+              )
+            ]),
+          )));
+    } else
+      return LayoutBuilder(
+        builder: (context, constrains) {
+          return Scaffold(
+            backgroundColor: HexColor("#C7F9CC"),
+            body: ListView(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Top side
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 28.0, top: 30.0, bottom: 28.0),
                       child: Stack(
                         children: [
                           Container(
                             height: 85,
+                            width: MediaQuery.of(context).size.width * 0.60,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
@@ -318,44 +186,56 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: Image.asset(
-                                    'assets/pump.png',
-                                    height: 50,
-                                    width: 50,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 28.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              widget.gardenName,
+                                              style: GoogleFonts.mulish(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Image.asset(
+                                              'assets/farm_connected.png',
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              online
+                                                  ? 'Connected'
+                                                  : 'Not Connected',
+                                              style: GoogleFonts.mulish(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                textStyle: TextStyle(
+                                                    color: HexColor("#D3D3D3")),
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            Image.asset(
+                                              online
+                                                  ? 'assets/online.png'
+                                                  : 'assets/offline.png',
+                                              height: 10,
+                                              width: 10,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Máy bơm ABCXYZ",
-                                        style: GoogleFonts.mulish(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Text(
-                                        pumpStart ? "Running" : "Stopped",
-                                        style: GoogleFonts.mulish(
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 16,
-                                            textStyle: TextStyle(
-                                                color: HexColor("#D3D3D3"))),
-                                      ),
-                                      Text(
-                                        "Run time: " + runtime,
-                                        style: GoogleFonts.mulish(
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 16,
-                                            textStyle: TextStyle(
-                                                color: HexColor("#D3D3D3"))),
-                                      ),
-                                    ],
-                                  ),
-                                  flex: 2,
+                                  flex: 3,
                                 ),
                                 Expanded(
                                   child: IconButton(
@@ -367,14 +247,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: HexColor("#0C9359"),
                                     onPressed: () {
                                       print("Pressed detail");
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Maybom(widget.userID)));
                                     },
                                   ),
-                                  flex: 1,
                                 )
                               ],
                             ),
@@ -382,105 +256,254 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
+
+                    // Water status
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Image.asset(
+                                'assets/watering_plants.png',
+                                height: 100,
+                                width: 100,
+                              ),
+                              flex: 1,
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (waterPercent * 100).toString() + " %",
+                                    style: GoogleFonts.mulish(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                        textStyle: TextStyle(
+                                            color: HexColor("#2C6E49"))),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 10.0, bottom: 10.0),
+                                    child: new LinearPercentIndicator(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.40,
+                                      animation: true,
+                                      lineHeight: 20.0,
+                                      animationDuration: 2000,
+                                      percent: waterPercent,
+                                      linearStrokeCap: LinearStrokeCap.roundAll,
+                                      progressColor: HexColor("#78C6F7"),
+                                    ),
+                                  ),
+                                  Text(
+                                    waterCap,
+                                    style: GoogleFonts.mulish(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                        textStyle: TextStyle(
+                                            color: HexColor("#2C6E49"))),
+                                  ),
+                                ],
+                              ),
+                              flex: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Device running
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(28.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 85,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 0.25,
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                        0, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Image.asset(
+                                      'assets/pump.png',
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                    flex: 1,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Máy bơm ABCXYZ",
+                                          style: GoogleFonts.mulish(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          pumpStart ? "Running" : "Stopped",
+                                          style: GoogleFonts.mulish(
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 16,
+                                              textStyle: TextStyle(
+                                                  color: HexColor("#D3D3D3"))),
+                                        ),
+                                        Text(
+                                          "Run time: " + runtime,
+                                          style: GoogleFonts.mulish(
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 16,
+                                              textStyle: TextStyle(
+                                                  color: HexColor("#D3D3D3"))),
+                                        ),
+                                      ],
+                                    ),
+                                    flex: 2,
+                                  ),
+                                  Expanded(
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.chevron_right,
+                                        size: 30,
+                                      ),
+                                      tooltip: 'Go detail',
+                                      color: HexColor("#0C9359"),
+                                      onPressed: () {
+                                        print("Pressed detail");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Maybom(widget.userID)));
+                                      },
+                                    ),
+                                    flex: 1,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                                child: Container(
+                                  constraints: BoxConstraints.expand(
+                                      height: constrains.maxWidth * 0.3,
+                                      width: constrains.maxWidth * 0.3),
+                                  child: cardItem(
+                                      context,
+                                      temperature.toString() + " °C",
+                                      "Temperature",
+                                      "assets/temperature.png"),
+                                ),
+                                onTap: () => _showDialogTemperature()),
+                            InkWell(
+                              onTap: () => _showDialogHumidity(),
                               child: Container(
                                 constraints: BoxConstraints.expand(
                                     height: constrains.maxWidth * 0.3,
                                     width: constrains.maxWidth * 0.3),
                                 child: cardItem(
                                     context,
-                                    temperature.toString() + " °C",
-                                    "Temperature",
-                                    "assets/temperature.png"),
+                                    (humidity).toString() + " %",
+                                    "Humidity",
+                                    "assets/humidity.png"),
                               ),
-                              onTap: () => _showDialogTemperature()),
-                          InkWell(
-                            onTap: () => _showDialogHumidity(),
-                            child: Container(
+                            ),
+                            InkWell(
+                              onTap: () => _showDialogWater(),
+                              child: Container(
+                                constraints: BoxConstraints.expand(
+                                    height: constrains.maxWidth * 0.3,
+                                    width: constrains.maxWidth * 0.3),
+                                child: cardItem(
+                                    context,
+                                    (waterLv).toString() + " %",
+                                    "Water level",
+                                    "assets/water_level.png"),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
                               constraints: BoxConstraints.expand(
                                   height: constrains.maxWidth * 0.3,
-                                  width: constrains.maxWidth * 0.3),
-                              child: cardItem(
+                                  width: constrains.maxWidth * 0.6),
+                              child: cardItemDouble(
                                   context,
-                                  (humidity).toString() + " %",
-                                  "Humidity",
-                                  "assets/humidity.png"),
+                                  "Watering",
+                                  "Need more",
+                                  "Status",
+                                  "assets/plant.png",
+                                  "assets/clock.png"),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () => _showDialogWater(),
-                            child: Container(
-                              constraints: BoxConstraints.expand(
-                                  height: constrains.maxWidth * 0.3,
-                                  width: constrains.maxWidth * 0.3),
-                              child: cardItem(
-                                  context,
-                                  (waterLv).toString() + " %",
-                                  "Water level",
-                                  "assets/water_level.png"),
+                            InkWell(
+                              onTap: () => _showDialogLight(),
+                              child: Container(
+                                constraints: BoxConstraints.expand(
+                                    height: constrains.maxWidth * 0.3,
+                                    width: constrains.maxWidth * 0.3),
+                                child: cardItem(context, lightLv.toString(),
+                                    "Light", "assets/clock.png"),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            constraints: BoxConstraints.expand(
-                                height: constrains.maxWidth * 0.3,
-                                width: constrains.maxWidth * 0.6),
-                            child: cardItemDouble(
-                                context,
-                                "Watering",
-                                "Need more",
-                                "Status",
-                                "assets/plant.png",
-                                "assets/clock.png"),
-                          ),
-                          InkWell(
-                            onTap: () => _showDialogLight(),
-                            child: Container(
-                              constraints: BoxConstraints.expand(
-                                  height: constrains.maxWidth * 0.3,
-                                  width: constrains.maxWidth * 0.3),
-                              child: cardItem(context, lightLv.toString(),
-                                  "Light", "assets/clock.png"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          // floatingActionButton: Visibility(
-          //   child: FloatingActionButton(
-          //     onPressed: () async {
-          //       await _manager_2.publishInputDevice(11, "0", widget.userID);
-          //     },
-          //     tooltip: 'Add new',
-          //     child: const Icon(Icons.add),
-          //   ),
-          //   visible: true,
-          // ),
-          bottomNavigationBar: bottomNavigator(context, _currentIndex,
-              userID: widget.userID, userName: widget.gardenName),
-        );
-      },
-    );
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            // floatingActionButton: Visibility(
+            //   child: FloatingActionButton(
+            //     onPressed: () async {
+            //       await _manager_2.publishInputDevice(11, "0", widget.userID);
+            //     },
+            //     tooltip: 'Add new',
+            //     child: const Icon(Icons.add),
+            //   ),
+            //   visible: true,
+            // ),
+            bottomNavigationBar: bottomNavigator(context, _currentIndex,
+                userID: widget.userID, userName: widget.gardenName),
+          );
+        },
+      );
   }
 
   void _showDialogTemperature() {
@@ -661,6 +684,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     var deviceStatus = context.read<GlobalDeviceStatus>();
     deviceStatus.setDeviceStatus(pumpStart, 0);
+    setState(() {
+      isLoading = false;
+    });
   }
 }
 

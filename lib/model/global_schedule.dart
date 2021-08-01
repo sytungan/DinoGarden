@@ -24,10 +24,14 @@ class GlobalSchedule extends ChangeNotifier {
 
   List<DeviceAuto> get listSchedule => _items;
 
-  void setDevice(DeviceAuto item, index) {
+  void setSchedule(DeviceAuto item, int index) {
     _items[index] = item;
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
+  }
+
+  DeviceAuto getDevice(int index) {
+    return _items[index];
   }
 
   /// Removes all items from the cart.

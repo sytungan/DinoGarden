@@ -60,13 +60,13 @@ class _MaybomState extends State<Maybom> {
     final Future<dynamic> status = scheduleAPI.getSchedule();
     dynamic data = (await status)['data'];
     var scheduleModel = context.read<GlobalSchedule>();
-    scheduleModel.setDevice(DeviceAuto.fromJson(data[0]), 0);
-    scheduleModel.setDevice(DeviceAuto.fromJson(data[1]), 1);
-    scheduleModel.setDevice(DeviceAuto.fromJson(data[2]), 2);
+    scheduleModel.setSchedule(DeviceAuto.fromJson(data[0]), 0);
+    scheduleModel.setSchedule(DeviceAuto.fromJson(data[1]), 1);
+    scheduleModel.setSchedule(DeviceAuto.fromJson(data[2]), 2);
     setState(() {
-      dvcTemp = DeviceAuto.fromJson(data[0]);
-      dvcSoil = DeviceAuto.fromJson(data[1]);
-      dvcLight = DeviceAuto.fromJson(data[2]);
+      // dvcTemp = DeviceAuto.fromJson(data[0]);
+      // dvcSoil = DeviceAuto.fromJson(data[1]);
+      // dvcLight = DeviceAuto.fromJson(data[2]);
       isLoading = false;
     });
     print("Done loading...");
@@ -86,6 +86,14 @@ class _MaybomState extends State<Maybom> {
       }
     };
     scheduleAPI.setSchedule(schedule);
+  }
+
+  void _setPump() {
+    var deviceStatus = context.read<GlobalDeviceStatus>();
+    if (isPumpTurnOn != deviceStatus.getStatus(0)) {
+      _writeLog();
+      sendPumpRequestTurnOn(isPumpTurnOn);
+    }
   }
 
   void _writeLog() {
@@ -175,18 +183,16 @@ class _MaybomState extends State<Maybom> {
               ),
             ),
             Center(
-              child: Container(child: Consumer<GlobalDeviceStatus>(
-                builder: (context, device, child) {
-                  return Text(
-                    'Power ' + (device.getStatus(0) ? 'Off' : 'On'),
-                    style: GoogleFonts.mulish(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      textStyle: TextStyle(color: HexColor("#0C9359")),
-                    ),
-                  );
-                },
-              )),
+              child: Container(
+                child: Text(
+                  'Power ' + (isPumpTurnOn ? 'Off' : 'On'),
+                  style: GoogleFonts.mulish(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    textStyle: TextStyle(color: HexColor("#0C9359")),
+                  ),
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 50.0, left: 50.0, right: 50.0),
@@ -453,6 +459,7 @@ class _MaybomState extends State<Maybom> {
                   child: TextButton(
                     onPressed: () {
                       print("CONFIRMED");
+                      _setPump();
                       _setStatus();
                     },
                     child: Text("CONFIRM",
