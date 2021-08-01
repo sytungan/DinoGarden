@@ -1,4 +1,5 @@
 import 'package:dinogarden/model/Feed.dart';
+import 'package:dinogarden/model/log_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -55,16 +56,26 @@ class DeviceAPI {
     }
   }
 
-  Future<bool> sendLog(Feed device) async {
+  Future<void> sendLog(LogLine logLine) async {
+    DateTime now = new DateTime.now();
+    Map log = {
+      'userid': userId,
+      'date': now.day.toString() +
+          " " +
+          now.month.toString() +
+          " " +
+          now.year.toString(),
+      'data': logLine.toJson(),
+    };
     final response = await http.post(
         Uri.parse('https://testdinogarden.herokuapp.com/log/creat'),
-        body: device.toJson());
+        headers: {"content-type": "application/json"},
+        body: json.encode(log));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return true;
+      return;
     } else {
-      return false;
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load device');

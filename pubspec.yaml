@@ -45,8 +45,10 @@ dependencies:
   provider: ^5.0.0
   http: ^0.13.3
   json_annotation: ^4.0.0
+  material_design_icons_flutter: ^4.0.5955
 
 dev_dependencies:
+  slide_digital_clock: ^1.0.0
   flutter_test:
     sdk: flutter
   build_runner: ^2.0.0
@@ -97,6 +99,18 @@ flutter:
     - images/cabbage1.png
     - images/imgprofile_3.png
     - assets/online.png
+    - assets/icons/thermometer.svg
+    - assets/icons/thermometer_nhat.svg
+    - assets/icons/humidity_water.svg
+    - assets/icons/cold.svg
+    - assets/icons/hot.svg
+    - assets/icons/smile.svg
+    - assets/icons/smi.png
+    - assets/icons/crying.png
+    - assets/icons/proud.png
+    - assets/icons/light.svg
+
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
