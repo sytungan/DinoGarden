@@ -95,12 +95,14 @@ class _Light_State extends State<Light> {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 field("Time On"),
                                 clock(),
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 field("Time Off"),
                                 clockOff(),
@@ -186,7 +188,7 @@ class _Light_State extends State<Light> {
 
   Widget clock() {
     return new Container(
-      padding: EdgeInsets.only(left: Size.width(1.9, context)),
+      // padding: EdgeInsets.only(left: Size.width(1.9, context)),
       child: TextButton(
         onPressed: _selectTime,
         child: Text(
@@ -202,7 +204,7 @@ class _Light_State extends State<Light> {
 
   Widget clockOff() {
     return new Container(
-      padding: EdgeInsets.only(left: Size.width(1.94, context)),
+      // padding: EdgeInsets.only(left: Size.width(1.94, context)),
       child: TextButton(
         onPressed: _selectTimeOff,
         child: Text(
@@ -218,7 +220,7 @@ class _Light_State extends State<Light> {
 
   Widget field(String contend) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 10.0),
       child: Text(
         contend,
         style: GoogleFonts.mulish(

@@ -94,12 +94,14 @@ class HumidityState extends State<Humidity> {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 field("Time On"),
                                 clock(),
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 field("Time Off"),
                                 clockOff(),
@@ -185,7 +187,7 @@ class HumidityState extends State<Humidity> {
 
   Widget clock() {
     return new Container(
-      padding: EdgeInsets.only(left: Size.width(1.9, context)),
+      // padding: EdgeInsets.only(left: Size.width(2.1, context)),
       child: TextButton(
         onPressed: _selectTime,
         child: Text(
@@ -201,7 +203,7 @@ class HumidityState extends State<Humidity> {
 
   Widget clockOff() {
     return new Container(
-      padding: EdgeInsets.only(left: Size.width(1.94, context)),
+      // padding: EdgeInsets.only(left: Size.width(2.1, context)),
       child: TextButton(
         onPressed: _selectTimeOff,
         child: Text(
@@ -217,7 +219,7 @@ class HumidityState extends State<Humidity> {
 
   Widget field(String contend) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 10.0),
       child: Text(
         contend,
         style: GoogleFonts.mulish(

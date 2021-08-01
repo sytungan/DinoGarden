@@ -177,8 +177,8 @@ class _MaybomState extends State<Maybom> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                    width: 140.0,
-                    height: 95.0,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(
                                 20.0) //                 <--- border radius here
@@ -201,7 +201,7 @@ class _MaybomState extends State<Maybom> {
                               Text(
                                 'Temperature',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -233,8 +233,8 @@ class _MaybomState extends State<Maybom> {
                     )),
                 SizedBox(width: 60.0),
                 Container(
-                    width: 140.0,
-                    height: 95.0,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(
                                 20.0) //                 <--- border radius here
@@ -257,7 +257,7 @@ class _MaybomState extends State<Maybom> {
                               Text(
                                 'Humidity',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -289,13 +289,13 @@ class _MaybomState extends State<Maybom> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                    width: 140.0,
-                    height: 95.0,
+                    width: MediaQuery.of(context).size.width * 0.38,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(
                                 20.0) //                 <--- border radius here
@@ -318,7 +318,7 @@ class _MaybomState extends State<Maybom> {
                               Text(
                                 'Soil Moisture',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -348,8 +348,8 @@ class _MaybomState extends State<Maybom> {
                     )),
                 SizedBox(width: 60.0),
                 Container(
-                    width: 140.0,
-                    height: 95.0,
+                    width: MediaQuery.of(context).size.width * 0.37,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(
                                 20.0) //                 <--- border radius here
@@ -372,7 +372,7 @@ class _MaybomState extends State<Maybom> {
                               Text(
                                 'Light',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
