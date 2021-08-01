@@ -13,6 +13,7 @@ class ScheduleAPI {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
+      if (response.body.length == 0) return "None";
       return json.decode(response.body)['schedule'];
     } else {
       // If the server did not return a 200 OK response,

@@ -58,7 +58,14 @@ class _MaybomState extends State<Maybom> {
 
   Future<void> _getStatus() async {
     final Future<dynamic> status = scheduleAPI.getSchedule();
-    dynamic data = (await status)['data'];
+    dynamic dataZip = (await status);
+    if (dataZip.toString() == "None") {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+    dynamic data = dataZip['data'];
     var scheduleModel = context.read<GlobalSchedule>();
     scheduleModel.setSchedule(DeviceAuto.fromJson(data[0]), 0);
     scheduleModel.setSchedule(DeviceAuto.fromJson(data[1]), 1);

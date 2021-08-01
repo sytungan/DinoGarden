@@ -60,13 +60,13 @@ class DeviceAPI {
   Future<void> sendLog(LogLine logLine) async {
     DateTime now = new DateTime.now();
     Map log = {
-      'userid': userId,
+      'userId': userId,
       'date': now.day.toString() +
           " " +
           now.month.toString() +
           " " +
           now.year.toString(),
-      'data': logLine.toJson(),
+      'data': json.encode(logLine.toJson()),
     };
     print(log.toString());
     final response = await http.post(

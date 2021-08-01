@@ -272,6 +272,7 @@ class _Soil_State extends State<Soil> {
                 textColor: Colors.white,
                 fontSize: 16.0,
               );
+              Navigator.pop(context);
             },
             child: Text("CONFIRM",
                 style: GoogleFonts.mulish(fontSize: 16.0, color: Colors.white)),
