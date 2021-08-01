@@ -101,6 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               pumpStart = (data == "1") ? true : false;
             });
+            var deviceStatus = context.read<GlobalDeviceStatus>();
+            deviceStatus.setDeviceStatus(pumpStart, 0);
           }
           break;
 
@@ -464,16 +466,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          floatingActionButton: Visibility(
-            child: FloatingActionButton(
-              onPressed: () async {
-                await _manager_2.publishInputDevice(11, "0", widget.userID);
-              },
-              tooltip: 'Add new',
-              child: const Icon(Icons.add),
-            ),
-            visible: true,
-          ),
+          // floatingActionButton: Visibility(
+          //   child: FloatingActionButton(
+          //     onPressed: () async {
+          //       await _manager_2.publishInputDevice(11, "0", widget.userID);
+          //     },
+          //     tooltip: 'Add new',
+          //     child: const Icon(Icons.add),
+          //   ),
+          //   visible: true,
+          // ),
           bottomNavigationBar: bottomNavigator(context, _currentIndex,
               userID: widget.userID, userName: widget.gardenName),
         );

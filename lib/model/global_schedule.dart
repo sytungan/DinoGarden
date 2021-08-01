@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 
 class GlobalSchedule extends ChangeNotifier {
   /// Internal, private state of the cart.
-  List<DeviceAuto> _items = [];
+  List<DeviceAuto> _items = [
+    DeviceAuto("TEMP-HUMID", "0", "0", "00:00:00", "23:59:99", false),
+    DeviceAuto("SOIL", "0", "0", "00:00:00", "23:59:99", false),
+    DeviceAuto("LIGHT", "0", "0", "00:00:00", "23:59:99", false)
+  ];
 
   /// An unmodifiable view of the items in the cart.
   // UnmodifiableListView<DeviceAuto> get items => UnmodifiableListView(_items);
@@ -21,7 +25,7 @@ class GlobalSchedule extends ChangeNotifier {
   List<DeviceAuto> get listSchedule => _items;
 
   void setDevice(DeviceAuto item, index) {
-    _items[0] = item;
+    _items[index] = item;
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }

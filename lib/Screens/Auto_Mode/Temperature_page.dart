@@ -28,10 +28,8 @@ class Size {
 class temperatureState extends State<Temperature> {
   String contend = "";
   bool isSwitched = false;
-  double barPointerValue = 40;
-  int barPointerValuetoInt = 40;
-  int shapePointerValuetoInt = 20;
-  double shapePointerValue = 20;
+  double startPointerValue = 20;
+  double endPointerValue = 40;
   TimeOfDay _time = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay _timeOff = TimeOfDay(hour: 10, minute: 00);
   void _selectTimeOff() async {
@@ -126,12 +124,10 @@ class temperatureState extends State<Temperature> {
                                 markerPointers: [
                                   LinearWidgetPointer(
                                     position: LinearElementPosition.outside,
-                                    value: barPointerValue,
+                                    value: startPointerValue,
                                     onValueChanged: (value) {
                                       setState(() {
-                                        barPointerValue = value;
-                                        barPointerValuetoInt =
-                                            barPointerValue.toInt();
+                                        startPointerValue = value;
                                       });
                                     },
                                     child: Container(
@@ -142,18 +138,16 @@ class temperatureState extends State<Temperature> {
                                             shape: BoxShape.circle),
                                         child: Center(
                                             child: Text(
-                                          "$barPointerValuetoInt",
+                                          "${startPointerValue.toInt()}",
                                           style: TextStyle(fontSize: 14.0),
                                         ))),
                                   ),
                                   LinearWidgetPointer(
                                     position: LinearElementPosition.outside,
-                                    value: shapePointerValue,
+                                    value: endPointerValue,
                                     onValueChanged: (value) {
                                       setState(() {
-                                        shapePointerValue = value;
-                                        shapePointerValuetoInt =
-                                            shapePointerValue.toInt();
+                                        endPointerValue = value;
                                       });
                                     },
                                     child: Container(
@@ -164,7 +158,7 @@ class temperatureState extends State<Temperature> {
                                             shape: BoxShape.circle),
                                         child: Center(
                                             child: Text(
-                                          "$shapePointerValuetoInt",
+                                          "${endPointerValue.toInt()}",
                                           style: TextStyle(fontSize: 14.0),
                                         ))),
                                   ),
