@@ -61,7 +61,7 @@ autoRespone.autoRespone(process.env.USER_NAME1, process.env.PASSWORD1 , process.
 autoRespone.autoRespone(process.env.USER_NAME2, process.env.PASSWORD2 , process.env.SUBCRIBE2, false);
 
 
-app.use(function(req, res, next) {
+app.use(function(req, res, next){
   next(createError(404));
 });
 
