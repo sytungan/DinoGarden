@@ -198,21 +198,21 @@ class MQTTManager extends ChangeNotifier {
       case 1:
         String topic = "CSE_BBC/feeds/bk-iot-led";
         Feed feed = Feed(id.toString(), "LED", data, "");
-        deviceAPI.setDevice(feed);
+        // deviceAPI.setDevice(feed);
         String body = json.encode(feed.toJson());
         publish(body, topic);
         break;
       case 3:
         String topic = "CSE_BBC/feeds/bk-iot-lcd";
         Feed feed = Feed(id.toString(), "LCD", data, "");
-        await deviceAPI.setDevice(feed);
+        // await deviceAPI.setDevice(feed);
         String body = json.encode(feed.toJson());
         publish(body, topic);
         break;
       case 11:
         String topic = "CSE_BBC1/feeds/bk-iot-relay";
         Feed feed = Feed(id.toString(), "RELAY", data, "");
-        await deviceAPI.setDevice(feed);
+        // await deviceAPI.setDevice(feed);
         print("pushed");
         String body = json.encode(feed.toJson());
         publish(body, topic);

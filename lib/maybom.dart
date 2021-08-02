@@ -25,7 +25,7 @@ class Maybom extends StatefulWidget {
   MQTTManager _manager;
   bool pumpStart;
   // Maybom(@required this.userID, @required this._manager, this.pumpStart);
-  Maybom(@required this.userID);
+  Maybom(@required this.userID, this._manager);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -99,7 +99,7 @@ class _MaybomState extends State<Maybom> {
     var deviceStatus = context.read<GlobalDeviceStatus>();
     if (isPumpTurnOn != deviceStatus.getStatus(0)) {
       _writeLog();
-      // sendPumpRequestTurnOn(isPumpTurnOn);
+      sendPumpRequestTurnOn(isPumpTurnOn);
     }
   }
 

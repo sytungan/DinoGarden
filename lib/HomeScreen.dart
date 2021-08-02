@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // initValue
     _initValue();
     // connect
-    // _configureAndConnect();
+    _configureAndConnect();
 
     _manager_1.addListener(() {
       MQTTAppState map1 = _manager_1.currentState;
@@ -393,8 +393,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Maybom(widget.userID)));
+                                                builder: (context) => Maybom(
+                                                    widget.userID,
+                                                    _manager_2)));
                                       },
                                     ),
                                     flex: 1,
@@ -642,9 +643,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: Use UUID
     String server1 = 'server_1';
     String server2 = 'server_2';
-    await _manager_1.initializeMQTTClient(identifier: server1, server: "BBC");
+    // await _manager_1.initializeMQTTClient(identifier: server1, server: "BBC");
     await _manager_2.initializeMQTTClient(identifier: server2, server: "BBC1");
-    _manager_1.connect();
+    // _manager_1.connect();
     _manager_2.connect();
     // _manager.subScribeTo('sytungan/feeds/garden');
   }
