@@ -93,7 +93,7 @@ class LightState extends State<Light> {
 
     if (_isScheduleChange(presentDvc)) {
       var deviceStatus = context.read<GlobalSchedule>();
-      deviceStatus.setSchedule(presentDvc, 0);
+      deviceStatus.setSchedule(presentDvc, 2);
     }
   }
 

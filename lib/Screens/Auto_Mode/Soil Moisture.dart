@@ -93,7 +93,7 @@ class _Soil_State extends State<Soil> {
 
     if (_isScheduleChange(presentDvc)) {
       var deviceStatus = context.read<GlobalSchedule>();
-      deviceStatus.setSchedule(presentDvc, 0);
+      deviceStatus.setSchedule(presentDvc, 1);
     }
   }
 
