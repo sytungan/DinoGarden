@@ -9,7 +9,7 @@ class DeviceAPI {
   DeviceAPI(this.userId);
   Future<Feed> getDevice(String id) async {
     String url = 'https://testdinogarden.herokuapp.com/device/get/' +
-        "60c584eb353077001511f098" +
+        "60d3e6d66cd58b00151a3e2d" +
         "/" +
         id;
     final response = await http.get(Uri.parse(url));
@@ -26,7 +26,7 @@ class DeviceAPI {
 
   Future<dynamic> getAllDevice(String id) async {
     String url = 'https://testdinogarden.herokuapp.com/device/get/' +
-        "60c584eb353077001511f098";
+        "60d3e6d66cd58b00151a3e2d";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,

@@ -7,8 +7,7 @@ class ScheduleAPI {
   String userId;
   ScheduleAPI(this.userId);
   Future<dynamic> getSchedule() async {
-    String url = 'https://testdinogarden.herokuapp.com/schedule/' +
-        "60c584eb353077001511f098";
+    String url = 'https://testdinogarden.herokuapp.com/schedule/' + userId;
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -23,8 +22,7 @@ class ScheduleAPI {
   }
 
   Future<bool> setSchedule(Map scheduleData) async {
-    String url = 'https://testdinogarden.herokuapp.com/schedule/' +
-        "60c584eb353077001511f098";
+    String url = 'https://testdinogarden.herokuapp.com/schedule/' + userId;
     print(json.encode(scheduleData));
     final response = await http.post(
       Uri.parse(url),
